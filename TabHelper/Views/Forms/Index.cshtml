@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">Formulários de Entrada</div>
+            <div class="panel-body">
+                <div class="col-md-9">
+                    <h3>Controle de Formulários</h3>
+                    <p>Use este configurador para criar novos formulários.</p>
+                    <p>Formulários são criados como auxiliares de marca para seus atendimentos.</p>
+                </div>
+                <div class="col-md-3 text-right">
+                    <a href="#" class="btn btn-default btn-sm" data-toggle="modal" data-target="#create">Adicionar nova entrada (+)</a>
+                </div>
+            </div>
+        </div>
+        <partial name="List"/>
+    </div>
+
+<div class="modal" id="create">
+    <div class="modal-dialog">
+        <partial name="Create"/>        
+    </div>
+</div>
+
+<div class="modal" id="edit">
+    <div class="modal-dialog">
+        <partial name="Edit"/>        
+    </div>
+</div>
+
+<div class="modal" id="desactive">
+    <div class="modal-dialog">
+        <partial name="Desactive"/>        
+    </div>
+</div>
+
+<div class="modal" id="delete">
+    <div class="modal-dialog">
+        <partial name="Delete"/>        
+    </div>
+</div>

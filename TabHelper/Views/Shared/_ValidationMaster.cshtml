@@ -1,0 +1,32 @@
+@using Microsoft.AspNetCore.Http.Features
+
+@{
+    var error = ViewData["Error"];
+    var message = ViewData["Message"];
+    var info = ViewData["Info"];
+}
+@if (error != null || message != null || info != null)
+{
+    <br/>
+}
+@if (error != null)
+{
+    <div class="alert alert-dismissible alert-danger">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Erro!</strong> <a href="#" class="alert-link">@error</a> tente novamente.
+    </div>    
+}
+@if (message != null)
+{
+    <div class="alert alert-dismissible alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Sucesso!</strong> @message
+    </div>    
+}
+@if (info != null)
+{
+    <div class="alert alert-dismissible alert-info">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Info!</strong> @info.
+    </div>
+}

@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">Administração de Tabulações</div>
+            <div class="panel-body">
+                <div class="col-md-9">
+                    <h3>Controle de Tabulações</h3>
+                    <p>Crie novas tabulações de acordo com seu negócio.</p>
+                    <p>Vincule suas tabulações aos seus departamentos ou projetos.</p>
+                    <p>Atribua seus formulários com as tabulações de forma simples e prática</p>
+                    <p>Organize a ordem de seus formulários</p>
+                </div>
+                <div class="col-md-3 text-right">
+                    <a href="#" class="btn btn-default btn-sm" data-toggle="modal" data-target="#create">Adicionar nova entrada (+)</a>
+                </div>
+            </div>
+        </div>
+        <partial name="List"/>
+    </div>
+
+<div class="modal" id="create">
+    <div class="modal-dialog">
+        <partial name="Create"/>        
+    </div>
+</div>
+
+<div class="modal" id="edit">
+    <div class="modal-dialog">
+        <partial name="Edit"/>        
+    </div>
+</div>
+
+<div class="modal" id="desactive">
+    <div class="modal-dialog">
+        <partial name="Desactive"/>        
+    </div>
+</div>
+
+<div class="modal" id="delete">
+    <div class="modal-dialog">
+        <partial name="Delete"/>        
+    </div>
+</div>

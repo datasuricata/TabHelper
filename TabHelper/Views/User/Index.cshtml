@@ -1,0 +1,47 @@
+@{
+    ViewData["Title"] = "User mananger";
+}
+
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">Administração de Usuário</div>
+            <div class="panel-body">
+                <div class="col-md-9">
+                    <h3>Controle de acesso</h3>
+                    <p>Controle o nível de acesso de seus colaboradores.</p>
+                    <p>Bloqueio de colaboradores que não estão mais em seu ciclo empresarial.</p>
+                    <p></p>
+                </div>
+                <div class="col-md-3 text-right">
+                    <a asp-controller="User" asp-action="Create" class="btn btn-default btn-sm" data-toggle="modal" data-target="#create">Adicionar nova entrada (+)</a>
+                </div>
+            </div>
+        </div>
+        <partial name="List"/>
+        @* @{ await Html.RenderPartialAsync("_List", Model);} *@
+    </div>
+
+<div class="modal" id="create">
+    <div class="modal-dialog">
+        <partial name="Create"/>        
+    </div>
+</div>
+
+<div class="modal" id="edit">
+    <div class="modal-dialog">
+        <partial name="Edit"/>        
+    </div>
+</div>
+
+<div class="modal" id="block">
+    <div class="modal-dialog">
+        <partial name="Block"/>        
+    </div>
+</div>
+
+<div class="modal" id="delete">
+    <div class="modal-dialog">
+        <partial name="Delete"/>        
+    </div>
+</div>
+

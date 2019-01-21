@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">Entidades de Relacionamento</div>
+            <div class="panel-body">
+                <div class="col-md-9">
+                    <h3>Controle relacional</h3>
+                    <p>Use este configurador para criar novas entidades.</p>
+                    <p>Entidades podem ser, departamentos, filiais, projetos ou o que achar melhor adequado para sua classificação.</p>
+                    <p>A forma de relacionamento entre usuarios, tabulações e formularios é definida pelo relacionamento.</p>
+                </div>
+                <div class="col-md-3 text-right">
+                    <a href="#" class="btn btn-success btn-sm" data-toggle="modal" data-target="#create">Adicionar nova entrada (+)</a>
+                </div>
+            </div>
+        </div>
+        <partial name="List"/>
+    </div>
+</div>
+
+<div class="modal" id="create">
+    <div class="modal-dialog">
+        <partial name="Create"/>        
+    </div>
+</div>
+
+<div class="modal" id="edit">
+    <div class="modal-dialog">
+        <partial name="Edit"/>        
+    </div>
+</div>
+
+<div class="modal" id="desactive">
+    <div class="modal-dialog">
+        <partial name="Desactive"/>        
+    </div>
+</div>
+
+<div class="modal" id="delete">
+    <div class="modal-dialog">
+        <partial name="Delete"/>        
+    </div>
+</div>
