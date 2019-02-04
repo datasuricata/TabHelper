@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using TabHelper.Models.Base;
+﻿using TabHelper.Models.Base;
 
 namespace TabHelper.Models.Entities
 {
@@ -8,8 +7,8 @@ namespace TabHelper.Models.Entities
         public string TabulationId { get; set; }
         public string UserId { get; set; }
         public string FormJson { get; set; }
-        
-        public Historic()
+
+        protected Historic()
         {
             
         }

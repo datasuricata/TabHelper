@@ -1,4 +1,4 @@
-@model TabHelper.Models.Entities.User
+@model TabHelper.Models.ViewModel.UserManagerModel
 
 @{
     Layout = null;
@@ -10,54 +10,51 @@
         <h4 class="modal-title">Adicionar novo usuário</h4>
     </div>
     <div class="modal-body">
-        <form method="post" asp-controller="User" asp-action="Create" class="form-horizontal">
+        <form data-ajax="true" data-ajax-method="POST" data-ajax-failure="formOnFail" data-ajax-success="window.location = '/Index'" asp-controller="User" asp-action="Create" class="form-horizontal">
             <div class="well text-center">
                 <strong>Inserir novo registro de usuário</strong>
             </div>
             <div class="well text-center">
-            <fieldset>
-                <div class="form-group">
-                    <label class="col-lg-3 control-label">Nome</label>
-                    <div class="col-lg-9">
-                        <input class="form-control input-sm" type="text" asp-for="Name" placeholder="Nome Completo">
+                <fieldset>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">Nome</label>
+                        <div class="col-lg-9">
+                            <input class="form-control input-sm" type="text" asp-for="Name" placeholder="Nome Completo">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-lg-3 control-label">E-mail</label>
-                    <div class="col-lg-9">
-                        <input type="text" class="form-control input-sm" asp-for="Email" placeholder="usuario@datasuricata.com.br">
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">E-mail</label>
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control input-sm" asp-for="Email" placeholder="usuario@datasuricata.com.br">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-lg-3 control-label">Senha</label>
-                    <div class="col-lg-9">
-                        <input type="password" class="form-control input-sm" asp-for="Password" placeholder="Password">
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">Senha</label>
+                        <div class="col-lg-9">
+                            <input type="password" class="form-control input-sm" asp-for="Password" placeholder="Password">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-lg-3 control-label">Acesso</label>
-                    <div class="col-lg-9">
-                        <select class="form-control input-sm" asp-for="UserAccess" asp-items="Html.GetEnumSelectList(typeof (UserAccess))"></select>
-                        <br>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">Acesso</label>
+                        <div class="col-lg-9">
+                            <select class="form-control input-sm" asp-for="UserAccess" asp-items="ViewBag.Access as List<SelectListItem>"></select>
+                            <br>
+                        </div>
+                        <label for="select" class="col-lg-3 control-label">Departamento</label>
+                        <div class="col-lg-9">
+                            <select class="form-control input-sm" asp-for="DepartmentId" asp-items="ViewBag.Departments as List<SelectListItem>"></select>
+                            <br>
+                        </div>
                     </div>
-                    <label for="select" class="col-lg-3 control-label">Entidade</label>
-                    <div class="col-lg-9">
-                        <select class="form-control input-sm" id="select">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                        </select>
-                        <br>
-                    </div>
-                </div>
-            </fieldset>
+                </fieldset>
+            </div>
+            <div class="text-right">
+                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-info btn-sm">Salvar alterações</button>
             </div>
         </form>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-info btn-sm">Salvar alterações</button>
+        
     </div>
 </div>

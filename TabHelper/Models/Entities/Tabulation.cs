@@ -5,16 +5,15 @@ namespace TabHelper.Models.Entities
 {
     public class Tabulation : EntityBase
     {
-        public Tabulation()
+        protected Tabulation()
         {
-            Forms = new List<Forms>();   
+
         }
 
         public string Name { get; set; }
         public string Observation { get; set; }
-        public string DepartmentId { get; set; }
-        public virtual Department Department { get; set; }
-        public virtual ICollection<Forms> Forms { get; set; }
+        public ICollection<Forms> Forms { get; set; } = new List<Forms>();
+        public ICollection<DepartmentTabulation> DepartmentTabulations { get; set; } = new List<DepartmentTabulation>();
     }
 }
     

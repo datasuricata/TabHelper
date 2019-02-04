@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TabHelper.Models.Base
 {
@@ -10,8 +11,8 @@ namespace TabHelper.Models.Base
         [Key]
         public int Id { get; set; }
 
-        public DateTimeOffset? CreatedAt { get; set; }
         public bool IsDeleted { get; set; }
+        public DateTimeOffset? CreatedAt { get; set; }
         public DateTimeOffset? UpdatedAt { get; set; }
 
         #endregion
@@ -20,6 +21,7 @@ namespace TabHelper.Models.Base
 
         protected EntityBase()
         {
+
         }
 
         #endregion

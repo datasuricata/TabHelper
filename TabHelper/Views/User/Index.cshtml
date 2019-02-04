@@ -1,47 +1,62 @@
-@{
-    ViewData["Title"] = "User mananger";
-}
+@model TabHelper.Models.ViewModel.UserViewModel
 
-    <div class="col-md-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">Administração de Usuário</div>
-            <div class="panel-body">
-                <div class="col-md-9">
-                    <h3>Controle de acesso</h3>
-                    <p>Controle o nível de acesso de seus colaboradores.</p>
-                    <p>Bloqueio de colaboradores que não estão mais em seu ciclo empresarial.</p>
-                    <p></p>
-                </div>
-                <div class="col-md-3 text-right">
-                    <a asp-controller="User" asp-action="Create" class="btn btn-default btn-sm" data-toggle="modal" data-target="#create">Adicionar nova entrada (+)</a>
-                </div>
+@using TabHelper.Models.ViewModel
+
+<partial name="_ValidationMaster" />
+
+<div class="col-md-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">Administração de Usuário</div>
+        <div class="panel-body">
+            <div class="col-md-9">
+                <h3>Controle de acesso</h3>
+                <p>Controle o nível de acesso de seus colaboradores.</p>
+                <p>Bloqueio de colaboradores que não estão mais em seu ciclo empresarial.</p>
+                <p></p>
+            </div>
+            <div class="col-md-3 text-right">
+                <a asp-controller="User" asp-action="Create" class="btn btn-default btn-sm" data-toggle="modal" data-target="#create">Adicionar nova entrada (+)</a>
             </div>
         </div>
-        <partial name="List"/>
-        @* @{ await Html.RenderPartialAsync("_List", Model);} *@
     </div>
+    @*<partial name="List" />*@
+    @await Html.PartialAsync("../User/List.cshtml", Model)
+
+</div>
 
 <div class="modal" id="create">
     <div class="modal-dialog">
-        <partial name="Create"/>        
+        @*<partial name="Create" />*@
+        @await Html.PartialAsync("../User/Create.cshtml", new UserManagerModel())
     </div>
 </div>
 
 <div class="modal" id="edit">
     <div class="modal-dialog">
-        <partial name="Edit"/>        
+        @*<partial name="Edit" />*@
+        @await Html.PartialAsync("../User/Edit.cshtml", new UserManagerModel())
     </div>
 </div>
 
 <div class="modal" id="block">
     <div class="modal-dialog">
-        <partial name="Block"/>        
+        @*<partial name="Block" />*@
+        @await Html.PartialAsync("../User/Block.cshtml", new UserAccessModel())
     </div>
 </div>
+@*
+    <div class="modal" id="delete">
+        <div class="modal-dialog">
+            <partial name="Delete" />
+        </div>
+    </div>*@
 
-<div class="modal" id="delete">
-    <div class="modal-dialog">
-        <partial name="Delete"/>        
-    </div>
-</div>
+@section scripts{
 
+    <script type="text/javascript">
+        $(".modal").on("hidden.bs.modal", function () {
+            $(this).data('bs.modal', null);
+        });
+    </script>
+
+}

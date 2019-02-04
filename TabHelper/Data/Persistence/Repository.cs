@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,76 +9,62 @@ using TabHelper.Models.Base;
 
 namespace TabHelper.Data.Persistence
 {
-    public class Repository<TEntity> : IRepository<TEntity>, IDisposable where TEntity : EntityBase
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : EntityBase 
     {
-        protected readonly AppDbContext context;
+        private readonly AppDbContext db;
 
-        protected Repository(AppDbContext context)
+        public Repository(AppDbContext db)
         {
-            this.context = context;
+            this.db = db;
         }
 
         public virtual TEntity GetById(int id)
         {
-            var query = context.Set<TEntity>().Where(e => e.Id == id);
-            return query.Any() ? query.First() : null;
+            return db.Set<TEntity>().SingleOrDefault(e => e.Id == id);
         }
 
-        public virtual IEnumerable<TEntity> All()
+        public virtual IQueryable<TEntity> GetQueriable()
         {
-            var query = context.Set<TEntity>();
+            return db.Set<TEntity>().AsQueryable();
+        }
 
+        public virtual IEnumerable<TEntity> List()
+        {
+            var query = db.Set<TEntity>();
             return query.Any() ? query.ToList() : new List<TEntity>();
-        }
-
-        public virtual void Save(TEntity entity)
-        {
-            entity.UpdatedAt = DateTime.Now;
-            context.Set<TEntity>().Add(entity);
-        }
-
-        public virtual IQueryable<TEntity> Get()
-        {
-            return context.Set<TEntity>().Where(e => !e.IsDeleted);
-        }
-
-        public virtual TEntity Get(int id)
-        {
-            return Get().SingleOrDefault(e => e.Id == id);
         }
 
         public virtual void Create(TEntity entity)
         {
-            entity.CreatedAt = DateTime.Now;
-            entity.UpdatedAt = entity.CreatedAt;
-            context.Add(entity);
+            db.Set<TEntity>().Add(entity);
         }
 
         public virtual void Update(TEntity entity)
         {
-            entity.UpdatedAt = DateTime.Now;
-            context.Set<TEntity>().Attach(entity);
-            context.Entry(entity);
+            db.Set<TEntity>().Attach(entity);
+            db.Entry(entity);
         }
 
-        public virtual void Delete(int id)
+        public virtual void SoftExclude(TEntity entity)
         {
-            var entity = Get(id);
-
-            if (entity == null) return;
-            entity.UpdatedAt = DateTime.Now;
             entity.IsDeleted = true;
+            db.Set<TEntity>().Attach(entity);
+            db.Entry(entity);
+        }
+
+        public virtual void Exclude(TEntity entity)
+        {
+            db.Set<TEntity>().Remove(entity);
+        }
+
+        public virtual int Count()
+        {
+            return db.Set<TEntity>().Count();
         }
 
         public virtual Task<int> SaveAsync()
         {
-            return context.SaveChangesAsync();
-        }
-
-        public virtual void Dispose()
-        {
-            Dispose();
-            GC.SuppressFinalize(this);
+            return db.SaveChangesAsync();
         }
     }
 }

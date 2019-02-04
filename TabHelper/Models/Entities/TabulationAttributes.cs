@@ -5,9 +5,9 @@ namespace TabHelper.Models.Entities
 {
     public class TabulationAttributes : EntityBase
     {
-        public TabulationAttributes()
+        protected TabulationAttributes()
         {
-            Forms = new List<Forms>();
+
         }
         
         public string Name { get; set; } 
@@ -17,6 +17,6 @@ namespace TabHelper.Models.Entities
 
         public int Order { get; set; }
         public ComponentType ComponentType { get; set; }
-        public virtual ICollection<Forms> Forms { get; set; }
+        public ICollection<Forms> Forms { get; set; } = new List<Forms>();
     }
 }

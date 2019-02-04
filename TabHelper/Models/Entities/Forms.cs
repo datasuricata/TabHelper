@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore.Query.ExpressionVisitors.Internal;
 using TabHelper.Models.Base;
 
 namespace TabHelper.Models.Entities

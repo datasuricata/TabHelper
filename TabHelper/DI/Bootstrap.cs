@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using TabHelper.Data.ORM;
 using TabHelper.Data.Persistence;
 using TabHelper.Data.Persistence.Interfaces;
+using TabHelper.Data.Transaction;
 
 namespace TabHelper.DI
 {
@@ -10,8 +11,10 @@ namespace TabHelper.DI
     {
         public static void Configure(IServiceCollection services, string conn)
         {
-            services.AddDbContext<AppDbContext>(options => options.UseMySQL(conn, 
+            services.AddDbContext<AppDbContext>(options => options.UseMySql(conn, 
                 builder => builder.MigrationsAssembly("TabHelper")));
+
+            services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
 
             // # repository base {entities}
             /// <summary>
