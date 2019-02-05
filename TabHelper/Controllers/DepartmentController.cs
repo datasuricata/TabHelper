@@ -7,7 +7,7 @@ using TabHelper.Models.Entities;
 
 namespace TabHelper.Controllers
 {
-    public class EntityController : Controller
+    public class DepartmentController : Controller
     {
         //private readonly IRepository<Tabulation> repoTab;
         //private readonly IRepository<TabulationAttributes> repoTabAtt;

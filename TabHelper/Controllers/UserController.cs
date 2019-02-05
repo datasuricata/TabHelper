@@ -16,9 +16,9 @@ namespace TabHelper.Controllers
 {
     public class UserController : Controller
     {
-        private IRepository<User> userRepo;
-        private IRepository<Department> deptRepo;
-        private IUnitOfWork uow;
+        private readonly IRepository<User> userRepo;
+        private readonly IRepository<Department> deptRepo;
+        private readonly IUnitOfWork uow;
 
         public UserController(IRepository<User> userRepo, IRepository<Department> deptRepo, IUnitOfWork uow)
         {
@@ -31,7 +31,7 @@ namespace TabHelper.Controllers
         {
             try
             {
-                var usrs = userRepo.List().Where(x => x.Id != 1).ToList();
+                var usrs = userRepo.List().ToList();
                 return View(new UserViewModel { Users = usrs });
             }
             catch (Exception e)
@@ -132,11 +132,36 @@ namespace TabHelper.Controllers
             }
         }
 
-        public IActionResult Delete()
+        public IActionResult Delete(int id)
         {
             try
             {
-                return View();
+                var user = userRepo.GetById(id);
+                DomainValidation.When(user == null, "User not found.");
+                return View(new UserAccessModel
+                {
+                    Id = user.Id,
+                    Name = user.Name
+                });
+            }
+            catch (Exception e)
+            {
+                ViewData["Error"] = e.Message;
+                return RedirectToAction("Index");
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(UserAccessModel form)
+        {
+            try
+            {
+                var user = userRepo.GetById(form.Id);
+                DomainValidation.When(user == null, "User not found.");
+
+                userRepo.Exclude(user);
+                return RedirectToAction("Index");
             }
             catch (Exception e)
             {
