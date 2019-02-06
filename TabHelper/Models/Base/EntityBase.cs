@@ -6,12 +6,13 @@ namespace TabHelper.Models.Base
 {
     public abstract class EntityBase
     {
-        #region [ attributes ]
+        #region [ properties ]
 
         [Key]
         public int Id { get; set; }
 
         public bool IsDeleted { get; set; }
+
         public DateTimeOffset? CreatedAt { get; set; }
         public DateTimeOffset? UpdatedAt { get; set; }
 

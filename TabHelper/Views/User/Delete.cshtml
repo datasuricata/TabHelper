@@ -1,4 +1,4 @@
-@model TabHelper.Models.ViewModel.UserAccessModel
+@model TabHelper.Models.ViewModel.UserLightModel
 
 @{
     Layout = null;
@@ -11,10 +11,10 @@
     </div>
     <div class="modal-body">
         <form data-ajax="true" data-ajax-method="POST" data-ajax-failure="formOnFail" data-ajax-success="window.location = '/Index'" asp-controller="User" asp-action="Delete" class="form-horizontal">
-            <div class="well text-center">
+            <div class="well text-center" style="border-color:#029acf">
                 <strong>Deseja deletar o colaborador <b>@Model.Name</b> ?</strong>
             </div>
-            <div class="well text-center">
+            <div class="well text-center" style="border-color:#029acf">
                 <fieldset>
                     <div class="form-group">
                         <div class="form-group">

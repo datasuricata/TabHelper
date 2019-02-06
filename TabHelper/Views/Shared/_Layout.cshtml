@@ -25,7 +25,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-default navbar-fixed-top drop-shadow" style="border-color:#029acf">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -54,7 +54,7 @@
                         <ul class="dropdown-menu" role="menu">
                             <li><a asp-controller="Tab" asp-action="Index">Tabulações</a></li>
                             <li><a asp-controller="Forms" asp-action="Index">Formulários</a></li>
-                            <li><a asp-controller="Entity" asp-action="Index">Entidades</a></li>
+                            <li><a asp-controller="Department" asp-action="Index">Departamentos</a></li>
                             <li><a asp-controller="Export" asp-action="Index">Exportar Dados</a></li>
                         </ul>
                     </li>
@@ -65,33 +65,30 @@
     </nav>
     <partial name="_CookieConsentPartial" />
 
-    <div class="container body-content"
-         @if (error != null || message != null || info != null) { <br />
-        }
+    <div class="container body-content">
         @if (error != null)
         {
-            <div class="alert alert-dismissible alert-danger">
+            <div class="alert alert-dismissible alert-danger drop-shadow">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 <strong>Erro!</strong> <a href="#" class="alert-link">@error</a> tente novamente.
             </div>
         }
         @if (message != null)
         {
-            <div class="alert alert-dismissible alert-success">
+            <div class="alert alert-dismissible alert-success drop-shadow">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 <strong>Sucesso!</strong> @message
             </div>
         }
         @if (info != null)
         {
-            <div class="alert alert-dismissible alert-info">
+            <div class="alert alert-dismissible alert-info drop-shadow">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 <strong>Info!</strong> @info.
             </div>
         }
         @*@await Html.PartialAsync("_ValidationMaster")*@
-        <p></p>
-        <hr />
+        <br />
         @RenderBody()
         <hr />
         @await Html.PartialAsync("_ValidationScriptsPartial")

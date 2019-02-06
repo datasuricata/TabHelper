@@ -9,10 +9,11 @@ namespace TabHelper.Models.Entities
         public string Name { get; private set; }
         public string Email { get; private set; }
         public string Password { get; private set; }
+        public bool IsBlock { get; private set; }
         public Department Department { get; private set; }
         public UserAccess UserAccess { get; private set; }
 
-        public User()
+        protected User()
         {
 
         }
@@ -38,17 +39,23 @@ namespace TabHelper.Models.Entities
             Password = password.EncryptPassword();
             Department = department;
             UserAccess = userAccess;
+            IsBlock = false;
         }
 
-        public void Edit(User form)
+        public void Edit(User usr)
         {
-            Validate(form.Name, form.Email, form.Password, form.Department, form.UserAccess);
+            Validate(usr.Name, usr.Email, usr.Password, usr.Department, usr.UserAccess);
 
-            Name = form.Name;
-            Email = form.Email;
-            UserAccess = form.UserAccess;
-            Password = form.Password;
-            Department = form.Department;
+            Name = usr.Name;
+            Email = usr.Email;
+            UserAccess = usr.UserAccess;
+            Password = usr.Password;
+            Department = usr.Department;
+        }
+
+        public void Block()
+        {
+            IsBlock = !IsBlock;
         }
     }
 }

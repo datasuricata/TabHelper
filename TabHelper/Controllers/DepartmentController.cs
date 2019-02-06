@@ -4,21 +4,42 @@ using System.Diagnostics;
 using TabHelper.Data.Persistence.Interfaces;
 using TabHelper.Models;
 using TabHelper.Models.Entities;
+using System.Linq;
+using TabHelper.Models.ViewModel;
+using TabHelper.Services;
 
 namespace TabHelper.Controllers
 {
     public class DepartmentController : Controller
     {
-        //private readonly IRepository<Tabulation> repoTab;
-        //private readonly IRepository<TabulationAttributes> repoTabAtt;
+        private readonly IRepository<Department> deptRepo;
 
-        //public TabController(IRepository<Tabulation> repoTab, IRepository<TabulationAttributes> repoTabAtt)
-        //{
-        //    this.repoTab = repoTab;
-        //    this.repoTabAtt = repoTabAtt;
-        //}
+        public DepartmentController(IRepository<Department> deptRepo)
+        {
+            this.deptRepo = deptRepo;
+        }
 
         public IActionResult Index()
+        {
+            try
+            {
+                var depts = deptRepo.List().ToList();
+                var model = depts.ConvertAll(e => (DepartmentModel)e);
+                return View(new DepartmentViewModel { Departments = model });
+            }
+            catch (Exception e)
+            {
+                ViewData["Error"] = e.Message;
+                return RedirectToAction("Index", "Dash");
+            }
+        }
+
+        public IActionResult List()
+        {
+            return PartialView();
+        }
+
+        public IActionResult Create()
         {
             try
             {
@@ -27,32 +48,102 @@ namespace TabHelper.Controllers
             catch (Exception e)
             {
                 ViewData["Error"] = e.Message;
-                return RedirectToAction("Index","Dash");
+                return RedirectToAction("Index", "Dash");
             }
         }
 
-        public IActionResult Create()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(DepartmentModel form)
         {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
+            try
+            {
+                var dept = new Department(form.Name, form.Description);
+                deptRepo.Create(dept);
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                ViewData["Error"] = e.Message;
+                return RedirectToAction("Index");
+            }
         }
 
-        public IActionResult Edit()
+        public IActionResult Delete(int id)
         {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
+            try
+            {
+                var dept = deptRepo.GetById(id);
+                DomainValidation.When(dept == null, "Dept not found.");
+                return View(new DepartmentModel
+                {
+                    Id = dept.Id,
+                    Name = dept.Name,
+                    Description = dept.Description,
+                });
+            }
+            catch (Exception e)
+            {
+                ViewData["Error"] = e.Message;
+                return RedirectToAction("Index");
+            }
         }
 
-        public IActionResult Delete()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(DepartmentModel form)
         {
-            return View();
+            try
+            {
+                var dept = deptRepo.GetById(form.Id);
+                DomainValidation.When(dept == null, "Dept not found.");
+                deptRepo.SoftExclude(dept);
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                ViewData["Error"] = e.Message;
+                return RedirectToAction("Index");
+            }
         }
 
-        public IActionResult List()
+        public IActionResult Edit(int id)
         {
-            return View();
+            try
+            {
+                var dept = deptRepo.GetById(id);
+                DomainValidation.When(dept == null, "User not found.");
+
+                return View(new DepartmentModel {
+                    Id = dept.Id,
+                    Name = dept.Name,
+                    Description = dept.Description,
+                });
+            }
+            catch (Exception e)
+            {
+                ViewData["Error"] = e.Message;
+                return RedirectToAction("Index");
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(DepartmentModel form)
+        {
+            try
+            {
+                var dept = deptRepo.GetById(form.Id);
+                dept = Department.Edit(dept, form.Name, form.Description);
+                deptRepo.Update(dept);
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                ViewData["Error"] = e.Message;
+                return PartialView("_ValidationMaster");
+            }
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

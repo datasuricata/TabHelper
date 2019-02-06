@@ -14,17 +14,15 @@ using TabHelper.Services;
 
 namespace TabHelper.Controllers
 {
-    public class UserController : Controller
+    public class UserController : BaseController
     {
         private readonly IRepository<User> userRepo;
         private readonly IRepository<Department> deptRepo;
-        private readonly IUnitOfWork uow;
 
-        public UserController(IRepository<User> userRepo, IRepository<Department> deptRepo, IUnitOfWork uow)
+        public UserController(IRepository<User> userRepo, IRepository<Department> deptRepo, IUnitOfWork uow) : base(uow)
         {
             this.userRepo = userRepo;
             this.deptRepo = deptRepo;
-            this.uow = uow;
         }
 
         public IActionResult Index()
@@ -32,7 +30,7 @@ namespace TabHelper.Controllers
             try
             {
                 var usrs = userRepo.List().ToList();
-                return View(new UserViewModel { Users = usrs });
+                return View(new UserViewModel { Users = usrs.ConvertAll(e => (UserModel)e) });
             }
             catch (Exception e)
             {
@@ -50,9 +48,8 @@ namespace TabHelper.Controllers
         {
             try
             {
-                ViewBag.Access = Utils.GetAccessDropdown();
-                ViewBag.Departments = deptRepo.List().Where(x => x.Name != "Root")
-                    .Select(x => new SelectListItem(x.Name, x.Id.ToString())).ToList();
+                ViewBag.Departments = GetDropDown(deptRepo.List()
+                    .Where(x => x.Name != "Root").ToList(), "Name", "Id");
 
                 return View();
             }
@@ -65,7 +62,7 @@ namespace TabHelper.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(UserManagerModel form)
+        public IActionResult Create(UserModel form)
         {
             try
             {
@@ -99,12 +96,7 @@ namespace TabHelper.Controllers
             {
                 var user = userRepo.GetById(id);
                 DomainValidation.When(user == null, "User not found.");
-                return View(new UserAccessModel
-                {
-                    Display = user.IsDeleted ? "desbloquear" : "bloquear",
-                    Id = user.Id,
-                    Name = user.Name
-                });
+                return View((UserLightModel)user);
             }
             catch (Exception e)
             {
@@ -115,14 +107,16 @@ namespace TabHelper.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Block(UserAccessModel form)
+        public IActionResult Block(UserLightModel form)
         {
             try
             {
                 var user = userRepo.GetById(form.Id);
                 DomainValidation.When(user is null, "User not found.");
-                user.IsDeleted = !user.IsDeleted;
+
+                user.Block();
                 userRepo.Update(user);
+
                 return RedirectToAction("Index");
             }
             catch (Exception e)
@@ -138,11 +132,7 @@ namespace TabHelper.Controllers
             {
                 var user = userRepo.GetById(id);
                 DomainValidation.When(user == null, "User not found.");
-                return View(new UserAccessModel
-                {
-                    Id = user.Id,
-                    Name = user.Name
-                });
+                return View((UserLightModel)user);
             }
             catch (Exception e)
             {
@@ -153,14 +143,14 @@ namespace TabHelper.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(UserAccessModel form)
+        public IActionResult Delete(UserLightModel form)
         {
             try
             {
                 var user = userRepo.GetById(form.Id);
                 DomainValidation.When(user == null, "User not found.");
 
-                userRepo.Exclude(user);
+                userRepo.SoftExclude(user);
                 return RedirectToAction("Index");
             }
             catch (Exception e)
@@ -179,18 +169,10 @@ namespace TabHelper.Controllers
 
                 DomainValidation.When(user == null, "User not found.");
 
-                ViewBag.Access = Utils.GetAccessDropdown();
-                ViewBag.Departments = deptRepo.List().Where(x => x.Name != "Root")
-                    .Select(x => new SelectListItem(x.Name, x.Id.ToString())).ToList();
+                ViewBag.Departments = GetDropDown(deptRepo.List()
+                    .Where(x => x.Name != "Root").ToList(), "Name", "Id");
 
-                return View(new UserManagerModel
-                {
-                    DepartmentId = user.Department.Id,
-                    Email = user.Email,
-                    Name = user.Name,
-                    UserAccess = user.UserAccess,
-                    Password = user.Password
-                });
+                return View((UserModel)user);
             }
             catch (Exception e)
             {
@@ -201,7 +183,7 @@ namespace TabHelper.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(UserManagerModel form)
+        public IActionResult Edit(UserModel form)
         {
             try
             {
@@ -212,7 +194,6 @@ namespace TabHelper.Controllers
                 var entity = new User(form.Name, form.Email, form.Password, dept, form.UserAccess);
 
                 user.Edit(entity);
-
                 userRepo.Update(user);
 
                 return RedirectToAction("Index");

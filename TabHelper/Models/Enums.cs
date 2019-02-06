@@ -22,8 +22,8 @@ namespace TabHelper.Models
 
     public enum ComponentType
     {
-        [Display(Description = "Padrão")]
-        Texto = 0,
+        [Display(Description = "Texto")]
+        Text = 0,
         
         [Display(Description = "Lógico")]
         Radio = 1,

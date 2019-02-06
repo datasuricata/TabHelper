@@ -1,6 +1,10 @@
 @model TabHelper.Models.ViewModel.UserViewModel
 
-<div class="panel panel-default">
+@{
+    var state = string.Empty;
+}
+
+<div class="panel panel-info drop-shadow">
     <div class="panel-heading">Listagem de Usuários</div>
     <div class="panel-body">
 
@@ -21,25 +25,30 @@
                     {
                         <tr>
                             <td>@user.Id</td>
-                            <td>@user.CreatedAt?.ToString("dd/MM/yyyy HH:mm")</td>
+                            <td>@user.CreatedAt</td>
                             <td>@user.Name</td>
                             <td>@user.Email</td>
                             <td>
-                                @if (user.Id != 1)
+                                @if (user.Id == 1 || user.IsDeleted)
                                 {
-                                    if (user.IsDeleted)
-                                    {
-                                        <a asp-controller="User" asp-action="Block" asp-route-id="@user.Id" class="btn btn-warning btn-xs" style="width: 80px;" data-toggle="modal" data-target="#block">Desbloquear</a>
-                                    }
-                                    else
-                                    {
-                                        <a asp-controller="User" asp-action="Block" asp-route-id="@user.Id" class="btn btn-default btn-xs" style="width: 80px;" data-toggle="modal" data-target="#block">Bloquear</a>
-                                    }
-
-                                    <a asp-controller="User" asp-action="Edit" asp-route-id="@user.Id" style="width: 80px;" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#edit">Editar</a>
-
-                                    <a asp-controller="User" asp-action="Delete" asp-route-id="@user.Id" class="btn btn-danger btn-xs" style="width: 80px;" data-toggle="modal" data-target="#delete">Deletar</a>
+                                    state = "disabled";
+                                    user.Id = 0;
                                 }
+                                else
+                                {
+                                    state = string.Empty;
+                                }
+
+                                @if (user.IsBlock)
+                                {
+                                    <a asp-controller="User" asp-action="Block" asp-route-id="@user.Id" class="btn btn-warning btn-xs @state" style="width: 80px;" data-toggle="modal" data-target="#block">Desbloquear</a>
+                                }
+                                else
+                                {
+                                    <a asp-controller="User" asp-action="Block" asp-route-id="@user.Id" class="btn btn-default btn-xs @state" style="width: 80px;" data-toggle="modal" data-target="#block">Bloquear</a>
+                                }
+                                <a asp-controller="User" asp-action="Edit" asp-route-id="@user.Id" style="width: 80px;" class="btn btn-primary btn-xs @state" data-toggle="modal" data-target="#edit">Editar</a>
+                                <a asp-controller="User" asp-action="Delete" asp-route-id="@user.Id" class="btn btn-danger btn-xs @state" style="width: 80px;" data-toggle="modal" data-target="#delete">Deletar</a>
                             </td>
                         </tr>
                     }

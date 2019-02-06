@@ -25,6 +25,16 @@ body {
     width: 100%;
 }
 
+.drop-shadow {
+    -webkit-box-shadow: 0 0 5px 2px rgba(0, 0, 0, .5);
+    box-shadow: 0 0 5px 2px rgba(0, 0, 0, .5);
+}
+
+.container.drop-shadow {
+    padding-left: 0;
+    padding-right: 0;
+}
+
 /* QR code generator */
 #qrCode {
     margin: 15px;

@@ -5,7 +5,7 @@
 <partial name="_ValidationMaster" />
 
 <div class="col-md-12">
-    <div class="panel panel-default">
+    <div class="panel panel-info drop-shadow">
         <div class="panel-heading">Administração de Usuário</div>
         <div class="panel-body">
             <div class="col-md-9">
@@ -19,37 +19,32 @@
             </div>
         </div>
     </div>
-    @*<partial name="List" />*@
     @await Html.PartialAsync("../User/List.cshtml", Model)
-
 </div>
 
 <div class="modal" id="create">
     <div class="modal-dialog">
-        @*<partial name="Create" />*@
-        @await Html.PartialAsync("../User/Create.cshtml", new UserManagerModel())
+        @await Html.PartialAsync("../User/Create.cshtml", new UserModel())
     </div>
 </div>
 
 <div class="modal" id="edit">
     <div class="modal-dialog">
-        @*<partial name="Edit" />*@
-        @await Html.PartialAsync("../User/Edit.cshtml", new UserManagerModel())
+        @await Html.PartialAsync("../User/Edit.cshtml", new UserModel())
     </div>
 </div>
 
 <div class="modal" id="block">
     <div class="modal-dialog">
-        @*<partial name="Block" />*@
-        @await Html.PartialAsync("../User/Block.cshtml", new UserAccessModel())
+        @await Html.PartialAsync("../User/Block.cshtml", new UserLightModel())
     </div>
 </div>
-@*
-    <div class="modal" id="delete">
-        <div class="modal-dialog">
-            <partial name="Delete" />
-        </div>
-    </div>*@
+
+<div class="modal" id="delete">
+    <div class="modal-dialog">
+        @await Html.PartialAsync("../User/Delete.cshtml", new UserLightModel())
+    </div>
+</div>
 
 @section scripts{
 

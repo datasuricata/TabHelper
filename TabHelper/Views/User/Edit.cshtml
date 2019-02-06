@@ -1,4 +1,6 @@
-@model TabHelper.Models.ViewModel.UserManagerModel
+@model TabHelper.Models.ViewModel.UserModel
+
+@using TabHelper.Helpers
 
 @{
     Layout = null;
@@ -11,10 +13,10 @@
     </div>
     <div class="modal-body">
         <form data-ajax="true" data-ajax-method="POST" data-ajax-failure="formOnFail" data-ajax-success="window.location = '/Index'" asp-controller="User" asp-action="Edit" class="form-horizontal">
-            <div class="well text-center">
+            <div class="well text-center" style="border-color:#029acf">
                 <strong>Inserir novo registro de usuário</strong>
             </div>
-            <div class="well text-center">
+            <div class="well text-center" style="border-color:#029acf">
                 <fieldset>
                     <div class="form-group">
                         <label class="col-lg-3 control-label">Nome</label>
@@ -37,7 +39,7 @@
                     <div class="form-group">
                         <label class="col-lg-3 control-label">Acesso</label>
                         <div class="col-lg-9">
-                            <select class="form-control input-sm" asp-for="UserAccess" asp-items="ViewBag.Access as List<SelectListItem>"></select>
+                            <select class="form-control input-sm" asp-for="UserAccess" asp-items="Utils.GetAccessDropdown()"></select>
                             <br>
                         </div>
                         <label for="select" class="col-lg-3 control-label">Departamento</label>

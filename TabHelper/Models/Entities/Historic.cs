@@ -4,13 +4,20 @@ namespace TabHelper.Models.Entities
 {
     public class Historic : EntityBase
     {
-        public string TabulationId { get; set; }
-        public string UserId { get; set; }
-        public string FormJson { get; set; }
+        public int TabulationId { get; private set; }
+        public int UserId { get; private set; }
+        public string FormJson { get; private set; }
 
         protected Historic()
         {
             
+        }
+
+        public Historic(int tabulationId, int userId, string formJson)
+        {
+            TabulationId = tabulationId;
+            UserId = userId;
+            FormJson = formJson;
         }
     }
 }

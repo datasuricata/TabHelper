@@ -9,6 +9,6 @@ namespace TabHelper.Models
     public class TabViewModel
     {
         public List<Tabulation> Tabulations { get; set; }
-        public List<TabulationAttributes> TabulationAttributes { get; set; }
+        public List<FormAttribute> TabulationAttributes { get; set; }
     }
 }

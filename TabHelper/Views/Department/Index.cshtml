@@ -1,46 +1,42 @@
-﻿
+﻿@model TabHelper.Models.ViewModel.DepartmentViewModel
+@using TabHelper.Models.ViewModel
+
 @{
     ViewData["Title"] = "Index";
 }
 
-    <div class="col-md-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">Entidades de Relacionamento</div>
-            <div class="panel-body">
-                <div class="col-md-9">
-                    <h3>Controle relacional</h3>
-                    <p>Use este configurador para criar novas entidades.</p>
-                    <p>Entidades podem ser, departamentos, filiais, projetos ou o que achar melhor adequado para sua classificação.</p>
-                    <p>A forma de relacionamento entre usuarios, tabulações e formularios é definida pelo relacionamento.</p>
-                </div>
-                <div class="col-md-3 text-right">
-                    <a href="#" class="btn btn-default btn-sm" data-toggle="modal" data-target="#create">Adicionar nova entrada (+)</a>
-                </div>
+<div class="col-md-12">
+    <div class="panel panel-info drop-shadow">
+        <div class="panel-heading">Entidades de Relacionamento</div>
+        <div class="panel-body">
+            <div class="col-md-9">
+                <h3>Controle relacional</h3>
+                <p>Use este configurador para criar novas entidades de departamentos.</p>
+                <p>A forma de relacionamento entre usuarios, tabulações e formularios é definida pelo relacionamento dos departamentos.</p>
+            </div>
+            <div class="col-md-3 text-right">
+                <a href="#" class="btn btn-default btn-sm" data-toggle="modal" data-target="#create">Adicionar nova entrada (+)</a>
             </div>
         </div>
-        <partial name="List"/>
     </div>
+    @*<partial name="List"/>*@
+    @await Html.PartialAsync("../Department/List.cshtml", Model)
+</div>
 
 <div class="modal" id="create">
     <div class="modal-dialog">
-        <partial name="Create"/>        
+        @await Html.PartialAsync("../Department/Create.cshtml", new DepartmentModel())
     </div>
 </div>
 
 <div class="modal" id="edit">
     <div class="modal-dialog">
-        <partial name="Edit"/>        
-    </div>
-</div>
-
-<div class="modal" id="desactive">
-    <div class="modal-dialog">
-        <partial name="Desactive"/>        
+        @await Html.PartialAsync("../Department/Edit.cshtml", new DepartmentModel())
     </div>
 </div>
 
 <div class="modal" id="delete">
     <div class="modal-dialog">
-        <partial name="Delete"/>        
+        @await Html.PartialAsync("../Department/Delete.cshtml", new DepartmentModel())
     </div>
 </div>

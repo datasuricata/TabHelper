@@ -5,14 +5,13 @@ namespace TabHelper.Models.Entities
 {
     public class Department : EntityBase
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public string Name { get; private set; }
+        public string Description { get; private set; }
 
-        public ICollection<User> Users { get; set; } = new List<User>();
-        public ICollection<Tabulation> Tabs { get; set; } = new List<Tabulation>();
-        public ICollection<DepartmentTabulation> DepartmentTabulations { get; set; } = new List<DepartmentTabulation>();
+        public ICollection<User> Users { get; private set; } = new List<User>();
+        public ICollection<DepartFile> DepartmentTabulations { get; set; } = new List<DepartFile>();
 
-        public Department()
+        protected Department()
         {
 
         }
@@ -21,6 +20,14 @@ namespace TabHelper.Models.Entities
         {
             Name = name;
             Description = description;
+        }
+
+        public static Department Edit(Department dept, string name, string desc)
+        {
+            dept.Name = name; 
+            dept.Description = desc;
+
+            return dept;
         }
 
         public override string ToString()

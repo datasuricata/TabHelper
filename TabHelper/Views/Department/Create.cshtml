@@ -1,42 +1,44 @@
+@model TabHelper.Models.ViewModel.DepartmentModel
+
 @{
     Layout = null;
 }
 
+
 <div class="modal-content">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Adicionar nova entidade</h4>
+        <h4 class="modal-title">Adicionar novo departamento</h4>
     </div>
     <div class="modal-body">
-        <form class="form-horizontal">
-            <div class="well text-center">
-                <strong>Inserir novo registro de entidade</strong>
+        <form data-ajax="true" data-ajax-method="POST" data-ajax-failure="formOnFail" data-ajax-success="window.location = '/Index'" asp-controller="Department" asp-action="Create" class="form-horizontal">
+            <div class="well text-center" style="border-color:#029acf">
+                <strong>Inserir novo registro de departamento</strong>
             </div>
-            <div class="well text-center">
+            <div class="well text-center" style="border-color:#029acf">
                 <fieldset>
-                    <form class="form-horizontal">
-                        <fieldset>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label" for="inputSmall">Nome</label>
-                                <div class="col-lg-9">
-                                    <input class="form-control input-sm" type="text" id="inputSmall" placeholder="Receptivo-001">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="textArea" class="col-lg-3 control-label">Descrição</label>
-                                <div class="col-lg-9">
-                                    <textarea class="form-control" rows="3" id="textArea" placeholder="Equipe do receptivo de vendas. bloco 01"></textarea>
-                                    <span class="help-block">Informe uma breve descrição que defina a entidade</span>
-                                </div>
-                            </div>
-                        </fieldset>
-                    </form>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">Nome</label>
+                        <div class="col-lg-9">
+                            <input class="form-control input-sm" type="text" asp-for="Name" placeholder="Vendas">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">Descrição</label>
+                        <div class="col-lg-9">
+                            <textarea class="form-control" rows="3" asp-for="Description"></textarea>
+                            <span class="help-block">Insira uma breve descrição sobre o departamento.</span>
+                        </div>
+                    </div>
                 </fieldset>
+            </div>
+            <div class="text-right">
+                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-info btn-sm">Salvar alterações</button>
             </div>
         </form>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-info btn-sm">Salvar alterações</button>
+
     </div>
 </div>

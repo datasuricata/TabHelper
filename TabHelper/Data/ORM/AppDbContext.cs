@@ -16,9 +16,9 @@ namespace TabHelper.Data.ORM
         public DbSet<Department> Departments { get; set; }
         public DbSet<Historic> Historics { get; set; }
         public DbSet<Tabulation> Tabulations { get; set; }
-        public DbSet<TabulationAttributes> TabulationAttributes { get; set; }
-        public DbSet<DepartmentTabulation> DepartmentTabulations { get; set; }
-        public DbSet<Forms> Forms { get; set; }
+        public DbSet<FormAttribute> TabulationAttributes { get; set; }
+        public DbSet<DepartFile> DepartmentTabulations { get; set; }
+        public DbSet<Form> Forms { get; set; }
 
         #endregion
 
@@ -45,15 +45,15 @@ namespace TabHelper.Data.ORM
 
             options.Entity<Tabulation>(c => c.HasKey(x => x.Id));
 
-            options.Entity<TabulationAttributes>(c => c.HasKey(x => x.Id));
+            options.Entity<FormAttribute>(c => c.HasKey(x => x.Id));
 
-            options.Entity<Forms>().HasKey(bc => new { bc.TabulationId, bc.TabulationAttributesId });
-            options.Entity<Forms>().HasOne(bc => bc.Tabulation).WithMany(b => b.Forms).HasForeignKey(bc => bc.TabulationId);
-            options.Entity<Forms>().HasOne(bc => bc.TabulationAttributes).WithMany(c => c.Forms).HasForeignKey(bc => bc.TabulationAttributesId);
+            options.Entity<Form>().HasKey(bc => new { bc.TabulationId, bc.TabulationAttributesId });
+            options.Entity<Form>().HasOne(bc => bc.Tabulation).WithMany(b => b.Forms).HasForeignKey(bc => bc.TabulationId);
+            options.Entity<Form>().HasOne(bc => bc.TabulationAttributes).WithMany(c => c.Forms).HasForeignKey(bc => bc.TabulationAttributesId);
 
-            options.Entity<DepartmentTabulation>().HasKey(bc => new { bc.DepartmentId, bc.TabulationId });
-            options.Entity<DepartmentTabulation>().HasOne(bc => bc.Department).WithMany(b => b.DepartmentTabulations).HasForeignKey(bc => bc.DepartmentId);
-            options.Entity<DepartmentTabulation>().HasOne(bc => bc.Tabulation).WithMany(b => b.DepartmentTabulations).HasForeignKey(bc => bc.TabulationId);
+            options.Entity<DepartFile>().HasKey(bc => new { bc.DepartmentId, bc.TabulationId });
+            options.Entity<DepartFile>().HasOne(bc => bc.Department).WithMany(b => b.DepartmentTabulations).HasForeignKey(bc => bc.DepartmentId);
+            options.Entity<DepartFile>().HasOne(bc => bc.Tabulation).WithMany(b => b.DepartmentTabulations).HasForeignKey(bc => bc.TabulationId);
         }
 
         #endregion

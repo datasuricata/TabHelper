@@ -17,6 +17,19 @@ namespace TabHelper.Migrations
                 .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("TabHelper.Models.Entities.DepartFile", b =>
+                {
+                    b.Property<int>("DepartmentId");
+
+                    b.Property<int>("TabulationId");
+
+                    b.HasKey("DepartmentId", "TabulationId");
+
+                    b.HasIndex("TabulationId");
+
+                    b.ToTable("DepartmentTabulations");
+                });
+
             modelBuilder.Entity("TabHelper.Models.Entities.Department", b =>
                 {
                     b.Property<int>("Id")
@@ -37,99 +50,20 @@ namespace TabHelper.Migrations
                     b.ToTable("Departments");
                 });
 
-            modelBuilder.Entity("TabHelper.Models.Entities.DepartmentTabulation", b =>
-                {
-                    b.Property<int>("DepartmentId");
-
-                    b.Property<int>("TabulationId");
-
-                    b.Property<DateTimeOffset?>("CreatedAt");
-
-                    b.Property<int>("Id");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<DateTimeOffset?>("UpdatedAt");
-
-                    b.HasKey("DepartmentId", "TabulationId");
-
-                    b.HasAlternateKey("Id");
-
-                    b.HasIndex("TabulationId");
-
-                    b.ToTable("DepartmentTabulations");
-                });
-
-            modelBuilder.Entity("TabHelper.Models.Entities.Forms", b =>
+            modelBuilder.Entity("TabHelper.Models.Entities.Form", b =>
                 {
                     b.Property<int>("TabulationId");
 
                     b.Property<int>("TabulationAttributesId");
 
-                    b.Property<DateTimeOffset?>("CreatedAt");
-
-                    b.Property<int>("Id");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<DateTimeOffset?>("UpdatedAt");
-
                     b.HasKey("TabulationId", "TabulationAttributesId");
-
-                    b.HasAlternateKey("Id");
 
                     b.HasIndex("TabulationAttributesId");
 
                     b.ToTable("Forms");
                 });
 
-            modelBuilder.Entity("TabHelper.Models.Entities.Historic", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTimeOffset?>("CreatedAt");
-
-                    b.Property<string>("FormJson");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<string>("TabulationId");
-
-                    b.Property<DateTimeOffset?>("UpdatedAt");
-
-                    b.Property<string>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Historics");
-                });
-
-            modelBuilder.Entity("TabHelper.Models.Entities.Tabulation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTimeOffset?>("CreatedAt");
-
-                    b.Property<int?>("DepartmentId");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<string>("Name");
-
-                    b.Property<string>("Observation");
-
-                    b.Property<DateTimeOffset?>("UpdatedAt");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DepartmentId");
-
-                    b.ToTable("Tabulations");
-                });
-
-            modelBuilder.Entity("TabHelper.Models.Entities.TabulationAttributes", b =>
+            modelBuilder.Entity("TabHelper.Models.Entities.FormAttribute", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -152,9 +86,53 @@ namespace TabHelper.Migrations
 
                     b.Property<DateTimeOffset?>("UpdatedAt");
 
+                    b.Property<string>("Value");
+
                     b.HasKey("Id");
 
                     b.ToTable("TabulationAttributes");
+                });
+
+            modelBuilder.Entity("TabHelper.Models.Entities.Historic", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTimeOffset?>("CreatedAt");
+
+                    b.Property<string>("FormJson");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<int>("TabulationId");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Historics");
+                });
+
+            modelBuilder.Entity("TabHelper.Models.Entities.Tabulation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTimeOffset?>("CreatedAt");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Observation");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tabulations");
                 });
 
             modelBuilder.Entity("TabHelper.Models.Entities.User", b =>
@@ -167,6 +145,8 @@ namespace TabHelper.Migrations
                     b.Property<int?>("DepartmentId");
 
                     b.Property<string>("Email");
+
+                    b.Property<bool>("IsBlock");
 
                     b.Property<bool>("IsDeleted");
 
@@ -185,7 +165,7 @@ namespace TabHelper.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("TabHelper.Models.Entities.DepartmentTabulation", b =>
+            modelBuilder.Entity("TabHelper.Models.Entities.DepartFile", b =>
                 {
                     b.HasOne("TabHelper.Models.Entities.Department", "Department")
                         .WithMany("DepartmentTabulations")
@@ -198,9 +178,9 @@ namespace TabHelper.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("TabHelper.Models.Entities.Forms", b =>
+            modelBuilder.Entity("TabHelper.Models.Entities.Form", b =>
                 {
-                    b.HasOne("TabHelper.Models.Entities.TabulationAttributes", "TabulationAttributes")
+                    b.HasOne("TabHelper.Models.Entities.FormAttribute", "TabulationAttributes")
                         .WithMany("Forms")
                         .HasForeignKey("TabulationAttributesId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -209,13 +189,6 @@ namespace TabHelper.Migrations
                         .WithMany("Forms")
                         .HasForeignKey("TabulationId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("TabHelper.Models.Entities.Tabulation", b =>
-                {
-                    b.HasOne("TabHelper.Models.Entities.Department")
-                        .WithMany("Tabs")
-                        .HasForeignKey("DepartmentId");
                 });
 
             modelBuilder.Entity("TabHelper.Models.Entities.User", b =>
