@@ -21,37 +21,37 @@
     </environment>
 </head>
 <body>
-<div class="container" style="padding-top: 5%;" >
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-4"></div>
-            <div class="col-md-4 text-center">
-                <div class="well">
-                    <h5 class="text-center">Efetuar logon no sistema</h5>
+    <div class="container" style="padding-top: 5%;">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-4"></div>
+                <div class="col-md-4 text-center">
+                    <div class="well drop-shadow" style="border-color:#029acf;">
+                        <h5 class="text-">Efetuar login no sistema</h5>
+                    </div>
+                    <form>
+                        <div class="form-group">
+                            <input type="email" id="inputEmail" class="form-control" placeholder="user@datasuricata.com.br" required autofocus>
+                            <label for="inputEmail">Endereço de e-mail</label>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="password" id="inputPassword" class="form-control" placeholder="**********" required>
+                            <label for="inputPassword">Senha</label>
+                        </div>
+
+                        <div>
+                            <input type="checkbox" id="customCheck1">
+                            <label for="customCheck1">Lembrar senha</label>
+                        </div>
+                        <button class="btn btn-lg btn-info btn-sm text-uppercase" style="width: 100%;" type="submit">acessar</button>
+                        <hr>
+                        <button class="btn btn-lg btn-sm text-uppercase" style="width: 100%; border-color:#029acf;" type="submit">Acessar com Facebook</button>
+                        <button class="btn btn-lg btn-sm text-uppercase" style="width: 100%; border-color:#029acf;margin-top: 2px;" type="submit">Acessar com Google</button>
+                    </form>
                 </div>
-                <form>
-                    <div class="form-group">
-                        <input type="email" id="inputEmail" class="form-control" placeholder="user@datasuricata.com.br" required autofocus>
-                        <label for="inputEmail">Endereço de e-mail</label>
-                    </div>
-
-                    <div class="form-group">
-                        <input type="password" id="inputPassword" class="form-control" placeholder="**********" required>
-                        <label for="inputPassword">Senha</label>
-                    </div>
-
-                    <div>
-                        <input type="checkbox" id="customCheck1">
-                        <label for="customCheck1">Lembrar senha</label>
-                    </div>
-                    <button class="btn btn-lg btn-info btn-sm text-uppercase" style="width: 100%;" type="submit">acessar</button>
-                    <hr>
-                    <button class="btn btn-lg btn-sm text-uppercase" style="width: 100%;" type="submit">Acessar com Facebook</button>
-                    <button class="btn btn-lg btn-sm text-uppercase" style="width: 100%;" type="submit">Acessar com Google</button>
-                </form>
+                <div class="col-md-4"></div>
             </div>
-            <div class="col-md-4"></div>
         </div>
     </div>
-</div>
 </body>

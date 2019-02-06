@@ -21,9 +21,11 @@ namespace TabHelper
 
                 try
                 {
-                    var context = services.
-                        GetRequiredService<AppDbContext>();
-                    context.Database.Migrate();
+                    //var context = services.
+                    //    GetRequiredService<AppDbContext>();
+                    //context.Database.Migrate();
+
+                    services.GetRequiredService<AppDbContext>().Database.Migrate();
                     DataSeed.Initialize(services);
                 }
                 catch (Exception ex)

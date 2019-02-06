@@ -10,7 +10,7 @@
         <h4 class="modal-title">Deletar departamento</h4>
     </div>
     <div class="modal-body">
-        <form data-ajax="true" data-ajax-method="POST" data-ajax-failure="formOnFail" data-ajax-success="window.location = '/Index'" asp-controller="User" asp-action="Delete" class="form-horizontal">
+        <form data-ajax="true" data-ajax-method="POST" data-ajax-failure="formOnFail" data-ajax-success="window.location = '/Index'" asp-controller="Department" asp-action="Delete" class="form-horizontal">
             <div class="well text-center" style="border-color:#029acf">
                 <strong>Deseja deletar o departamento <b style="color:brown">@Model.Name</b>?</strong>
             </div>

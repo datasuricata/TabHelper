@@ -52,9 +52,9 @@ namespace TabHelper.Migrations
                     IsDeleted = table.Column<bool>(nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(nullable: true),
                     UpdatedAt = table.Column<DateTimeOffset>(nullable: true),
-                    Order = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     ComponentType = table.Column<int>(nullable: false),
+                    IsNumeric = table.Column<bool>(nullable: false),
                     Title = table.Column<string>(nullable: true),
                     Value = table.Column<string>(nullable: true),
                     Info = table.Column<string>(nullable: true),
@@ -138,7 +138,9 @@ namespace TabHelper.Migrations
                 columns: table => new
                 {
                     TabulationId = table.Column<int>(nullable: false),
-                    TabulationAttributesId = table.Column<int>(nullable: false)
+                    TabulationAttributesId = table.Column<int>(nullable: false),
+                    Order = table.Column<int>(nullable: false),
+                    Repeat = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

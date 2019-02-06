@@ -134,7 +134,9 @@ namespace TabHelper.Controllers
             try
             {
                 var dept = deptRepo.GetById(form.Id);
-                dept = Department.Edit(dept, form.Name, form.Description);
+                var edited = new Department(form.Name, form.Description);
+
+                dept.Edit(edited);
                 deptRepo.Update(dept);
 
                 return RedirectToAction("Index");

@@ -12,6 +12,7 @@ namespace TabHelper.Models.ViewModel
     {
         public int Id { get; set; }
         public string CreatedAt { get; set; }
+        public bool IsDeleted { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
 
@@ -22,6 +23,7 @@ namespace TabHelper.Models.ViewModel
                 Id = v.Id,
                 CreatedAt = v.CreatedAt.Value.ToString("dd/MM/yyyy HH:mm"),
                 Description = v.Description,
+                IsDeleted = v.IsDeleted,
                 Name = v.Name,
             };
         }

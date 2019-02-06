@@ -9,7 +9,7 @@ using TabHelper.Data.ORM;
 namespace TabHelper.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190206002017_AddedFirstMigration")]
+    [Migration("20190206184702_AddedFirstMigration")]
     partial class AddedFirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,19 +18,6 @@ namespace TabHelper.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
-
-            modelBuilder.Entity("TabHelper.Models.Entities.DepartFile", b =>
-                {
-                    b.Property<int>("DepartmentId");
-
-                    b.Property<int>("TabulationId");
-
-                    b.HasKey("DepartmentId", "TabulationId");
-
-                    b.HasIndex("TabulationId");
-
-                    b.ToTable("DepartmentTabulations");
-                });
 
             modelBuilder.Entity("TabHelper.Models.Entities.Department", b =>
                 {
@@ -52,11 +39,28 @@ namespace TabHelper.Migrations
                     b.ToTable("Departments");
                 });
 
+            modelBuilder.Entity("TabHelper.Models.Entities.DepartTab", b =>
+                {
+                    b.Property<int>("DepartmentId");
+
+                    b.Property<int>("TabulationId");
+
+                    b.HasKey("DepartmentId", "TabulationId");
+
+                    b.HasIndex("TabulationId");
+
+                    b.ToTable("DepartmentTabulations");
+                });
+
             modelBuilder.Entity("TabHelper.Models.Entities.Form", b =>
                 {
                     b.Property<int>("TabulationId");
 
                     b.Property<int>("TabulationAttributesId");
+
+                    b.Property<int>("Order");
+
+                    b.Property<int>("Repeat");
 
                     b.HasKey("TabulationId", "TabulationAttributesId");
 
@@ -80,9 +84,9 @@ namespace TabHelper.Migrations
 
                     b.Property<bool>("IsDeleted");
 
-                    b.Property<string>("Name");
+                    b.Property<bool>("IsNumeric");
 
-                    b.Property<int>("Order");
+                    b.Property<string>("Name");
 
                     b.Property<string>("Title");
 
@@ -167,7 +171,7 @@ namespace TabHelper.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("TabHelper.Models.Entities.DepartFile", b =>
+            modelBuilder.Entity("TabHelper.Models.Entities.DepartTab", b =>
                 {
                     b.HasOne("TabHelper.Models.Entities.Department", "Department")
                         .WithMany("DepartmentTabulations")

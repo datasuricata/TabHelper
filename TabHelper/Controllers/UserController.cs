@@ -1,12 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Diagnostics;
 using System.Linq;
 using TabHelper.Data.Persistence.Interfaces;
 using TabHelper.Data.Transaction;
-using TabHelper.Helpers;
 using TabHelper.Models;
 using TabHelper.Models.Entities;
 using TabHelper.Models.ViewModel;

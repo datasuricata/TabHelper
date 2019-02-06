@@ -19,10 +19,39 @@ namespace TabHelper.Data.Seeder
                 {
                     if (!context.Users.Any())
                     {
+                        // # add default forms attributes
+                        var att1 = new FormAttribute("TabHelper - Check", ComponentType.Check, "Title Check", null, "display info", "display some infos for component detail", false);
+                        var att2 = new FormAttribute("TabHelper - Radio", ComponentType.Radio, "Title Radio", null, "display info", null, true);
+                        var att3 = new FormAttribute("TabHelper - Text", ComponentType.Text, "Title Text", null, "display info", "display some infos for component detail", false);
+                        var att4 = new FormAttribute("TabHelper - TextBox", ComponentType.TextBox, "Title TextBox", null, "display info", "display some infos for component detail", false);
+                        var att5 = new FormAttribute("TabHelper - Custom", ComponentType.Custom, "Title Custom", "10", "display info", "display some infos for component detail", true);
+
+                        context.TabulationAttributes.AddRange(att1, att2, att3, att4, att5);
+
+                        // # add default form tabulations
+                        var tab1 = new Tabulation("TabHelper - Default", "Default form tabulation");
+                        var tab2 = new Tabulation("Pesquisa", "Formulário exemplo pesquisa");
+
+                        context.Tabulations.AddRange(tab1);
+
+                        // # add default forms
+                        context.Forms.AddRange(
+                        new Form(tab1, att1, 1, 0),
+                        new Form(tab1, att2, 2, 0),
+                        new Form(tab1, att3, 3, 0),
+                        new Form(tab1, att4, 4, 0),
+                        new Form(tab1, att5, 5, 0),
+                        new Form(tab2, att1, 1, 3),
+                        new Form(tab2, att2, 2, 1),
+                        new Form(tab2, att3, 3, 2),
+                        new Form(tab2, att4, 4, 0),
+                        new Form(tab2, att5, 5, 0)
+                        );
+
                         // # add default departments
                         var Dept1 = new Department("Root", "Root group system");
                         var Dept2 = new Department("Admin", "Admin group system");
-                        var Dept3 = new Department("Sellers", "Sales group system");
+                        var Dept3 = new Department("Pesquisa", "Grupo de vendas");
 
                         // # add default users
                         context.Users.AddRange(
@@ -57,6 +86,9 @@ namespace TabHelper.Data.Seeder
                             Dept3,
                             UserAccess.Operador)
                             );
+
+                        // # default tabulations in departments
+                        context.DepartmentTabulations.AddRange(new DepartTab(Dept1, tab1), new DepartTab(Dept2, tab1), new DepartTab(Dept3, tab2));
                     }
 
                     context.SaveChanges();
