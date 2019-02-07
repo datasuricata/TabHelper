@@ -6,12 +6,18 @@ namespace TabHelper.Models.Entities
 {
     public class User : EntityBase
     {
+        #region [ properties ]
+
         public string Name { get; private set; }
         public string Email { get; private set; }
         public string Password { get; private set; }
         public bool IsBlock { get; private set; }
         public Department Department { get; private set; }
         public UserAccess UserAccess { get; private set; }
+
+        #endregion
+
+        #region [ ctor ]
 
         protected User()
         {
@@ -24,7 +30,11 @@ namespace TabHelper.Models.Entities
             SetProperties(name, email, password, department, userAccess);
         }
 
-        protected void Validate(string name, string email, string password, Department department, UserAccess userAccess)
+        #endregion
+
+        #region [ methods ]
+
+        private void Validate(string name, string email, string password, Department department, UserAccess userAccess)
         {
             DomainValidation.When(string.IsNullOrEmpty(name), "Nome é obrigatório.");
             DomainValidation.When(string.IsNullOrEmpty(email), "E-mail é obrigatório.");
@@ -32,7 +42,7 @@ namespace TabHelper.Models.Entities
             DomainValidation.When(department is null, "Selecione um departamento.");
         }
 
-        protected void SetProperties(string name, string email, string password, Department department, UserAccess userAccess)
+        private void SetProperties(string name, string email, string password, Department department, UserAccess userAccess)
         {
             Name = name;
             Email = email;
@@ -57,5 +67,7 @@ namespace TabHelper.Models.Entities
         {
             IsBlock = !IsBlock;
         }
+
+        #endregion
     }
 }

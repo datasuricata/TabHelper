@@ -3,9 +3,9 @@
 }
 
 @{
-    var error = ViewData["Error"];
-    var message = ViewData["Message"];
-    var info = ViewData["Info"];
+    var error = TempData["Error"];
+    var message = TempData["Message"];
+    var info = TempData["Info"];
 }
 
 @if (error != null || message != null || info != null)
@@ -14,22 +14,22 @@
 }
 @if (error != null)
 {
-    <div class="alert alert-dismissible alert-danger">
+    <div class="alert alert-dismissible alert-danger drop-shadow">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>Erro!</strong> <a href="#" class="alert-link">@error</a> tente novamente.
+        <a href="#" class="alert-link">@error</a> tente novamente.
     </div>
 }
 @if (message != null)
 {
-    <div class="alert alert-dismissible alert-success">
+    <div class="alert alert-dismissible alert-success drop-shadow">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>Sucesso!</strong> @message
+        @message
     </div>
 }
 @if (info != null)
 {
-    <div class="alert alert-dismissible alert-info">
+    <div class="alert alert-dismissible alert-info drop-shadow">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>Info!</strong> @info.
+        @info
     </div>
 }

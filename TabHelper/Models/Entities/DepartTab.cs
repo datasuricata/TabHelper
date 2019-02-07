@@ -37,23 +37,23 @@ namespace TabHelper.Models.Entities
 
         #region [ methods ]
 
-        public void Validate(Department department, Tabulation tabulation)
+        private void Validate(Department department, Tabulation tabulation)
         {
             DomainValidation.When(department is null, "Selecione um departamento");
             DomainValidation.When(tabulation is null, "Selecione uma tabulação");
         }
-        public void SetProperties(Department department, Tabulation tabulation)
+        private void SetProperties(Department department, Tabulation tabulation)
         {
             Department = department;
             Tabulation = tabulation;
         }
 
-        public void Validate(int departmentId, int tabulationId)
+        private void Validate(int departmentId, int tabulationId)
         {
             DomainValidation.When(departmentId == 0, "Selecione um departamento");
             DomainValidation.When(tabulationId == 0, "Selecione uma tabulação");
         }
-        public void SetProperties(int departmentId, int tabulationId)
+        private void SetProperties(int departmentId, int tabulationId)
         {
             DepartmentId = departmentId;
             TabulationId = tabulationId;

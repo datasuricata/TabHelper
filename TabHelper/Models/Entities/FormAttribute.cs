@@ -50,13 +50,13 @@ namespace TabHelper.Models.Entities
 
         #region [ methods ]
 
-        public void Validate(string name, string title)
+        private void Validate(string name, string title)
         {
             DomainValidation.When(string.IsNullOrEmpty(name), "Defina um nome para seu atributo");
             DomainValidation.When(string.IsNullOrEmpty(title), "Titulo de exibição é obrigatorio");
         }
 
-        public void SetProperties(string name, ComponentType componentType, string title, string value, string info, string detail, bool isnumeric)
+        private void SetProperties(string name, ComponentType componentType, string title, string value, string info, string detail, bool isnumeric)
         {
             Name = name;
             ComponentType = componentType;

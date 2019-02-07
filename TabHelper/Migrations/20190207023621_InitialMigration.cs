@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TabHelper.Migrations
 {
-    public partial class AddedFirstMigration : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -23,24 +23,6 @@ namespace TabHelper.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Departments", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Historics",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    CreatedAt = table.Column<DateTimeOffset>(nullable: true),
-                    UpdatedAt = table.Column<DateTimeOffset>(nullable: true),
-                    TabulationId = table.Column<int>(nullable: false),
-                    UserId = table.Column<int>(nullable: false),
-                    FormJson = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Historics", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -159,6 +141,31 @@ namespace TabHelper.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Historics",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(nullable: true),
+                    UpdatedAt = table.Column<DateTimeOffset>(nullable: true),
+                    TabulationId = table.Column<int>(nullable: false),
+                    UserId = table.Column<int>(nullable: false),
+                    Ip = table.Column<string>(nullable: true),
+                    FormJson = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Historics", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Historics_Tabulations_TabulationId",
+                        column: x => x.TabulationId,
+                        principalTable: "Tabulations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_DepartmentTabulations_TabulationId",
                 table: "DepartmentTabulations",
@@ -168,6 +175,11 @@ namespace TabHelper.Migrations
                 name: "IX_Forms_TabulationAttributesId",
                 table: "Forms",
                 column: "TabulationAttributesId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Historics_TabulationId",
+                table: "Historics",
+                column: "TabulationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_DepartmentId",

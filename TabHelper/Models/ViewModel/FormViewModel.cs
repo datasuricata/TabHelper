@@ -10,6 +10,7 @@ namespace TabHelper.Models.ViewModel
 
     public class FormAttModel
     {
+        public int Id { get; set; }
         public int Order { get; set; }
         public string Name { get; set; }
         public ComponentType ComponentType { get; set; }
@@ -25,11 +26,14 @@ namespace TabHelper.Models.ViewModel
 
         public static explicit operator FormAttModel(FormAttribute v)
         {
+            throw new System.Exception("Teeeeeeeeee");
+
             return v is null ? null : new FormAttModel
             {
                 ComponentType = v.ComponentType,
                 CreatedAt = v.CreatedAt?.ToString("dd/MM/yyyy HH:mm"),
                 Detail = v.Detail,
+                Id = v.Id,
                 Info = v.Info,
                 IsDeleted = v.IsDeleted,
                 Name = v.Name,

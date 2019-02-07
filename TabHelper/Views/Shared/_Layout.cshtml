@@ -66,32 +66,11 @@
     <partial name="_CookieConsentPartial" />
 
     <div class="container body-content">
-        @if (error != null)
-        {
-            <div class="alert alert-dismissible alert-danger drop-shadow">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <strong>Erro!</strong> <a href="#" class="alert-link">@error</a> tente novamente.
-            </div>
-        }
-        @if (message != null)
-        {
-            <div class="alert alert-dismissible alert-success drop-shadow">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <strong>Sucesso!</strong> @message
-            </div>
-        }
-        @if (info != null)
-        {
-            <div class="alert alert-dismissible alert-info drop-shadow">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <strong>Info!</strong> @info.
-            </div>
-        }
-        @*@await Html.PartialAsync("_ValidationMaster")*@
+        <partial name="_ValidationMaster" />
         <br />
         @RenderBody()
         <hr />
-        @await Html.PartialAsync("_ValidationScriptsPartial")
+        <partial name="_ValidationScriptsPartial" />
         <footer>
             <p>&copy; @DateTime.Now.Year - Data Suricata</p>
         </footer>

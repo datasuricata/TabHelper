@@ -37,4 +37,11 @@ namespace TabHelper.Models
         [Display(Description = "Customizados")]
         Custom = 5,        
     }
+
+    public enum MsgType
+    {
+        Error = 0,
+        Message = 1,
+        Info = 2,
+    }
 }
