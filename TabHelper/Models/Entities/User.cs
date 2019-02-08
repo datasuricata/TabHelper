@@ -42,7 +42,7 @@ namespace TabHelper.Models.Entities
             DomainValidation.When(department is null, "Selecione um departamento.");
         }
 
-        protected void SetProperties(string name, string email, string password, Department department, UserAccess userAccess)
+        private void SetProperties(string name, string email, string password, Department department, UserAccess userAccess)
         {
             Name = name;
             Email = email;

@@ -31,15 +31,14 @@ namespace TabHelper.Models.Entities
 
         #endregion
 
-
         #region [ methods ]
 
-        public void Validate(string name)
+        private void Validate(string name)
         {
             DomainValidation.When(string.IsNullOrEmpty(name), "Defina um nome ao tabulação");
         }
 
-        public void SetProperties(string name, string observation)
+        private void SetProperties(string name, string observation)
         {
             Name = name;
             Observation = observation;

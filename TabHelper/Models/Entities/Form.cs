@@ -40,27 +40,27 @@ namespace TabHelper.Models.Entities
 
         #region [ methods ]
 
-        public void Validate(int tabulationId, int tabulationAttributesId, int order)
+        private void Validate(int tabulationId, int tabulationAttributesId, int order)
         {
             DomainValidation.When(tabulationId == 0, "Selecione uma tabulação para criar o formulário");
             DomainValidation.When(tabulationAttributesId == 0, "Selecione o atributo que deseja adicionar no formulário");
             DomainValidation.When(order == 0, "Ordem do componente deve ser maior que 0");
         }
-        public void Validate(Tabulation tabulation, FormAttribute tabulationAttributes, int order)
+        private void Validate(Tabulation tabulation, FormAttribute tabulationAttributes, int order)
         {
             DomainValidation.When(tabulation is null, "Selecione uma tabulação para criar o formulário");
             DomainValidation.When(tabulationAttributes is null, "Selecione o atributo que deseja adicionar no formulário");
             DomainValidation.When(order == 0, "Ordem do componente deve ser maior que 0");
         }
 
-        public void SetProperties(int tabulationId, int tabulationAttributesId, int order, int repeat)
+        private void SetProperties(int tabulationId, int tabulationAttributesId, int order, int repeat)
         {
             TabulationId = tabulationId;
             TabulationAttributesId = tabulationAttributesId;
             Order = order;
             Repeat = repeat;
         }
-        public void SetProperties(Tabulation tabulation, FormAttribute tabulationAttributes, int order, int repeat)
+        private void SetProperties(Tabulation tabulation, FormAttribute tabulationAttributes, int order, int repeat)
         {
             Tabulation = tabulation;
             TabulationAttributes = tabulationAttributes;

@@ -34,9 +34,17 @@ namespace TabHelper.Controllers
 
         public IActionResult Index()
         {
-            var atts = formAttRepo.List().ToList();
-            var vm = new FormViewModel { FormAttibutes = atts.ConvertAll(e => (FormAttModel)e) };
-            return View(vm);
+            try
+            {
+                var atts = formAttRepo.List().ToList();
+                var vm = new FormViewModel { FormAttibutes = atts.ConvertAll(e => (FormAttModel)e) };
+                return View(vm);
+            }
+            catch (Exception e)
+            {
+                SetMessage(e.Message, MsgType.Error);
+                return RedirectToAction("Index", "Dash");
+            }
         }
 
         public IActionResult Create()
@@ -47,7 +55,7 @@ namespace TabHelper.Controllers
             }
             catch (Exception e)
             {
-                ViewData["Error"] = e.Message;
+                SetMessage(e.Message, MsgType.Error);
                 return RedirectToAction("Index", "Dash");
             }
         }

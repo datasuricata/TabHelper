@@ -37,11 +37,11 @@ namespace TabHelper.Models.Entities
             Description = dept.Description;
         }
 
-        public void Validate(string name)
+        private void Validate(string name)
         {
             DomainValidation.When(string.IsNullOrEmpty(name), "Defina um nome ao novo departamento");
         }
-        public void SetProperties(string name, string description)
+        private void SetProperties(string name, string description)
         {
             Name = name;
             Description = description;

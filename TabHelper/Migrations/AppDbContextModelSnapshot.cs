@@ -118,6 +118,8 @@ namespace TabHelper.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("TabulationId");
+
                     b.ToTable("Historics");
                 });
 
@@ -193,6 +195,14 @@ namespace TabHelper.Migrations
 
                     b.HasOne("TabHelper.Models.Entities.Tabulation", "Tabulation")
                         .WithMany("Forms")
+                        .HasForeignKey("TabulationId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("TabHelper.Models.Entities.Historic", b =>
+                {
+                    b.HasOne("TabHelper.Models.Entities.Tabulation", "Tabulation")
+                        .WithMany()
                         .HasForeignKey("TabulationId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

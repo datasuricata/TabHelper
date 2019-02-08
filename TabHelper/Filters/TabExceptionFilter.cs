@@ -14,7 +14,10 @@ namespace TabHelper.Filters
             {
                 context.HttpContext.Response.ContentType = "application/json";
                 context.HttpContext.Response.StatusCode = 500;
-                var message = context.Exception is DomainValidation ? context.Exception.Message : "Um erro aconteceu.";
+
+                var message = context.Exception is DomainValidation ? 
+                    context.Exception.Message : "Um erro aconteceu, nossos robôs já estão trabalhando no ocorrido.";
+
                 context.Result = new JsonResult(message);
                 context.ExceptionHandled = true;
             }
