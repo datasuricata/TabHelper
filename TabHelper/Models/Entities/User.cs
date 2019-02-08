@@ -6,12 +6,18 @@ namespace TabHelper.Models.Entities
 {
     public class User : EntityBase
     {
+        #region [ propeties ]
+
         public string Name { get; private set; }
         public string Email { get; private set; }
         public string Password { get; private set; }
         public bool IsBlock { get; private set; }
         public Department Department { get; private set; }
         public UserAccess UserAccess { get; private set; }
+
+        #endregion
+
+        #region [ ctor ]
 
         protected User()
         {
@@ -23,6 +29,10 @@ namespace TabHelper.Models.Entities
             Validate(name, email, password, department, userAccess);
             SetProperties(name, email, password, department, userAccess);
         }
+
+        #endregion
+
+        #region [ methods ]
 
         protected void Validate(string name, string email, string password, Department department, UserAccess userAccess)
         {
@@ -57,5 +67,7 @@ namespace TabHelper.Models.Entities
         {
             IsBlock = !IsBlock;
         }
+
+        #endregion
     }
 }

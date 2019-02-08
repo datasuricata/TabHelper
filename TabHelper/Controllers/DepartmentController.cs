@@ -12,12 +12,22 @@ namespace TabHelper.Controllers
 {
     public class DepartmentController : Controller
     {
+        #region [ properties ]
+
         private readonly IRepository<Department> deptRepo;
+        
+        #endregion
+
+        #region [ ctor ]
 
         public DepartmentController(IRepository<Department> deptRepo)
         {
             this.deptRepo = deptRepo;
         }
+
+        #endregion
+
+        #region [ get ]
 
         public IActionResult Index()
         {
@@ -52,23 +62,6 @@ namespace TabHelper.Controllers
             }
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(DepartmentModel form)
-        {
-            try
-            {
-                var dept = new Department(form.Name, form.Description);
-                deptRepo.Create(dept);
-                return RedirectToAction("Index");
-            }
-            catch (Exception e)
-            {
-                ViewData["Error"] = e.Message;
-                return RedirectToAction("Index");
-            }
-        }
-
         public IActionResult Delete(int id)
         {
             try
@@ -89,6 +82,48 @@ namespace TabHelper.Controllers
             }
         }
 
+        public IActionResult Edit(int id)
+        {
+            try
+            {
+                var dept = deptRepo.GetById(id);
+                DomainValidation.When(dept == null, "User not found.");
+
+                return View(new DepartmentModel
+                {
+                    Id = dept.Id,
+                    Name = dept.Name,
+                    Description = dept.Description,
+                });
+            }
+            catch (Exception e)
+            {
+                ViewData["Error"] = e.Message;
+                return RedirectToAction("Index");
+            }
+        }
+
+        #endregion
+
+        #region [ post ]
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(DepartmentModel form)
+        {
+            try
+            {
+                var dept = new Department(form.Name, form.Description);
+                deptRepo.Create(dept);
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                ViewData["Error"] = e.Message;
+                return RedirectToAction("Index");
+            }
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(DepartmentModel form)
@@ -99,26 +134,6 @@ namespace TabHelper.Controllers
                 DomainValidation.When(dept == null, "Dept not found.");
                 deptRepo.SoftExclude(dept);
                 return RedirectToAction("Index");
-            }
-            catch (Exception e)
-            {
-                ViewData["Error"] = e.Message;
-                return RedirectToAction("Index");
-            }
-        }
-
-        public IActionResult Edit(int id)
-        {
-            try
-            {
-                var dept = deptRepo.GetById(id);
-                DomainValidation.When(dept == null, "User not found.");
-
-                return View(new DepartmentModel {
-                    Id = dept.Id,
-                    Name = dept.Name,
-                    Description = dept.Description,
-                });
             }
             catch (Exception e)
             {
@@ -148,10 +163,16 @@ namespace TabHelper.Controllers
             }
         }
 
+        #endregion
+
+        #region [ error ]
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        #endregion
     }
 }

@@ -106,6 +106,8 @@ namespace TabHelper.Migrations
 
                     b.Property<string>("FormJson");
 
+                    b.Property<string>("Ip");
+
                     b.Property<bool>("IsDeleted");
 
                     b.Property<int>("TabulationId");

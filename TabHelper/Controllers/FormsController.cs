@@ -4,21 +4,33 @@ using System.Diagnostics;
 using System.Linq;
 using TabHelper.Data.Persistence.Interfaces;
 using TabHelper.Data.Transaction;
+using TabHelper.Filters;
 using TabHelper.Models;
 using TabHelper.Models.Entities;
 using TabHelper.Models.ViewModel;
+using TabHelper.Services;
 
 namespace TabHelper.Controllers
 {
+    [TabExceptionFilter]
     public class FormsController : BaseController
     {
+        #region [ properties ]
 
         private readonly IRepository<FormAttribute> formAttRepo;
+
+        #endregion
+
+        #region [ ctor ]
 
         public FormsController(IRepository<FormAttribute> formAttRepo, IUnitOfWork uow) : base(uow)
         {
             this.formAttRepo = formAttRepo;
         }
+
+        #endregion
+
+        #region [ get ]
 
         public IActionResult Index()
         {
@@ -40,10 +52,20 @@ namespace TabHelper.Controllers
             }
         }
 
+        #endregion
+
+        #region [ post ]
+
+        #endregion
+
+        #region [ error ]
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        #endregion
     }
 }

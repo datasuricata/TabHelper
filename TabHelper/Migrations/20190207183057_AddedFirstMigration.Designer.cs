@@ -9,7 +9,7 @@ using TabHelper.Data.ORM;
 namespace TabHelper.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190206184702_AddedFirstMigration")]
+    [Migration("20190207183057_AddedFirstMigration")]
     partial class AddedFirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -107,6 +107,8 @@ namespace TabHelper.Migrations
                     b.Property<DateTimeOffset?>("CreatedAt");
 
                     b.Property<string>("FormJson");
+
+                    b.Property<string>("Ip");
 
                     b.Property<bool>("IsDeleted");
 

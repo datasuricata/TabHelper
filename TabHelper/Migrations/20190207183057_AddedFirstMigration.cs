@@ -34,8 +34,9 @@ namespace TabHelper.Migrations
                     IsDeleted = table.Column<bool>(nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(nullable: true),
                     UpdatedAt = table.Column<DateTimeOffset>(nullable: true),
-                    TabulationId = table.Column<int>(nullable: false),
                     UserId = table.Column<int>(nullable: false),
+                    TabulationId = table.Column<int>(nullable: false),
+                    Ip = table.Column<string>(nullable: true),
                     FormJson = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
