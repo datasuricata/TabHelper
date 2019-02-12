@@ -11,14 +11,24 @@ namespace TabHelper.Controllers
 {
     public class DashController : BaseController
     {
+        #region [ properties ]
+
         private readonly IRepository<User> userRepo;
         private readonly IRepository<Department> deptRepo;
+
+        #endregion
+
+        #region [ ctor ]
 
         public DashController(IRepository<User> userRepo, IRepository<Department> deptRepo, IUnitOfWork uow) : base(uow)
         {
             this.userRepo = userRepo;
             this.deptRepo = deptRepo;
         }
+
+        #endregion
+
+        #region [ get ]
 
         public IActionResult Index()
         {
@@ -36,10 +46,16 @@ namespace TabHelper.Controllers
             return View(vm);
         }
 
+        #endregion
+
+        #region [ error ]
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        #endregion
     }
 }

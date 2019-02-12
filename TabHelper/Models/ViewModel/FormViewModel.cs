@@ -22,12 +22,12 @@ namespace TabHelper.Models.ViewModel
         public string Detail { get; set; }
 
         public bool IsDeleted { get; set; }
+        public bool IsNumeric { get; set; }
         public string CreatedAt { get; set; }
+        public int TabulationId { get; set; }
 
         public static explicit operator FormAttModel(FormAttribute v)
         {
-            throw new System.Exception("Teeeeeeeeee");
-
             return v is null ? null : new FormAttModel
             {
                 ComponentType = v.ComponentType,

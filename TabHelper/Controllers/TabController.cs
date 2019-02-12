@@ -1,22 +1,23 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Diagnostics;
-using TabHelper.Data.Persistence.Interfaces;
+using TabHelper.Data.Transaction;
 using TabHelper.Models;
-using TabHelper.Models.Entities;
 
 namespace TabHelper.Controllers
 {
-    public class TabController : Controller
+    public class TabController : BaseController
     {
-        //private readonly IRepository<Tabulation> repoTab;
-        //private readonly IRepository<TabulationAttributes> repoTabAtt;
+        #region [ ctor ]
 
-        //public TabController(IRepository<Tabulation> repoTab, IRepository<TabulationAttributes> repoTabAtt)
-        //{
-        //    this.repoTab = repoTab;
-        //    this.repoTabAtt = repoTabAtt;
-        //}
+        public TabController(IUnitOfWork uow) : base(uow)
+        {
+
+        }
+
+        #endregion
+
+        #region [ get ]
 
         public IActionResult Index()
         {
@@ -55,10 +56,16 @@ namespace TabHelper.Controllers
             return View();
         }
 
+        #endregion
+
+        #region [ error ]
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        #endregion
     }
 }

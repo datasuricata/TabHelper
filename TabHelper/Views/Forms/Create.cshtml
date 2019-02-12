@@ -1,3 +1,6 @@
+@model TabHelper.Models.ViewModel.FormAttModel
+@using TabHelper.Helpers
+
 @{
     Layout = null;
 }
@@ -18,44 +21,44 @@
                     <div class="form-group">
                         <label for="select" class="col-lg-3 control-label">Tipo de Componente</label>
                         <div class="col-lg-9">
-                            <select style="margin-top: 10px;" class="form-control" id="select">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
+                            <select class="form-control input-sm" asp-for="ComponentType" asp-items="Utils.GetComponentType()"></select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-3 control-label" for="inputSmall">Nome Identificador</label>
                         <div class="col-lg-9">
-                            <input style="margin-top: 10px;" class="form-control input-sm" type="text" id="inputSmall" placeholder="">
+                            <input style="margin-top: 10px;" class="form-control input-sm" asp-for="Name" type="text" placeholder="">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-3 control-label" for="inputSmall">Titulo do Componente</label>
                         <div class="col-lg-9">
-                            <input style="margin-top: 10px;" class="form-control input-sm" type="text" id="inputSmall" placeholder="">
+                            <input style="margin-top: 10px;" class="form-control input-sm" asp-for="Title" type="text" placeholder="">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-3 control-label" for="inputSmall">Informações de Ajuda</label>
                         <div class="col-lg-9">
-                            <input style="margin-top: 10px;" class="form-control input-sm" type="text" id="inputSmall" placeholder="">
+                            <input style="margin-top: 10px;" class="form-control input-sm" asp-for="Info" type="text" placeholder="">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="textArea" class="col-lg-3 control-label">Detalhes</label>
                         <div class="col-lg-9">
-                            <textarea style="margin-top: 10px;" class="form-control" rows="3" id="textArea" placeholder="Equipe do receptivo de vendas. bloco 01"></textarea>
+                            <textarea style="margin-top: 10px;" class="form-control" rows="3" asp-for="Detail" placeholder="Equipe do receptivo de vendas. bloco 01"></textarea>
                             <span class="help-block">Informe uma breve descrição que defina a entidade</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" for="asdas">É numérico?</label>
+                        <div class="col-lg-9">
+                            <input style="margin-top: 10px;" class="checkbox" asp-for="IsNumeric" type="checkbox" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-3 control-label" for="asdas">Valor Customizado</label>
                         <div class="col-lg-9">
-                            <input style="margin-top: 10px;" class="form-control input-sm" type="text" id="asdasd" placeholder="10" />
+                            <input style="margin-top: 10px;" class="form-control input-sm" asp-for="Value" type="text" placeholder="10" />
                         </div>
                     </div>
                 </fieldset>
@@ -65,23 +68,18 @@
                     <div class="form-group">
                         <label for="select" class="col-lg-3 control-label">Vincular Tabulação</label>
                         <div class="col-lg-9">
-                            <select style="margin-top: 10px;" class="form-control" id="select">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
+                            <select class="form-control input-sm" asp-for="TabulationId" asp-items="ViewBag.DropDown as List<SelectListItem>"></select>
                         </div>
                     </div>
                 </fieldset>
             </div>
+            <div class="text-right">
+                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-info btn-sm">Salvar alterações</button>
+            </div>
         </form>
     </div>
-
     <div class="modal-footer">
-        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-info btn-sm">Salvar alterações</button>
-    </div>
 
+    </div>
 </div>

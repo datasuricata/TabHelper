@@ -33,22 +33,24 @@ namespace TabHelper.Controllers
         /// <param name="Text">text of property for search</param>
         /// <param name="Value">text of property for search</param>
         /// <returns></returns>
-        protected List<SelectListItem> GetDropDown<T>(List<T> listT, string Text, string Value)
+        protected List<SelectListItem> GetDropDown<T>(IEnumerable<T> listT, string Text, string Value)
         {
             var list = new List<SelectListItem>();
-            dynamic o = new { Text = "", Value = "" };
-
+            
             foreach (var x in listT)
             {
+                var pt = string.Empty;
+                var pv = string.Empty;
+
                 foreach (var p in x.GetType().GetProperties())
                     if (p.Name == Text)
-                        o.Text = p.GetValue(x).ToString();
+                        pt = p.GetValue(x).ToString();
 
                 foreach (var p in x.GetType().GetProperties())
                     if (p.Name == Value)
-                        o.Value = p.GetValue(x).ToString();
+                        pv = p.GetValue(x).ToString();
 
-                list.Add(new SelectListItem(o.Text, o.Value));
+                list.Add(new SelectListItem(pt, pv));
             }
             return list;
         }
@@ -62,11 +64,11 @@ namespace TabHelper.Controllers
         /// </summary>
         /// <param name="msg">Write your message</param>
         /// <param name="msgType">Define your message type</param>
-        protected void SetMsg(string msg, MsgType msgType)
+        protected void SetMessage(string msg, MsgType msgType)
         {
             switch (msgType)
             {
-                case MsgType.Message:
+                case MsgType.Success:
                     TempData["Message"] = msg;
                     break;
                 case MsgType.Error:

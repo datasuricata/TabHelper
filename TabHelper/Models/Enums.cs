@@ -40,7 +40,7 @@ namespace TabHelper.Models
 
     public enum MsgType
     {
-        Message = 0,
+        Success = 0,
         Error = 1,
         Info = 2,
     }

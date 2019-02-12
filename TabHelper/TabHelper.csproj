@@ -28,6 +28,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20190207183057_AddedFirstMigration.cs" />
+    <Compile Remove="Migrations\20190207183057_AddedFirstMigration.Designer.cs" />
     <Compile Remove="Models\Base\IEntity.cs" />
     <Compile Remove="Migrations\20181224205021_InitialCreate.cs" />
     <Compile Remove="Migrations\20181224205021_InitialCreate.Designer.cs" />
@@ -39,10 +41,6 @@
     <Compile Remove="Migrations\20190113021828_InitialCreate.Designer.cs" />
     <Compile Remove="Migrations\20190113024629_InitialCreate.cs" />
     <Compile Remove="Migrations\20190113024629_InitialCreate.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

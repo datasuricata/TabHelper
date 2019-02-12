@@ -1,4 +1,5 @@
 ﻿@model TabHelper.Models.ViewModel.FormViewModel
+@using TabHelper.Models.ViewModel
 
 @{
     ViewData["Title"] = "Formulários";
@@ -18,14 +19,14 @@
             </div>
         </div>
     </div>
-    <partial name="List" />
+    @await Html.PartialAsync("../Forms/List.cshtml", Model)
 </div>
 
-<div class="modal" id="create">
+@*<div class="modal" id="create">
     <div class="modal-dialog">
-        <partial name="Create" />
+        @await Html.PartialAsync("../Forms/Create.cshtml", new FormAttModel())
     </div>
-</div>
+</div>*@
 @*
     <div class="modal" id="edit">
         <div class="modal-dialog">

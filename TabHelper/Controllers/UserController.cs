@@ -6,6 +6,7 @@ using System.Linq;
 using TabHelper.Data.Persistence.Interfaces;
 using TabHelper.Data.Transaction;
 using TabHelper.Filters;
+using TabHelper.Helpers;
 using TabHelper.Models;
 using TabHelper.Models.Entities;
 using TabHelper.Models.ViewModel;
@@ -13,7 +14,7 @@ using TabHelper.Services;
 
 namespace TabHelper.Controllers
 {
-    [TabExceptionFilter]
+    //[TabExceptionFilter]
     public class UserController : BaseController
     {
         #region [ properties ]
@@ -40,12 +41,11 @@ namespace TabHelper.Controllers
             try
             {
                 var usrs = userRepo.List().ToList();
-                DomainValidation.When(0 == 0, "Validado");
                 return View(new UserViewModel { Users = usrs.ConvertAll(e => (UserModel)e) });
             }
             catch (Exception e)
             {
-                SetMsg(e.Message, MsgType.Error); return RedirectToAction("Index", "Dash");
+                SetMessage(e.Message, MsgType.Error); return RedirectToAction("Index", "Dash");
             }
         }
 
@@ -65,7 +65,7 @@ namespace TabHelper.Controllers
             }
             catch (Exception e)
             {
-                SetMsg(e.Message, MsgType.Error); return RedirectToAction("Index");
+                SetMessage(e.Message, MsgType.Error); return RedirectToAction("Index");
             }
         }
 
@@ -77,7 +77,7 @@ namespace TabHelper.Controllers
             }
             catch (Exception e)
             {
-                SetMsg(e.Message, MsgType.Error); return RedirectToAction("Index");
+                SetMessage(e.Message, MsgType.Error); return RedirectToAction("Index");
             }
         }
 
@@ -91,7 +91,7 @@ namespace TabHelper.Controllers
             }
             catch (Exception e)
             {
-                SetMsg(e.Message, MsgType.Error); return RedirectToAction("Index");
+                SetMessage(e.Message, MsgType.Error); return RedirectToAction("Index");
             }
         }
 
@@ -105,7 +105,7 @@ namespace TabHelper.Controllers
             }
             catch (Exception e)
             {
-                SetMsg(e.Message, MsgType.Error); return RedirectToAction("Index");
+                SetMessage(e.Message, MsgType.Error); return RedirectToAction("Index");
             }
         }
 
@@ -125,7 +125,7 @@ namespace TabHelper.Controllers
             }
             catch (Exception e)
             {
-                SetMsg(e.Message, MsgType.Error); return RedirectToAction("Index");
+                SetMessage(e.Message, MsgType.Error); return RedirectToAction("Index");
             }
         }
 
@@ -140,12 +140,13 @@ namespace TabHelper.Controllers
             try
             {
                 var dept = deptRepo.GetById(form.DepartmentId);
-                userRepo.Create(new User(form.Name, form.Email, form.Password, dept, form.UserAccess));
+                SetMessage(Messenger.Created(userRepo.Create(
+                    new User(form.Name, form.Email, form.Password, dept, form.UserAccess))), MsgType.Success);
                 return RedirectToAction("Index");
             }
             catch (Exception e)
             {
-                SetMsg(e.Message, MsgType.Error); return RedirectToAction("Index");
+                SetMessage(e.Message, MsgType.Error); return RedirectToAction("Index");
             }
         }
 
@@ -157,15 +158,13 @@ namespace TabHelper.Controllers
             {
                 var user = userRepo.GetById(form.Id);
                 DomainValidation.When(user is null, "User not found.");
-
                 user.Block();
-                userRepo.Update(user);
-
+                SetMessage(Messenger.Changed(userRepo.Update(user)), MsgType.Success);
                 return RedirectToAction("Index");
             }
             catch (Exception e)
             {
-                ViewData["Error"] = e.Message; return RedirectToAction("Index");
+                SetMessage(e.Message, MsgType.Error); return RedirectToAction("Index");
             }
         }
 
@@ -177,13 +176,12 @@ namespace TabHelper.Controllers
             {
                 var user = userRepo.GetById(form.Id);
                 DomainValidation.When(user == null, "User not found.");
-
-                userRepo.SoftExclude(user);
+                SetMessage(Messenger.SoftExclude(userRepo.SoftExclude(user)), MsgType.Success);
                 return RedirectToAction("Index");
             }
             catch (Exception e)
             {
-                SetMsg(e.Message, MsgType.Error); return RedirectToAction("Index");
+                SetMessage(e.Message, MsgType.Error); return RedirectToAction("Index");
             }
         }
 
@@ -196,18 +194,14 @@ namespace TabHelper.Controllers
                 var user = userRepo.GetQueriable().Include(x => x.Department)
                     .Where(x => x.Id == form.Id).SingleOrDefault();
 
-                var dept = deptRepo.GetById(form.DepartmentId);
-                var entity = new User(form.Name, form.Email, form.Password, dept, form.UserAccess);
-
-                user.Edit(entity);
-                userRepo.Update(user);
+                user.Edit(new User(form.Name, form.Email, form.Password, deptRepo.GetById(form.DepartmentId), form.UserAccess));
+                SetMessage(Messenger.Changed(userRepo.Update(user)), MsgType.Success);
 
                 return RedirectToAction("Index");
             }
             catch (Exception e)
-
             {
-                SetMsg(e.Message, MsgType.Error); return RedirectToAction("Index");
+                SetMessage(e.Message, MsgType.Error); return RedirectToAction("Index");
             }
         }
 

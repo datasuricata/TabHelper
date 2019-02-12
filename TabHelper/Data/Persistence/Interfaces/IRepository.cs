@@ -8,12 +8,12 @@ namespace TabHelper.Data.Persistence.Interfaces
     {
         TEntity GetById(int id);
         IQueryable<TEntity> GetQueriable();
-
         IEnumerable<TEntity> List();
-        void Create(TEntity entity);
-        void Update(TEntity entity);
-        void SoftExclude(TEntity entity);
-        void Exclude(TEntity entity);
+
+        TEntity Create(TEntity entity);
+        TEntity Update(TEntity entity);
+        TEntity SoftExclude(TEntity entity);
+        TEntity Exclude(TEntity entity);
 
         int Count();
         Task<int> SaveAsync();

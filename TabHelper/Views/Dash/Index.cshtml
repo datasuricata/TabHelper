@@ -7,27 +7,6 @@
 
 <div class="col-md-12">
     <div class="col-md-3">
-        <button type="button" style="width: 100%;" class="btn btn-default btn-xs" data-toggle="modal" data-target="#tabulacao">
-            Adicionar (+)
-        </button>
-    </div>
-    <div class="col-md-3">
-        <button type="button" style="width: 100%;" class="btn btn-default btn-xs" data-toggle="modal" data-target="#departamento">
-            Adicionar (+)
-        </button>
-    </div>
-    <div class="col-md-3">
-        <button type="button" style="width: 100%;" class="btn btn-default btn-xs" data-toggle="modal" data-target="#usuario">
-            Adicionar (+)
-        </button>
-    </div>
-    <div class="col-md-3">
-        <button type="button" style="width: 100%;" class="btn btn-default btn-xs" data-toggle="modal" data-target="#formulario">
-            Adicionar (+)
-        </button>
-    </div>
-    <hr>
-    <div class="col-md-3">
         <div class="panel panel-info text-center drop-shadow">
             <div class="panel-body">
                 <div class="panel-body ">
@@ -58,6 +37,11 @@
                             </td>
                         </tr>
                 </table>
+                <div class="col-md-12">
+                    <button type="button" style="width: 100%;" class="btn btn-default btn-xs" data-toggle="modal" data-target="#tabulacao">
+                        Adicionar (+)
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -92,6 +76,11 @@
                             </td>
                         </tr>
                 </table>
+                <div class="col-md-12">
+                    <button type="button" style="width: 100%;" class="btn btn-default btn-xs" data-toggle="modal" data-target="#departamento">
+                        Adicionar (+)
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -126,6 +115,11 @@
                             </td>
                         </tr>
                 </table>
+                <div class="col-md-12">
+                    <button type="button" style="width: 100%;" class="btn btn-default btn-xs" data-toggle="modal" data-target="#usuario">
+                        Adicionar (+)
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -160,6 +154,11 @@
                             </td>
                         </tr>
                 </table>
+                <div class="col-md-12">
+                    <button type="button" style="width: 100%;" class="btn btn-default btn-xs" data-toggle="modal" data-target="#formulario">
+                        Adicionar (+)
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -388,94 +387,9 @@
     </div>
 </div>
 
-
-
-<div class="modal" id="tabulacao">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Adicionar nova tabulação</h4>
-            </div>
-            <div class="modal-body">
-                <form class="form-horizontal">
-                    <div class="well text-center">
-                        <strong>Inserir novo registro de tabulação</strong>
-                    </div>
-                    <div class="well text-center">
-                        <fieldset>
-                            <div class="form-group">
-                                <label for="inputEmail" class="col-lg-3 control-label">Titulo</label>
-                                <div class="col-lg-9">
-                                    <input type="text" class="form-control" id="#" placeholder="Receptivo-Pesquisa-001">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="textArea" class="col-lg-3 control-label">Observação</label>
-                                <div class="col-lg-9">
-                                    <textarea class="form-control" rows="3" id="textArea" placeholder="Tabulação formulário de entrada criado para pesquisas acompanhar fluxo de pesquisa e vendas Renault."></textarea>
-                                    <span class="help-block">Informe uma observação sobre a criação deste auxiliar de marca.</span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="select" class="col-lg-3 control-label">Atribuições</label>
-                                <div class="col-lg-9">
-                                    <select multiple="" class="form-control">
-                                        <option>1 - Formulário de satisfação produto</option>
-                                        <option>2 - Formulário de satisfação entrega </option>
-                                        <option>3 - Formulário de satisfação cliente</option>
-                                        <option>4 - Formulário de satisfação atendimento</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="select" class="col-lg-3 control-label">Departamento</label>
-                                <div class="col-lg-9">
-                                    <select class="form-control input-sm" id="select">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                    </select>
-                                    <br>
-                                </div>
-                            </div>
-                        </fieldset>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-info btn-sm">Salvar alterações</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
 <div class="modal" id="departamento">
     <div class="modal-dialog">
         @await Html.PartialAsync("../Department/Create.cshtml", new DepartmentModel())
-    </div>
-</div>
-
-
-<div class="modal" id="formulario">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Adicionar novo formulário</h4>
-            </div>
-            <div class="modal-body">
-                <p>One fine body…</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-info btn-sm">Salvar alterações</button>
-            </div>
-        </div>
     </div>
 </div>
 

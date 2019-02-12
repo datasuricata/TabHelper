@@ -1,8 +1,9 @@
+using TabHelper.Models.Base;
 using TabHelper.Services;
 
 namespace TabHelper.Models.Entities
 {
-    public class Form // : EntityBase
+    public class Form : EntityBase
     {
         #region [ properties ]
 

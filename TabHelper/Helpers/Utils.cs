@@ -41,6 +41,8 @@ namespace TabHelper.Helpers
             return attribute == null ? value.ToString() : attribute.Description;
         }
 
+        #region [ components ]
+
         public static List<SelectListItem> GetAccessDropdown()
         {
             return Enum.GetValues(typeof(UserAccess)).Cast<UserAccess>()
@@ -51,5 +53,17 @@ namespace TabHelper.Helpers
                      Value = ((int)v).ToString()
                  }).ToList();
         }
+
+        public static List<SelectListItem> GetComponentType()
+        {
+            return Enum.GetValues(typeof(ComponentType)).Cast<ComponentType>()
+                 .Select(v => new SelectListItem
+                 {
+                     Text = v.ToString(),
+                     Value = ((int)v).ToString()
+                 }).ToList();
+        }
+
+        #endregion
     }
 }
