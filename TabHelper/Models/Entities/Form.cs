@@ -3,15 +3,15 @@ using TabHelper.Services;
 
 namespace TabHelper.Models.Entities
 {
-    public class Form : EntityBase
+    public class Form
     {
         #region [ properties ]
 
         public int TabulationId { get; private set; }
         public Tabulation Tabulation {get; private set; }
 
-        public int TabulationAttributesId { get; private set; }
-        public FormAttribute TabulationAttributes { get; private set; }
+        public int FormAttributeId { get; private set; }
+        public FormAttribute FormAttribute { get; private set; }
 
         public int Order { get; private set; }
         public int Repeat { get; private set; }
@@ -57,14 +57,14 @@ namespace TabHelper.Models.Entities
         private void SetProperties(int tabulationId, int tabulationAttributesId, int order, int repeat)
         {
             TabulationId = tabulationId;
-            TabulationAttributesId = tabulationAttributesId;
+            FormAttributeId = tabulationAttributesId;
             Order = order;
             Repeat = repeat;
         }
         private void SetProperties(Tabulation tabulation, FormAttribute tabulationAttributes, int order, int repeat)
         {
             Tabulation = tabulation;
-            TabulationAttributes = tabulationAttributes;
+            FormAttribute = tabulationAttributes;
             Order = order;
             Repeat = repeat;
         }

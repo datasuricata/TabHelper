@@ -21,6 +21,7 @@ namespace TabHelper.DI
             /// use this manipule internal entities from db source
             /// </summary>
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped(typeof(IFormManager), typeof(FormManager));
         }
     }
 }

@@ -9,8 +9,8 @@ using TabHelper.Data.ORM;
 namespace TabHelper.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190212004647_reseff")]
-    partial class reseff
+    [Migration("20190213013707_InititalMigration")]
+    partial class InititalMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -56,25 +56,15 @@ namespace TabHelper.Migrations
                 {
                     b.Property<int>("TabulationId");
 
-                    b.Property<int>("TabulationAttributesId");
-
-                    b.Property<DateTimeOffset?>("CreatedAt");
-
-                    b.Property<int>("Id");
-
-                    b.Property<bool>("IsDeleted");
+                    b.Property<int>("FormAttributeId");
 
                     b.Property<int>("Order");
 
                     b.Property<int>("Repeat");
 
-                    b.Property<DateTimeOffset?>("UpdatedAt");
+                    b.HasKey("TabulationId", "FormAttributeId");
 
-                    b.HasKey("TabulationId", "TabulationAttributesId");
-
-                    b.HasAlternateKey("Id");
-
-                    b.HasIndex("TabulationAttributesId");
+                    b.HasIndex("FormAttributeId");
 
                     b.ToTable("Forms");
                 });
@@ -106,7 +96,7 @@ namespace TabHelper.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TabulationAttributes");
+                    b.ToTable("FormAttributes");
                 });
 
             modelBuilder.Entity("TabHelper.Models.Entities.Historic", b =>
@@ -198,9 +188,9 @@ namespace TabHelper.Migrations
 
             modelBuilder.Entity("TabHelper.Models.Entities.Form", b =>
                 {
-                    b.HasOne("TabHelper.Models.Entities.FormAttribute", "TabulationAttributes")
+                    b.HasOne("TabHelper.Models.Entities.FormAttribute", "FormAttribute")
                         .WithMany("Forms")
-                        .HasForeignKey("TabulationAttributesId")
+                        .HasForeignKey("FormAttributeId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("TabHelper.Models.Entities.Tabulation", "Tabulation")

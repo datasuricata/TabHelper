@@ -11,7 +11,7 @@ namespace TabHelper.Data.Seeder
 {
     public static class DataSeed
     {
-        public static void Initialize(IServiceProvider service)
+        public static async System.Threading.Tasks.Task InitializeAsync(IServiceProvider service)
         {
             try
             {
@@ -26,7 +26,7 @@ namespace TabHelper.Data.Seeder
                         var att4 = new FormAttribute("TabHelper - TextBox", ComponentType.TextBox, "Title TextBox", null, "display info", "display some infos for component detail", false);
                         var att5 = new FormAttribute("TabHelper - Custom", ComponentType.Custom, "Title Custom", "10", "display info", "display some infos for component detail", true);
 
-                        context.TabulationAttributes.AddRange(att1, att2, att3, att4, att5);
+                        context.FormAttributes.AddRange(att1, att2, att3, att4, att5);
 
                         // # add default form tabulations
                         var tab1 = new Tabulation("TabHelper - Default", "Default form tabulation");
@@ -91,7 +91,7 @@ namespace TabHelper.Data.Seeder
                         context.DepartmentTabulations.AddRange(new DepartTab(Dept1, tab1), new DepartTab(Dept2, tab1), new DepartTab(Dept3, tab2));
                     }
 
-                    context.SaveChanges();
+                    await context.SaveChangesAsync();
                 }
             }
             catch (Exception e)

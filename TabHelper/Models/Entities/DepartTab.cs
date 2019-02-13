@@ -2,7 +2,7 @@
 
 namespace TabHelper.Models.Entities
 {
-    public class DepartTab// : EntityBase
+    public class DepartTab
     {
         #region [ properties ]
 

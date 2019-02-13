@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Threading.Tasks;
 using TabHelper.Data.ORM;
 using TabHelper.Data.Seeder;
 
@@ -21,12 +22,11 @@ namespace TabHelper
 
                 try
                 {
-                    //var context = services.
-                    //    GetRequiredService<AppDbContext>();
-                    //context.Database.Migrate();
-
                     services.GetRequiredService<AppDbContext>().Database.Migrate();
-                    DataSeed.Initialize(services);
+
+                    Task.Run(async () => {
+                        await DataSeed.InitializeAsync(services);
+                    }).Wait();
                 }
                 catch (Exception ex)
                 {
@@ -34,7 +34,6 @@ namespace TabHelper
                     logger.LogError(ex, "An error occurred seeding the DB.");
                 }
             }
-
             host.Run();
         }
 

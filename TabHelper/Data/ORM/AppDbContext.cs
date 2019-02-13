@@ -18,7 +18,7 @@ namespace TabHelper.Data.ORM
         public DbSet<DepartTab> DepartmentTabulations { get; set; }
         public DbSet<Tabulation> Tabulations { get; set; }
         public DbSet<Department> Departments { get; set; }
-        public DbSet<FormAttribute> TabulationAttributes { get; set; }
+        public DbSet<FormAttribute> FormAttributes { get; set; }
 
         #endregion
 
@@ -53,9 +53,9 @@ namespace TabHelper.Data.ORM
             options.Entity<Department>(c => c.HasMany(x => x.Users).WithOne(x => x.Department));
 
             // # relationship tabulations forms with attributes
-            options.Entity<Form>().HasKey(bc => new { bc.TabulationId, bc.TabulationAttributesId });
+            options.Entity<Form>().HasKey(bc => new { bc.TabulationId, bc.FormAttributeId });
             options.Entity<Form>().HasOne(bc => bc.Tabulation).WithMany(b => b.Forms).HasForeignKey(bc => bc.TabulationId);
-            options.Entity<Form>().HasOne(bc => bc.TabulationAttributes).WithMany(c => c.Forms).HasForeignKey(bc => bc.TabulationAttributesId);
+            options.Entity<Form>().HasOne(bc => bc.FormAttribute).WithMany(c => c.Forms).HasForeignKey(bc => bc.FormAttributeId);
 
             // # relationship departments with tabulations
             options.Entity<DepartTab>().HasKey(bc => new { bc.DepartmentId, bc.TabulationId });
@@ -96,37 +96,6 @@ namespace TabHelper.Data.ORM
             }
 
             return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
-        }
-
-        /// <summary>
-        /// Ajust date infos on entities after commit
-        /// </summary>
-        /// <returns>Override SaveChanges</returns>
-        public override int SaveChanges()
-        {
-            try
-            {
-                foreach (var entry in ChangeTracker.Entries().Where(entry =>
-                entry.Entity.GetType().GetProperty(nameof(EntityBase.CreatedAt)) != null ||
-                entry.Entity.GetType().GetProperty(nameof(EntityBase.UpdatedAt)) != null))
-                {
-                    if (entry.Property(nameof(EntityBase.CreatedAt)) != null)
-                        if (entry.State == EntityState.Added)
-                            entry.Property(nameof(EntityBase.CreatedAt)).CurrentValue = DateTimeOffset.Now;
-                        else if (entry.State == EntityState.Modified)
-                            entry.Property(nameof(EntityBase.CreatedAt)).IsModified = false;
-
-                    if (entry.Property(nameof(EntityBase.UpdatedAt)) != null)
-                        if (entry.State == EntityState.Added || entry.State == EntityState.Modified)
-                            entry.Property(nameof(EntityBase.UpdatedAt)).CurrentValue = DateTimeOffset.Now;
-                }
-            }
-            catch (Exception e) //todo create log injection instance
-            {
-                var msg = e.Message;
-            }
-
-            return base.SaveChanges();
         }
 
         #endregion
