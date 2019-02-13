@@ -18,20 +18,16 @@ namespace TabHelper.Controllers
     {
         #region [ properties ]
 
-        private readonly IRepository<Form> formRepo;
-        private readonly IRepository<Tabulation> TabRepo;
-        private readonly IRepository<FormAttribute> formAttRepo;
+        private readonly IFormManager formManager;
 
 
         #endregion
 
         #region [ ctor ]
 
-        public FormsController(IRepository<Form> formRepo, IRepository<FormAttribute> formAttRepo, IRepository<Tabulation> TabRepo, IUnitOfWork uow) : base(uow)
+        public FormsController(IFormManager formManager, IUnitOfWork uow) : base(uow)
         {
-            this.TabRepo = TabRepo;
-            this.formRepo = formRepo;
-            this.formAttRepo = formAttRepo;
+            this.formManager = formManager;
         }
 
         #endregion
@@ -42,9 +38,7 @@ namespace TabHelper.Controllers
         {
             try
             {
-                var atts = formAttRepo.List().ToList();
-                ViewBag.DropDown = GetDropDown(TabRepo.List(), "Name", "Id");
-                return View(new FormViewModel { FormAttibutes = atts.ConvertAll(e => (FormAttModel)e) });
+                return View(new FormViewModel());
             }
             catch (Exception e)
             {
@@ -68,22 +62,22 @@ namespace TabHelper.Controllers
 
         #region [ post ]
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(FormAttModel form)
-        {
-            try
-            {
-                var formAtt = new FormAttribute(form.Name, form.ComponentType, form.Title, form.Value, form.Info, form.Detail, form.IsNumeric);
-                formAttRepo.Create(formAtt);
-                SetMessage(Messenger.Created(formAtt), MsgType.Success);
-                return RedirectToAction("Index");
-            }
-            catch (Exception e)
-            {
-                SetMessage(e.Message, MsgType.Error); return RedirectToAction("Index");
-            }
-        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult Create(FormAttModel form)
+        //{
+        //    try
+        //    {
+        //        var formAtt = new FormAttribute(form.Name, form.ComponentType, form.Title, form.Value, form.Info, form.Detail, form.IsNumeric);
+        //        formAttRepo.Create(formAtt);
+        //        SetMessage(Messenger.Created(formAtt), MsgType.Success);
+        //        return RedirectToAction("Index");
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        SetMessage(e.Message, MsgType.Error); return RedirectToAction("Index");
+        //    }
+        //}
 
         #endregion
 

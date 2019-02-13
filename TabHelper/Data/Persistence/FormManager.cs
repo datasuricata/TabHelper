@@ -21,9 +21,28 @@ namespace TabHelper.Data.Persistence
 
         #region [ ctor ]
 
-        public FormManager(AppDbContext db)
+        public FormManager(IRepository<Tabulation> tabRepo, IRepository<FormAttribute> formAttRepo, AppDbContext db)
         {
             this.db = db;
+            this.tabRepo = tabRepo;
+            this.formAttRepo = formAttRepo;
+        }
+
+        #endregion
+
+        #region [ attributes ]
+
+        public IEnumerable<FormAttribute> ListFormAtt()
+        {
+            return formAttRepo.List();
+        }
+        public IEnumerable<FormAttribute> ListFormAttF()
+        {
+            return formAttRepo.GetQueriable().Include(i => i.Forms).ThenInclude(i => i.Tabulation).ToList();
+        }
+        public IQueryable<FormAttribute> QueryFormAtt()
+        {
+            return formAttRepo.GetQueriable();
         }
 
         #endregion
@@ -34,6 +53,14 @@ namespace TabHelper.Data.Persistence
         {
             return db.Set<Form>().ToList();
         }
+        public IEnumerable<Form> ListFormsF()
+        {
+            return db.Set<Form>().Include(i => i.FormAttribute).Include(i => i.Tabulation).ToList();
+        }
+        public IQueryable<Form> QueryForms()
+        {
+            return db.Set<Form>().AsQueryable();
+        }
 
         #endregion
 
@@ -43,14 +70,13 @@ namespace TabHelper.Data.Persistence
         {
             return tabRepo.List();
         }
-
-        #endregion
-
-        #region [ attributes ]
-
-        public IEnumerable<FormAttribute> ListFormAtt()
+        public IEnumerable<Tabulation> ListTabsF()
         {
-            return formAttRepo.List();
+            return tabRepo.GetQueriable().Include(i => i.Forms).ThenInclude(i => i.FormAttribute).ToList();
+        }
+        public IQueryable<Tabulation> QueryTabs()
+        {
+            return tabRepo.GetQueriable();
         }
 
         #endregion
