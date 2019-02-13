@@ -12,7 +12,7 @@
         <h4 class="modal-title">Adicionar novo atributo</h4>
     </div>
     <div class="modal-body">
-        <form class="form-horizontal">
+        <form data-ajax="true" data-ajax-method="POST" data-ajax-failure="formOnFail" data-ajax-success="window.location = '/Index'" asp-controller="Forms" asp-action="CreateAtt" class="form-horizontal">
             <div class="well text-center" style="border-color:#029acf">
                 <strong>Inserir novo atributo de formulário</strong>
             </div>
@@ -59,16 +59,6 @@
                         <label class="col-lg-3 control-label" for="asdas">Valor Customizado</label>
                         <div class="col-lg-9">
                             <input style="margin-top: 10px;" class="form-control input-sm" asp-for="Value" type="text" placeholder="10" />
-                        </div>
-                    </div>
-                </fieldset>
-            </div>
-            <div class="well text-center" style="border-color:#029acf">
-                <fieldset>
-                    <div class="form-group">
-                        <label for="select" class="col-lg-3 control-label">Vincular Tabulação</label>
-                        <div class="col-lg-9">
-                            <select class="form-control input-sm" asp-for="TabulationId" asp-items="ViewBag.DropDown as List<SelectListItem>"></select>
                         </div>
                     </div>
                 </fieldset>

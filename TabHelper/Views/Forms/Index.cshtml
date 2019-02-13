@@ -9,24 +9,44 @@
     <div class="panel panel-info drop-shadow">
         <div class="panel-heading">Formulários de Entrada</div>
         <div class="panel-body">
-            <div class="col-md-9">
+            <div class="col-md-8">
                 <h3>Controle de Formulários</h3>
                 <p>Use este configurador para criar novos formulários.</p>
                 <p>Formulários são criados como auxiliares de marca para seus atendimentos.</p>
+                <p>Para criar um formulário você precisa criar seus atributos de entrada para sincronizar com o seu modelo.</p>
+                <p>Você deve vincular seus formulários com alguma tabulação.</p>
             </div>
-            <div class="col-md-3 text-right">
-                <a href="#" class="btn btn-default btn-sm" data-toggle="modal" data-target="#create">Adicionar nova entrada (+)</a>
+            <div class="col-md-4">
+                <h3>Crie novos atributos</h3>
+                <p>atributos definem o tipo de entrada no formulário</p>
+                <a href="#" class="btn btn-default btn-sm text-right drop-shadow" data-toggle="modal" data-target="#createatt" style="width:45%;">Atributo (+)</a>
+                <a href="#" class="btn btn-default btn-sm text-right drop-shadow" data-toggle="modal" style="width:45%;" data-target="#createform">Formulário (+)</a>
+                <a href="#" class="btn btn-primary btn-sm text-right drop-shadow" data-toggle="modal" style="width:91%;margin-top:10px;" data-target="#create">Gerencie todos formulários</a>
             </div>
         </div>
     </div>
-    @await Html.PartialAsync("../Forms/List.cshtml", Model)
+    <div class="row">
+        <div class="col-md-6">
+            @await Html.PartialAsync("../Forms/ListAtts.cshtml", Model)
+        </div>
+        <div class="col-md-6">
+            @await Html.PartialAsync("../Forms/ListForms.cshtml", Model)
+        </div>
+    </div>
 </div>
 
-@*<div class="modal" id="create">
+<div class="modal" id="createatt">
     <div class="modal-dialog">
-        @await Html.PartialAsync("../Forms/Create.cshtml", new FormAttModel())
+        @await Html.PartialAsync("../Forms/CreateAtt.cshtml", new FormAttModel())
     </div>
-</div>*@
+</div>
+
+<div class="modal" id="createform">
+    <div class="modal-dialog">
+        @await Html.PartialAsync("../Forms/CreateForm.cshtml", new FormModel())
+    </div>
+</div>
+
 @*
     <div class="modal" id="edit">
         <div class="modal-dialog">

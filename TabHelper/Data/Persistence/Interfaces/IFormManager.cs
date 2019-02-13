@@ -9,6 +9,7 @@ namespace TabHelper.Data.Persistence.Interfaces
         IEnumerable<FormAttribute> ListFormAtt();
         IEnumerable<FormAttribute> ListFormAttF();
         IQueryable<FormAttribute> QueryFormAtt();
+        FormAttribute Create(FormAttribute entity);
 
         IEnumerable<Form> ListForms();
         IEnumerable<Form> ListFormsF();

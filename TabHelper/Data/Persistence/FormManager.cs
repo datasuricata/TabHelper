@@ -45,6 +45,11 @@ namespace TabHelper.Data.Persistence
             return formAttRepo.GetQueriable();
         }
 
+        public FormAttribute Create(FormAttribute entity)
+        {
+            return formAttRepo.Create(entity);
+        }
+
         #endregion
 
         #region [ forms ]
