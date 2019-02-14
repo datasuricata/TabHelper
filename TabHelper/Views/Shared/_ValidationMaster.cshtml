@@ -8,27 +8,23 @@
     var info = TempData["Info"];
 }
 
-@if (error != null || message != null || info != null)
-{
-    <br />
-}
 @if (error != null)
 {
-    <div class="alert alert-dismissible alert-danger drop-shadow">
+    <div class="alert alert-dismissible alert-danger drop-shadow" style="margin-top:25px;">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         <a href="#" class="alert-link">@error</a> tente novamente.
     </div>
 }
 @if (message != null)
 {
-    <div class="alert alert-dismissible alert-success drop-shadow">
+    <div class="alert alert-dismissible alert-success drop-shadow" style="margin-top:25px;">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         @message
     </div>
 }
 @if (info != null)
 {
-    <div class="alert alert-dismissible alert-info drop-shadow">
+    <div class="alert alert-dismissible alert-info drop-shadow" style="margin-top:25px;">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         @info
     </div>
