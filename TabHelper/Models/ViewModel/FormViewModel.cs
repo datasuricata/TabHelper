@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using TabHelper.Models.Entities;
 
 namespace TabHelper.Models.ViewModel
@@ -73,6 +74,8 @@ namespace TabHelper.Models.ViewModel
         public string Name { get; set; }
         public string Code { get; set; }
 
+        public List<string> Tabulations { get; set; } = new List<string>();
+
         public static explicit operator FormModel(Form v)
         {
             return v == null ? null : new FormModel
@@ -80,6 +83,7 @@ namespace TabHelper.Models.ViewModel
                 Id = v.Id,
                 Code = v.Code,
                 Name = v.Name,
+                Tabulations = v.FormTabs.Select(x => x.Tabulation.Name).ToList(),
             };
         }
     }

@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.Linq;
 using TabHelper.Data.Persistence.Interfaces;
 using TabHelper.Data.Transaction;
-using TabHelper.Filters;
 using TabHelper.Helpers;
 using TabHelper.Models;
 using TabHelper.Models.Entities;
@@ -47,11 +46,6 @@ namespace TabHelper.Controllers
             {
                 SetMessage(e.Message, MsgType.Error); return RedirectToAction("Index", "Dash");
             }
-        }
-
-        public IActionResult List()
-        {
-            return PartialView();
         }
 
         public IActionResult Create()

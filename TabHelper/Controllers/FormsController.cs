@@ -44,7 +44,7 @@ namespace TabHelper.Controllers
         {
             try
             {
-                var forms = formRepo.GetQueriable().Include(x => x.FormTabs) as List<Form>;
+                var forms = formRepo.List().ToList();
                 return View(new FormViewModel { Forms = forms.ConvertAll(e => (FormModel)e) });
             }
             catch (Exception e)
@@ -57,19 +57,8 @@ namespace TabHelper.Controllers
         {
             try
             {
+                ViewBag.Forms = GetDropDown(formRepo.List(), "Name", "Id");
                 return View(new FormAttModel());
-            }
-            catch (Exception e)
-            {
-                SetMessage(e.Message, MsgType.Error); return RedirectToAction("Index");
-            }
-        }
-
-        public IActionResult CreateForm()
-        {
-            try
-            {
-                return View(new FormTabModel());
             }
             catch (Exception e)
             {

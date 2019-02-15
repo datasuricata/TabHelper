@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TabHelper.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class InitialScheme : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

@@ -13,7 +13,6 @@
                     <th class="text-center">#</th>
                     <th class="text-center">Código</th>
                     <th class="text-center">Nome</th>
-                    <th class="text-center">Tabulação</th>
                     <th class="text-center">Ação</th>
                 </tr>
             </thead>
@@ -26,12 +25,11 @@
                             <td>@frm.Id</td>
                             <td>@frm.Code</td>
                             <td>@frm.Name</td>
-                            <td>@frm.Name</td>
 
                             <td>
-                                <a href="#" class="btn btn-warning btn-xs @state" data-toggle="modal" data-target="#desactive">Desativar</a>
+                                <a href="#" class="btn btn-default btn-xs @state" data-toggle="modal" data-target="#detail">Detalhes</a>
                                 <a href="#" class="btn btn-primary btn-xs @state" data-toggle="modal" data-target="#edit">Alterar</a>
-                                <a href="#" class="btn btn-primary btn-xs @state" data-toggle="modal" data-target="#delete">Deletar</a>
+                                <a href="#" class="btn btn-primary btn-xs @state" data-toggle="modal" data-target="#desactive">Desativar</a>
                             </td>
                         </tr>
                     }
@@ -40,3 +38,5 @@
         </table>
     </div>
 </div>
+
+

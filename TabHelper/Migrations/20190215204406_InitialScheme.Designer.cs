@@ -9,8 +9,8 @@ using TabHelper.Data.ORM;
 namespace TabHelper.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190214234133_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20190215204406_InitialScheme")]
+    partial class InitialScheme
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
