@@ -26,7 +26,6 @@ namespace TabHelper.Models.Entities
             Department = department;
             Tabulation = tabulation;
         }
-
         public DepartTab(int departmentId, int tabulationId)
         {
             DepartmentId = departmentId;

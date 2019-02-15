@@ -11,9 +11,13 @@ namespace TabHelper.Models.Entities
         public string Name { get; private set; }
         public string Email { get; private set; }
         public string Password { get; private set; }
+
         public bool IsBlock { get; private set; }
-        public Department Department { get; private set; }
+
         public UserAccess UserAccess { get; private set; }
+
+        public int DepartmentId { get; private set; }
+        public Department Department { get; private set; }
 
         #endregion
 
@@ -24,15 +28,33 @@ namespace TabHelper.Models.Entities
 
         }
 
+        public User(string name, string email, string password, int departmentId, UserAccess userAccess)
+        {
+            Validate(name, email, password, departmentId, userAccess);
+            SetProperties(name, email, password, departmentId, userAccess);
+        }
         public User(string name, string email, string password, Department department, UserAccess userAccess)
         {
             Validate(name, email, password, department, userAccess);
             SetProperties(name, email, password, department, userAccess);
         }
 
-        #endregion
-
-        #region [ methods ]
+        protected void Validate(string name, string email, string password, int departmentId, UserAccess userAccess)
+        {
+            DomainValidation.When(string.IsNullOrEmpty(name), "Nome é obrigatório.");
+            DomainValidation.When(string.IsNullOrEmpty(email), "E-mail é obrigatório.");
+            DomainValidation.When(string.IsNullOrEmpty(password), "Deve criar uma senha.");
+            DomainValidation.When(departmentId == 0, "Selecione um departamento.");
+        }
+        private void SetProperties(string name, string email, string password, int departmentId, UserAccess userAccess)
+        {
+            Name = name;
+            Email = email;
+            Password = password.EncryptPassword();
+            DepartmentId = departmentId;
+            UserAccess = userAccess;
+            IsBlock = false;
+        }
 
         protected void Validate(string name, string email, string password, Department department, UserAccess userAccess)
         {
@@ -41,7 +63,6 @@ namespace TabHelper.Models.Entities
             DomainValidation.When(string.IsNullOrEmpty(password), "Deve criar uma senha.");
             DomainValidation.When(department is null, "Selecione um departamento.");
         }
-
         private void SetProperties(string name, string email, string password, Department department, UserAccess userAccess)
         {
             Name = name;
@@ -52,9 +73,13 @@ namespace TabHelper.Models.Entities
             IsBlock = false;
         }
 
+        #endregion
+
+        #region [ methods ]
+
         public void Edit(User usr)
         {
-            Validate(usr.Name, usr.Email, usr.Password, usr.Department, usr.UserAccess);
+            Validate(usr.Name, usr.Email, usr.Password, usr.DepartmentId, usr.UserAccess);
 
             Name = usr.Name;
             Email = usr.Email;

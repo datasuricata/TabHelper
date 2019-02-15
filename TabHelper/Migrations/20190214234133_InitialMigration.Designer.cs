@@ -9,8 +9,8 @@ using TabHelper.Data.ORM;
 namespace TabHelper.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190213013707_InititalMigration")]
-    partial class InititalMigration
+    [Migration("20190214234133_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -49,22 +49,25 @@ namespace TabHelper.Migrations
 
                     b.HasIndex("TabulationId");
 
-                    b.ToTable("DepartmentTabulations");
+                    b.ToTable("DepartTabs");
                 });
 
             modelBuilder.Entity("TabHelper.Models.Entities.Form", b =>
                 {
-                    b.Property<int>("TabulationId");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<int>("FormAttributeId");
+                    b.Property<string>("Code");
 
-                    b.Property<int>("Order");
+                    b.Property<DateTimeOffset?>("CreatedAt");
 
-                    b.Property<int>("Repeat");
+                    b.Property<bool>("IsDeleted");
 
-                    b.HasKey("TabulationId", "FormAttributeId");
+                    b.Property<string>("Name");
 
-                    b.HasIndex("FormAttributeId");
+                    b.Property<DateTimeOffset?>("UpdatedAt");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Forms");
                 });
@@ -80,6 +83,8 @@ namespace TabHelper.Migrations
 
                     b.Property<string>("Detail");
 
+                    b.Property<int>("FormId");
+
                     b.Property<string>("Info");
 
                     b.Property<bool>("IsDeleted");
@@ -87,6 +92,10 @@ namespace TabHelper.Migrations
                     b.Property<bool>("IsNumeric");
 
                     b.Property<string>("Name");
+
+                    b.Property<int>("Order");
+
+                    b.Property<int>("Repeat");
 
                     b.Property<string>("Title");
 
@@ -96,7 +105,22 @@ namespace TabHelper.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("FormId");
+
                     b.ToTable("FormAttributes");
+                });
+
+            modelBuilder.Entity("TabHelper.Models.Entities.FormTab", b =>
+                {
+                    b.Property<int>("TabulationId");
+
+                    b.Property<int>("FormId");
+
+                    b.HasKey("TabulationId", "FormId");
+
+                    b.HasIndex("FormId");
+
+                    b.ToTable("FormTabs");
                 });
 
             modelBuilder.Entity("TabHelper.Models.Entities.Historic", b =>
@@ -150,7 +174,7 @@ namespace TabHelper.Migrations
 
                     b.Property<DateTimeOffset?>("CreatedAt");
 
-                    b.Property<int?>("DepartmentId");
+                    b.Property<int>("DepartmentId");
 
                     b.Property<string>("Email");
 
@@ -186,15 +210,23 @@ namespace TabHelper.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("TabHelper.Models.Entities.Form", b =>
+            modelBuilder.Entity("TabHelper.Models.Entities.FormAttribute", b =>
                 {
-                    b.HasOne("TabHelper.Models.Entities.FormAttribute", "FormAttribute")
-                        .WithMany("Forms")
-                        .HasForeignKey("FormAttributeId")
+                    b.HasOne("TabHelper.Models.Entities.Form", "Form")
+                        .WithMany("Attributes")
+                        .HasForeignKey("FormId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("TabHelper.Models.Entities.FormTab", b =>
+                {
+                    b.HasOne("TabHelper.Models.Entities.Form", "Form")
+                        .WithMany("FormTabs")
+                        .HasForeignKey("FormId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("TabHelper.Models.Entities.Tabulation", "Tabulation")
-                        .WithMany("Forms")
+                        .WithMany("FormTabs")
                         .HasForeignKey("TabulationId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -203,7 +235,8 @@ namespace TabHelper.Migrations
                 {
                     b.HasOne("TabHelper.Models.Entities.Department", "Department")
                         .WithMany("Users")
-                        .HasForeignKey("DepartmentId");
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

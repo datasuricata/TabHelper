@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using TabHelper.Models.Base;
+﻿using TabHelper.Models.Base;
 using TabHelper.Services;
 
 namespace TabHelper.Models.Entities
@@ -11,7 +9,10 @@ namespace TabHelper.Models.Entities
 
         public string Name { get; private set; }
         public ComponentType ComponentType { get; private set; }
-        public bool IsNumeric { get; set; }
+        public bool IsNumeric { get; private set; }
+
+        public int Order { get; private set; }
+        public int Repeat { get; private set; }
 
         public string Title { get; private set; }
         public string Value { get; private set; }
@@ -19,7 +20,8 @@ namespace TabHelper.Models.Entities
         public string Info { get; private set; }
         public string Detail { get; private set; }
 
-        public ICollection<Form> Forms { get; private set; } = new List<Form>();
+        public int FormId { get; private set; }
+        public Form Form { get; private set; }
 
         #endregion
 
@@ -35,10 +37,15 @@ namespace TabHelper.Models.Entities
         /// <param name="isnumeric">define as numeric record</param>
         /// <param name="info">info for web span display</param>
         /// <param name="detail">detail for web display</param>
-        public FormAttribute(string name, ComponentType componentType, string title, string value, string info, string detail, bool isnumeric)
+        public FormAttribute(int formId, string name, ComponentType componentType, string title, string value, string info, string detail, bool isnumeric, int order, int repeat)
         {
-            Validate(name, title);
-            SetProperties(name, componentType, title, value, info, detail, isnumeric);
+            Validate(formId, name, title);
+            SetProperties(formId, name, componentType, title, value, info, detail, isnumeric, order, repeat);
+        }
+        public FormAttribute(Form form, string name, ComponentType componentType, string title, string value, string info, string detail, bool isnumeric, int order, int repeat)
+        {
+            Validate(form, name, title);
+            SetProperties(form, name, componentType, title, value, info, detail, isnumeric, order, repeat);
         }
 
         protected FormAttribute()
@@ -50,13 +57,13 @@ namespace TabHelper.Models.Entities
 
         #region [ methods ]
 
-        private void Validate(string name, string title)
+        private void Validate(int formId, string name, string title)
         {
+            DomainValidation.When(formId == 0, "É necessário vincular um formulário");
             DomainValidation.When(string.IsNullOrEmpty(name), "Defina um nome para seu atributo");
             DomainValidation.When(string.IsNullOrEmpty(title), "Titulo de exibição é obrigatorio");
         }
-
-        private void SetProperties(string name, ComponentType componentType, string title, string value, string info, string detail, bool isnumeric)
+        private void SetProperties(int formId, string name, ComponentType componentType, string title, string value, string info, string detail, bool isnumeric, int order, int repeat)
         {
             Name = name;
             ComponentType = componentType;
@@ -65,6 +72,34 @@ namespace TabHelper.Models.Entities
             Info = info;
             Detail = detail;
             IsNumeric = isnumeric;
+            Order = order;
+            Repeat = repeat;
+            FormId = formId;
+        }
+
+        private void Validate(Form form, string name, string title)
+        {
+            DomainValidation.When(string.IsNullOrEmpty(name), "Defina um nome para seu atributo");
+            DomainValidation.When(string.IsNullOrEmpty(title), "Titulo de exibição é obrigatorio");
+            DomainValidation.When(form is null, "É necessário vincular um formulário");
+        }
+        private void SetProperties(Form form, string name, ComponentType componentType, string title, string value, string info, string detail, bool isnumeric, int order, int repeat)
+        {
+            Name = name;
+            ComponentType = componentType;
+            Title = title;
+            Value = value;
+            Info = info;
+            Detail = detail;
+            IsNumeric = isnumeric;
+            Order = order;
+            Repeat = repeat;
+            Form = form;
+        }
+
+        public void ChangeOrder(int order)
+        {
+            Order = order;
         }
 
         #endregion

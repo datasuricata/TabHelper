@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -20,17 +21,19 @@ namespace TabHelper.Controllers
         #region [ properties ]
 
         private readonly IFormManager formManager;
-        private readonly IRepository<User> repository;
+        private readonly IRepository<Form> formRepo;
+        private readonly IRepository<FormAttribute> formAttRepo;
 
 
         #endregion
 
         #region [ ctor ]
 
-        public FormsController(IRepository<User> repository, IFormManager formManager, IUnitOfWork uow) : base(uow)
+        public FormsController(IRepository<Form> formRepo, IRepository<FormAttribute> formAttRepo, IFormManager formManager, IUnitOfWork uow) : base(uow)
         {
+            this.formAttRepo = formAttRepo;
             this.formManager = formManager;
-            this.repository = repository;
+            this.formRepo = formRepo;
         }
 
         #endregion
@@ -41,16 +44,8 @@ namespace TabHelper.Controllers
         {
             try
             {
-                var atts = formManager.ListFormAtt() as List<FormAttribute>;
-                var frm = formManager.ListFormsF()
-                    .GroupBy(x => x.Tabulation)
-                    .Select(x => new FormModel
-                    {
-                        Tabulation = (TabModel)x.Key,
-                        TabulationId = x.Key.Id,
-                    }).ToList();
-
-                return View(new FormViewModel { FormAttibutes = atts.ConvertAll(e => (FormAttModel)e), Forms = frm });
+                var forms = formRepo.GetQueriable().Include(x => x.FormTabs) as List<Form>;
+                return View(new FormViewModel { Forms = forms.ConvertAll(e => (FormModel)e) });
             }
             catch (Exception e)
             {
@@ -74,7 +69,7 @@ namespace TabHelper.Controllers
         {
             try
             {
-                return View(new FormModel());
+                return View(new FormTabModel());
             }
             catch (Exception e)
             {
@@ -94,19 +89,6 @@ namespace TabHelper.Controllers
             }
         }
 
-        public IActionResult ListForms()
-        {
-            try
-            {
-                var usrs = repository.List() as List<User>;
-                return View(new UserViewModel { Users = usrs.ConvertAll(e => (UserModel)e) });
-            }
-            catch (Exception e)
-            {
-                SetMessage(e.Message, MsgType.Error); return RedirectToAction("Index");
-            }
-        }
-
         #endregion
 
         #region [ post ]
@@ -117,9 +99,9 @@ namespace TabHelper.Controllers
         {
             try
             {
-                var formAtt = new FormAttribute(form.Name, form.ComponentType, form.Title, form.Value, form.Info, form.Detail, form.IsNumeric);
-                formManager.Create(formAtt);
-                SetMessage(Messenger.Created(formAtt), MsgType.Success);
+                //var formAtt = new FormAttribute(form.Name, form.ComponentType, form.Title, form.Value, form.Info, form.Detail, form.IsNumeric);
+                //formManager.Create(formAtt);
+                //SetMessage(Messenger.Created(formAtt), MsgType.Success);
                 return RedirectToAction("Index");
             }
             catch (Exception e)

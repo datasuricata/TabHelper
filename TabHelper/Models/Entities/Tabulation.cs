@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using TabHelper.Models.Base;
 using TabHelper.Services;
 
@@ -11,8 +12,8 @@ namespace TabHelper.Models.Entities
         public string Name { get; private set; }
         public string Observation { get; private set; }
 
-        public ICollection<Form> Forms { get; private set; } = new List<Form>();
-        public ICollection<DepartTab> DepartmentTabulations { get; private set; } = new List<DepartTab>();
+        public ICollection<FormTab> FormTabs { get; private set; } = new Collection<FormTab>();
+        public ICollection<DepartTab> DepartmentTabulations { get; private set; } = new Collection<DepartTab>();
 
         #endregion
 

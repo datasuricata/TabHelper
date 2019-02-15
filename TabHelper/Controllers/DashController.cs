@@ -39,8 +39,8 @@ namespace TabHelper.Controllers
             {
                 var usr = userRepo.GetQueriable();
                 var dpt = deptRepo.GetQueriable();
-                var tab = formManager.QueryTabs();
-                var frm = formManager.QueryForms().GroupBy(x => x.TabulationId);
+             //   var tab = formManager.QueryTabs();
+              //  var frm = formManager.QueryForms().GroupBy(x => x.TabulationId);
 
                 return View(new DashViewModel
                 {
@@ -48,9 +48,9 @@ namespace TabHelper.Controllers
                     DeptCountInt = dpt.Where(x => x.IsDeleted).Count(),
                     UserCountAct = usr.Where(x => !x.IsDeleted).Count(),
                     UserCountInt = usr.Where(x => x.IsDeleted).Count(),
-                    FormCountAct = frm.Select(x => x.Key).Count(),
-                    TabCountAct = tab.Where(x => !x.IsDeleted).Count(),
-                    TabCountInt = tab.Where(x => x.IsDeleted).Count(),
+                //    FormCountAct = frm.Select(x => x.Key).Count(),
+                //    TabCountAct = tab.Where(x => !x.IsDeleted).Count(),
+                 //   TabCountInt = tab.Where(x => x.IsDeleted).Count(),
                 });
             }
             catch (Exception e)

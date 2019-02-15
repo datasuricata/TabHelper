@@ -19,14 +19,25 @@ namespace TabHelper.Data.Seeder
                 {
                     if (!context.Users.Any())
                     {
-                        // # add default forms attributes
-                        var att1 = new FormAttribute("TabHelper - Check", ComponentType.Check, "Title Check", null, "display info", "display some infos for component detail", false);
-                        var att2 = new FormAttribute("TabHelper - Radio", ComponentType.Radio, "Title Radio", null, "display info", null, true);
-                        var att3 = new FormAttribute("TabHelper - Text", ComponentType.Text, "Title Text", null, "display info", "display some infos for component detail", false);
-                        var att4 = new FormAttribute("TabHelper - TextBox", ComponentType.TextBox, "Title TextBox", null, "display info", "display some infos for component detail", false);
-                        var att5 = new FormAttribute("TabHelper - Custom", ComponentType.Custom, "Title Custom", "10", "display info", "display some infos for component detail", true);
+                        // #  add forms
+                        var form1 = new Form("Default", "0001");
+                        var form2 = new Form("Pesquisa", "0001");
 
-                        context.FormAttributes.AddRange(att1, att2, att3, att4, att5);
+                        context.Forms.AddRange(form1, form2);
+
+                        // # add default forms attributes
+                        context.FormAttributes.AddRange(
+                        new FormAttribute(form1, "TabHelper - Check", ComponentType.Check, "Title Check", null, "display info", "display some infos for component detail", false, 1, 0),
+                        new FormAttribute(form1, "TabHelper - Radio", ComponentType.Radio, "Title Radio", null, "display info", null, true, 2, 0),
+                        new FormAttribute(form1, "TabHelper - Text", ComponentType.Text, "Title Text", null, "display info", "display some infos for component detail", false, 3, 0),
+                        new FormAttribute(form1, "TabHelper - TextBox", ComponentType.TextBox, "Title TextBox", null, "display info", "display some infos for component detail", false, 4, 0),
+                        new FormAttribute(form1, "TabHelper - Custom", ComponentType.Custom, "Title Custom", "10", "display info", "display some infos for component detail", true, 5, 0),
+                        new FormAttribute(form2, "TabHelper - Check", ComponentType.Check, "Title Check", null, "display info", "display some infos for component detail", false, 1, 0),
+                        new FormAttribute(form2, "TabHelper - Text", ComponentType.Text, "Title Text", null, "display info", "display some infos for component detail", false, 2, 0),
+                        new FormAttribute(form2, "TabHelper - Check", ComponentType.Check, "Title Check", null, "display info", "display some infos for component detail", false, 3, 0),
+                        new FormAttribute(form2, "TabHelper - Text", ComponentType.Text, "Title Text", null, "display info", "display some infos for component detail", false, 4, 0),
+                        new FormAttribute(form2, "TabHelper - Check", ComponentType.Check, "Title Check", null, "display info", "display some infos for component detail", false, 5, 0),
+                        new FormAttribute(form2, "TabHelper - Text", ComponentType.Text, "Title Text", null, "display info", "display some infos for component detail", false, 6, 0));
 
                         // # add default form tabulations
                         var tab1 = new Tabulation("TabHelper - Default", "Default form tabulation");
@@ -35,18 +46,7 @@ namespace TabHelper.Data.Seeder
                         context.Tabulations.AddRange(tab1);
 
                         // # add default forms
-                        context.Forms.AddRange(
-                        new Form(tab1, att1, 1, 0),
-                        new Form(tab1, att2, 2, 0),
-                        new Form(tab1, att3, 3, 0),
-                        new Form(tab1, att4, 4, 0),
-                        new Form(tab1, att5, 5, 0),
-                        new Form(tab2, att1, 1, 3),
-                        new Form(tab2, att2, 2, 1),
-                        new Form(tab2, att3, 3, 2),
-                        new Form(tab2, att4, 4, 0),
-                        new Form(tab2, att5, 5, 0)
-                        );
+                        context.FormTabs.AddRange(new FormTab(tab1, form1),new FormTab(tab2, form2));
 
                         // # add default departments
                         var Dept1 = new Department("Root", "Root group system");
@@ -88,7 +88,7 @@ namespace TabHelper.Data.Seeder
                             );
 
                         // # default tabulations in departments
-                        context.DepartmentTabulations.AddRange(new DepartTab(Dept1, tab1), new DepartTab(Dept2, tab1), new DepartTab(Dept3, tab2));
+                        context.DepartTabs.AddRange(new DepartTab(Dept1, tab1), new DepartTab(Dept2, tab1), new DepartTab(Dept3, tab2));
                     }
 
                     await context.SaveChangesAsync();

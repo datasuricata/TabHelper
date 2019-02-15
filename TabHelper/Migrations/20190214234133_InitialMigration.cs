@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TabHelper.Migrations
 {
-    public partial class InititalMigration : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -26,7 +26,7 @@ namespace TabHelper.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "FormAttributes",
+                name: "Forms",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -35,16 +35,11 @@ namespace TabHelper.Migrations
                     CreatedAt = table.Column<DateTimeOffset>(nullable: true),
                     UpdatedAt = table.Column<DateTimeOffset>(nullable: true),
                     Name = table.Column<string>(nullable: true),
-                    ComponentType = table.Column<int>(nullable: false),
-                    IsNumeric = table.Column<bool>(nullable: false),
-                    Title = table.Column<string>(nullable: true),
-                    Value = table.Column<string>(nullable: true),
-                    Info = table.Column<string>(nullable: true),
-                    Detail = table.Column<string>(nullable: true)
+                    Code = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FormAttributes", x => x.Id);
+                    table.PrimaryKey("PK_Forms", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -96,8 +91,8 @@ namespace TabHelper.Migrations
                     Email = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: true),
                     IsBlock = table.Column<bool>(nullable: false),
-                    DepartmentId = table.Column<int>(nullable: true),
-                    UserAccess = table.Column<int>(nullable: false)
+                    UserAccess = table.Column<int>(nullable: false),
+                    DepartmentId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -107,11 +102,42 @@ namespace TabHelper.Migrations
                         column: x => x.DepartmentId,
                         principalTable: "Departments",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "DepartmentTabulations",
+                name: "FormAttributes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(nullable: true),
+                    UpdatedAt = table.Column<DateTimeOffset>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    ComponentType = table.Column<int>(nullable: false),
+                    IsNumeric = table.Column<bool>(nullable: false),
+                    Order = table.Column<int>(nullable: false),
+                    Repeat = table.Column<int>(nullable: false),
+                    Title = table.Column<string>(nullable: true),
+                    Value = table.Column<string>(nullable: true),
+                    Info = table.Column<string>(nullable: true),
+                    Detail = table.Column<string>(nullable: true),
+                    FormId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FormAttributes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FormAttributes_Forms_FormId",
+                        column: x => x.FormId,
+                        principalTable: "Forms",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DepartTabs",
                 columns: table => new
                 {
                     DepartmentId = table.Column<int>(nullable: false),
@@ -119,15 +145,15 @@ namespace TabHelper.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DepartmentTabulations", x => new { x.DepartmentId, x.TabulationId });
+                    table.PrimaryKey("PK_DepartTabs", x => new { x.DepartmentId, x.TabulationId });
                     table.ForeignKey(
-                        name: "FK_DepartmentTabulations_Departments_DepartmentId",
+                        name: "FK_DepartTabs_Departments_DepartmentId",
                         column: x => x.DepartmentId,
                         principalTable: "Departments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_DepartmentTabulations_Tabulations_TabulationId",
+                        name: "FK_DepartTabs_Tabulations_TabulationId",
                         column: x => x.TabulationId,
                         principalTable: "Tabulations",
                         principalColumn: "Id",
@@ -135,25 +161,23 @@ namespace TabHelper.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Forms",
+                name: "FormTabs",
                 columns: table => new
                 {
                     TabulationId = table.Column<int>(nullable: false),
-                    FormAttributeId = table.Column<int>(nullable: false),
-                    Order = table.Column<int>(nullable: false),
-                    Repeat = table.Column<int>(nullable: false)
+                    FormId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Forms", x => new { x.TabulationId, x.FormAttributeId });
+                    table.PrimaryKey("PK_FormTabs", x => new { x.TabulationId, x.FormId });
                     table.ForeignKey(
-                        name: "FK_Forms_FormAttributes_FormAttributeId",
-                        column: x => x.FormAttributeId,
-                        principalTable: "FormAttributes",
+                        name: "FK_FormTabs_Forms_FormId",
+                        column: x => x.FormId,
+                        principalTable: "Forms",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Forms_Tabulations_TabulationId",
+                        name: "FK_FormTabs_Tabulations_TabulationId",
                         column: x => x.TabulationId,
                         principalTable: "Tabulations",
                         principalColumn: "Id",
@@ -161,14 +185,19 @@ namespace TabHelper.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_DepartmentTabulations_TabulationId",
-                table: "DepartmentTabulations",
+                name: "IX_DepartTabs_TabulationId",
+                table: "DepartTabs",
                 column: "TabulationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Forms_FormAttributeId",
-                table: "Forms",
-                column: "FormAttributeId");
+                name: "IX_FormAttributes_FormId",
+                table: "FormAttributes",
+                column: "FormId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FormTabs_FormId",
+                table: "FormTabs",
+                column: "FormId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_DepartmentId",
@@ -179,10 +208,13 @@ namespace TabHelper.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "DepartmentTabulations");
+                name: "DepartTabs");
 
             migrationBuilder.DropTable(
-                name: "Forms");
+                name: "FormAttributes");
+
+            migrationBuilder.DropTable(
+                name: "FormTabs");
 
             migrationBuilder.DropTable(
                 name: "Historics");
@@ -191,7 +223,7 @@ namespace TabHelper.Migrations
                 name: "Users");
 
             migrationBuilder.DropTable(
-                name: "FormAttributes");
+                name: "Forms");
 
             migrationBuilder.DropTable(
                 name: "Tabulations");

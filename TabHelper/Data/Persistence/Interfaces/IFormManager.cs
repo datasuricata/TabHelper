@@ -6,17 +6,6 @@ namespace TabHelper.Data.Persistence.Interfaces
 {
     public interface IFormManager
     {
-        IEnumerable<FormAttribute> ListFormAtt();
-        IEnumerable<FormAttribute> ListFormAttF();
-        IQueryable<FormAttribute> QueryFormAtt();
-        FormAttribute Create(FormAttribute entity);
-
-        IEnumerable<Form> ListForms();
-        IEnumerable<Form> ListFormsF();
-        IQueryable<Form> QueryForms();
-
-        IEnumerable<Tabulation> ListTabs();
-        IEnumerable<Tabulation> ListTabsF();
-        IQueryable<Tabulation> QueryTabs();
+        
     }
 }

@@ -5,7 +5,6 @@ namespace TabHelper.Models.ViewModel
 {
     public class FormViewModel
     {
-        public List<FormAttModel> FormAttibutes { get; set; } = new List<FormAttModel>();
         public List<FormModel> Forms { get; set; } = new List<FormModel>();
     }
 
@@ -13,8 +12,10 @@ namespace TabHelper.Models.ViewModel
     {
         public int Id { get; set; }
         public int Order { get; set; }
+        public int Repeat { get; set; }
         public string Name { get; set; }
         public ComponentType ComponentType { get; set; }
+
 
         public string Title { get; set; }
         public string Value { get; set; }
@@ -24,7 +25,7 @@ namespace TabHelper.Models.ViewModel
 
         public bool IsDeleted { get; set; }
         public bool IsNumeric { get; set; }
-        public int TabulationId { get; set; }
+        public int FormId { get; set; }
 
         public static explicit operator FormAttModel(FormAttribute v)
         {
@@ -38,31 +39,47 @@ namespace TabHelper.Models.ViewModel
                 Name = v.Name,
                 Title = v.Title,
                 Value = v.Value,
+                IsNumeric = v.IsNumeric,
+                Order = v.Order,
+                Repeat = v.Repeat,
+                FormId = v.FormId,
+            };
+        }
+    }
+
+    public class FormTabModel
+    {
+        public int TabulationId { get; set; }
+        public TabModel Tabulation { get; set; }
+
+        public int FormId { get; set; }
+        public FormModel Form { get; set; }
+
+        public static explicit operator FormTabModel(FormTab v)
+        {
+            return v is null ? null : new FormTabModel
+            {
+                Tabulation = (TabModel)v.Tabulation,
+                TabulationId = v.TabulationId,
+                Form = (FormModel)v.Form,
+                FormId = v.FormId,
             };
         }
     }
 
     public class FormModel
     {
-        public int TabulationId { get; set; }
-        public TabModel Tabulation { get; set; }
-
-        public int FormAttributeId { get; set; }
-        public FormAttModel FormAttribute { get; set; }
-
-        public int Order { get; set; }
-        public int Repeat { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Code { get; set; }
 
         public static explicit operator FormModel(Form v)
         {
-            return v is null ? null : new FormModel
+            return v == null ? null : new FormModel
             {
-                FormAttribute = (FormAttModel)v.FormAttribute,
-                FormAttributeId = v.FormAttributeId,
-                Order = v.Order,
-                Repeat = v.Repeat,
-                Tabulation = (TabModel)v.Tabulation,
-                TabulationId = v.TabulationId,
+                Id = v.Id,
+                Code = v.Code,
+                Name = v.Name,
             };
         }
     }

@@ -26,11 +26,8 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6">
-            @await Html.PartialAsync("../Forms/ListAtts.cshtml", Model)
-        </div>
-        <div class="col-md-6">
-            @await Html.PartialAsync("../Forms/ListForms.cshtml", Model)
+        <div class="col-md-12">
+            @await Html.PartialAsync("../Forms/List.cshtml", Model)
         </div>
     </div>
 </div>
@@ -65,3 +62,4 @@
             <partial name="Delete"/>
         </div>
     </div>*@
+

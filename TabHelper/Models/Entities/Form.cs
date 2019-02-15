@@ -1,77 +1,47 @@
+ï»¿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using TabHelper.Models.Base;
 using TabHelper.Services;
 
 namespace TabHelper.Models.Entities
 {
-    public class Form
+    public class Form : EntityBase
     {
         #region [ properties ]
 
-        public int TabulationId { get; private set; }
-        public Tabulation Tabulation {get; private set; }
+        public string Name { get; private set; }
+        public string Code { get; private set; }
 
-        public int FormAttributeId { get; private set; }
-        public FormAttribute FormAttribute { get; private set; }
-
-        public int Order { get; private set; }
-        public int Repeat { get; private set; }
+        public ICollection<FormTab> FormTabs { get; private set; } = new Collection<FormTab>();
+        public ICollection<FormAttribute> Attributes { get; private set; } = new Collection<FormAttribute>();
 
         #endregion
 
         #region [ ctor ]
 
-        public Form()
+        protected Form()
         {
 
         }
-
-        public Form(Tabulation tabulation, FormAttribute tabulationAttributes, int order, int repeat)
+        public Form(string name, string code)
         {
-            Validate(tabulation, tabulationAttributes, order);
-            SetProperties(tabulation, tabulationAttributes, order, repeat);
-        }
-
-        public Form(int tabulationId, int tabulationAttributesId, int order, int repeat)
-        {
-            Validate(tabulationId, tabulationAttributesId, order);
-            SetProperties(tabulationId, tabulationAttributesId, order, repeat);
+            Validate(name, code);
+            SetProperties(name, code);
         }
 
         #endregion
 
         #region [ methods ]
 
-        private void Validate(int tabulationId, int tabulationAttributesId, int order)
+        private void Validate(string name, string code)
         {
-            DomainValidation.When(tabulationId == 0, "Selecione uma tabulação para criar o formulário");
-            DomainValidation.When(tabulationAttributesId == 0, "Selecione o atributo que deseja adicionar no formulário");
-            DomainValidation.When(order == 0, "Ordem do componente deve ser maior que 0");
+            DomainValidation.When(string.IsNullOrEmpty(name), "Nome Ã© obrigatÃ³rio");
+            DomainValidation.When(string.IsNullOrEmpty(code), "Identificador Ã© obrigatÃ³rio");
         }
-        private void Validate(Tabulation tabulation, FormAttribute tabulationAttributes, int order)
+        private void SetProperties(string name, string code)
         {
-            DomainValidation.When(tabulation is null, "Selecione uma tabulação para criar o formulário");
-            DomainValidation.When(tabulationAttributes is null, "Selecione o atributo que deseja adicionar no formulário");
-            DomainValidation.When(order == 0, "Ordem do componente deve ser maior que 0");
-        }
-
-        private void SetProperties(int tabulationId, int tabulationAttributesId, int order, int repeat)
-        {
-            TabulationId = tabulationId;
-            FormAttributeId = tabulationAttributesId;
-            Order = order;
-            Repeat = repeat;
-        }
-        private void SetProperties(Tabulation tabulation, FormAttribute tabulationAttributes, int order, int repeat)
-        {
-            Tabulation = tabulation;
-            FormAttribute = tabulationAttributes;
-            Order = order;
-            Repeat = repeat;
-        }
-
-        public void ChangeOrder(int order)
-        {
-            Order = order;
+            Name = name;
+            Code = code;
         }
 
         #endregion
