@@ -1,4 +1,5 @@
 @model TabHelper.Models.ViewModel.FormModel
+@using TabHelper.Helpers
 
 @{
     Layout = null;
@@ -31,13 +32,55 @@
                     </div>
                 </fieldset>
             </div>
+
+            <div class="well text-center" style="border-color:#029acf">
+
+                <div class="form-group">
+                    <fieldset style="margin-bottom:10px;">
+                        <a class="btn btn-default btn-xs" style="width:66%;border-radius:12px;" id="addComponent">Adicionar entrada</a>
+                    </fieldset>
+                </div>
+
+                <div class="row">
+                    <div id="faq" class="attrCollapse" role="tablist" aria-multiselectable="true">
+  
+                    </div>
+                </div>
+
+
+
+            </div>
             <div class="text-right">
                 <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Cancelar</button>
                 <button type="button" class="btn btn-info btn-sm">Salvar alterações</button>
             </div>
         </form>
     </div>
-    <div class="modal-footer">
-
-    </div>
+    <div class="modal-footer"></div>
 </div>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<script>
+    $(function () {
+        $("#addComponent").click(function () {
+            $(".attrCollapse").append("<div class='col-md-12 form_div'></div>");
+            $("<div class='panel panel-default form_panel'><div>").appendTo(".form_div");
+            $("<div class='panel-heading form_panel_h' role='tab' id='questionOne'><div>").appendTo(".form_panel");
+            $("<h5 class='panel-title form_panel_h_1'></h5>").appendTo(".form_panel_h");
+            $("<a data-toggle='collapse' class='badge' data-parent='#faq' href='#answerOne' style='width:80%;height:100%' aria-expanded='false' aria-controls='answerOne'>Atributo 1</a><a class='btn btn-primary btn-xs removeComponent' style='width:26px;height:8px;float:right;margin-top:6px;border-radius:20px'></a>").appendTo(".form_panel_h_1");
+            $("<div id='answerOne' class='panel-collapse collapse form_panel_h_2' role='tabpanel' aria-labelledby='questionOne'></div>").appendTo(".form_panel_h");
+            $("<div class='panel-body'>Answer 1...</div>").appendTo(".form_panel_h_2");
+            
+            //  $(".asdasdasd").fadeToggle("fast");
+        });
+    });
+</script>
+
+<script>
+    $(function () {
+        $(".attrCollapse p").click(function () {
+            $(this).remove();
+        });
+    });
+</script>

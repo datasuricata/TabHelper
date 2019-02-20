@@ -17,53 +17,52 @@
                 <strong>Inserir novo atributo de formulário</strong>
             </div>
             <div class="well text-center" style="border-color:#029acf">
-                <fieldset>
-                    <div class="form-group">
-                        <label for="select" class="col-lg-3 control-label">Tipo de Componente</label>
-                        <div class="col-lg-9">
-                            <select class="form-control input-sm" asp-for="ComponentType" asp-items="Utils.GetComponentType()"></select>
+                @*<fieldset>
+                        <div class="form-group">
+                            <label for="select" class="col-lg-3 control-label">Tipo de Componente</label>
+                            <div class="col-lg-9">
+                                <select class="form-control input-sm" asp-for="ComponentType" asp-items="Utils.GetComponentType()"></select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label" for="inputSmall">Nome Identificador</label>
-                        <div class="col-lg-9">
-                            <input style="margin-top: 10px;" class="form-control input-sm" asp-for="Name" type="text" placeholder="">
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label" for="inputSmall">Nome Identificador</label>
+                            <div class="col-lg-9">
+                                <input style="margin-top: 10px;" class="form-control input-sm" asp-for="Name" type="text" placeholder="">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label" for="inputSmall">Titulo do Componente</label>
-                        <div class="col-lg-9">
-                            <input style="margin-top: 10px;" class="form-control input-sm" asp-for="Title" type="text" placeholder="">
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label" for="inputSmall">Titulo do Componente</label>
+                            <div class="col-lg-9">
+                                <input style="margin-top: 10px;" class="form-control input-sm" asp-for="Title" type="text" placeholder="">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label" for="inputSmall">Informações de Ajuda</label>
-                        <div class="col-lg-9">
-                            <input style="margin-top: 10px;" class="form-control input-sm" asp-for="Info" type="text" placeholder="">
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label" for="inputSmall">Informações de Ajuda</label>
+                            <div class="col-lg-9">
+                                <input style="margin-top: 10px;" class="form-control input-sm" asp-for="Info" type="text" placeholder="">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="textArea" class="col-lg-3 control-label">Detalhes</label>
-                        <div class="col-lg-9">
-                            <textarea style="margin-top: 10px;" class="form-control" rows="3" asp-for="Detail" placeholder="Equipe do receptivo de vendas. bloco 01"></textarea>
-                            <span class="help-block">Informe uma breve descrição que defina a entidade</span>
+                        <div class="form-group">
+                            <label for="textArea" class="col-lg-3 control-label">Detalhes</label>
+                            <div class="col-lg-9">
+                                <textarea style="margin-top: 10px;" class="form-control" rows="3" asp-for="Detail" placeholder="Equipe do receptivo de vendas. bloco 01"></textarea>
+                                <span class="help-block">Informe uma breve descrição que defina a entidade</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label" for="asdas">É numérico?</label>
-                        <div class="col-lg-9">
-                            <input style="margin-top: 10px;" class="checkbox" asp-for="IsNumeric" type="checkbox" />
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label" for="asdas">É numérico?</label>
+                            <div class="col-lg-9">
+                                <input style="margin-top: 10px;" class="checkbox" asp-for="IsNumeric" type="checkbox" />
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label" for="asdas">Valor Customizado</label>
-                        <div class="col-lg-9">
-                            <input style="margin-top: 10px;" class="form-control input-sm" asp-for="Value" type="text" placeholder="10" />
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label" for="asdas">Valor Customizado</label>
+                            <div class="col-lg-9">
+                                <input style="margin-top: 10px;" class="form-control input-sm" asp-for="Value" type="text" placeholder="10" />
+                            </div>
                         </div>
-                    </div>
-                </fieldset>
+                    </fieldset>*@
             </div>
-
 
             <div class="well text-center" style="border-color:#029acf">
                 <fieldset>
@@ -71,21 +70,6 @@
                         <label for="select" class="col-lg-3 control-label">Selecione um Formulário</label>
                         <div class="col-lg-9">
                             <select class="form-control input-sm" asp-for="FormId" asp-items="@ViewBag.Forms as List<SelectListItem>"></select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <p>
-                            <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                Link with href
-                            </a>
-                            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                Button with data-target
-                            </button>
-                        </p>
-                        <div class="collapse well" id="collapseExample" style="border-color:#029acf">
-                            <div class="card card-body">
-                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-                            </div>
                         </div>
                     </div>
                 </fieldset>
@@ -101,3 +85,5 @@
 
     </div>
 </div>
+
+
