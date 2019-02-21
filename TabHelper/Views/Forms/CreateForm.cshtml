@@ -43,10 +43,9 @@
 
                 <div class="row">
                     <div id="faq" class="attrCollapse" role="tablist" aria-multiselectable="true">
-  
+
                     </div>
                 </div>
-
 
 
             </div>
@@ -58,29 +57,25 @@
     </div>
     <div class="modal-footer"></div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
-<script src="~/lib/jquery/dist/jquery.js"></script>
-
+@*<script src="~/lib/jquery/dist/jquery.js"></script>*@
 <script>
-    $(function () {
+    $(function (){
         $("#addComponent").click(function () {
-            $(".attrCollapse").append("<div class='col-md-12 form_div'></div>");
-            $("<div class='panel panel-default form_panel'><div>").appendTo(".form_div");
-            $("<div class='panel-heading form_panel_h' role='tab' id='questionOne'><div>").appendTo(".form_panel");
-            $("<h5 class='panel-title form_panel_h_1'></h5>").appendTo(".form_panel_h");
-            $("<a data-toggle='collapse' class='badge' data-parent='#faq' href='#answerOne' style='width:80%;height:100%' aria-expanded='false' aria-controls='answerOne'>Atributo 1</a><a class='btn btn-primary btn-xs removeComponent' style='width:26px;height:8px;float:right;margin-top:6px;border-radius:20px'></a>").appendTo(".form_panel_h_1");
-            $("<div id='answerOne' class='panel-collapse collapse form_panel_h_2' role='tabpanel' aria-labelledby='questionOne'></div>").appendTo(".form_panel_h");
-            $("<div class='panel-body'>Answer 1...</div>").appendTo(".form_panel_h_2");
-            
-            //  $(".asdasdasd").fadeToggle("fast");
+
+            $.ajax({
+                url: '/Filter',
+                data: {
+                    FilterBy: filterByValue
+                }
+            })
+                .done(function (result) { } 
+
+            @*$(".attrCollapse").append("@(ViewBag.Component)");*@
         });
     });
 </script>
 
-<script>
-    $(function () {
-        $(".attrCollapse p").click(function () {
-            $(this).remove();
-        });
-    });
-</script>
+
+

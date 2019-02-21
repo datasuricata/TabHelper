@@ -4,6 +4,8 @@ using TabHelper.Data.ORM;
 using TabHelper.Data.Persistence;
 using TabHelper.Data.Persistence.Interfaces;
 using TabHelper.Data.Transaction;
+using TabHelper.Services;
+using TabHelper.Services.Interfaces;
 
 namespace TabHelper.DI
 {
@@ -22,6 +24,9 @@ namespace TabHelper.DI
             /// </summary>
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped(typeof(IFormManager), typeof(FormManager));
+
+            // # render view service
+            services.AddScoped(typeof(IViewRender), typeof(ViewRender));
         }
     }
 }

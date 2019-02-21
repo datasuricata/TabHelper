@@ -41,6 +41,11 @@ namespace TabHelper.Helpers
             return attribute == null ? value.ToString() : attribute.Description;
         }
 
+        public static string AjustHtml(this string value)
+        {
+            return value.Replace(Environment.NewLine, "").Replace("\"", "'");
+        }
+
         #region [ components ]
 
         public static List<SelectListItem> GetAccessDropdown()
