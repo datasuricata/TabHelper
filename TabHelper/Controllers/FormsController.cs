@@ -45,7 +45,6 @@ namespace TabHelper.Controllers
             try
             {
                 var forms = formRepo.List().ToList();
-                ViewBag.Component = new HtmlString(viewRender.Render("Forms/Attribute", new object()).AjustHtml());
                 return View(new FormViewModel { Forms = forms.ConvertAll(e => (FormModel)e) });
             }
             catch (Exception e)
@@ -79,16 +78,21 @@ namespace TabHelper.Controllers
             }
         }
 
-        public HtmlString Attribute()
+        //public JsonResult Attribute()
+        //{
+        //    try
+        //    {
+        //        return new JsonResult(), success = true);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        SetMessage(e.Message, MsgType.Error); return null;
+        //    }
+        //}
+
+        public IActionResult Attribute()
         {
-            try
-            {
-                return new HtmlString(viewRender.Render("Forms/Attribute", new object()).AjustHtml());
-            }
-            catch (Exception e)
-            {
-                SetMessage(e.Message, MsgType.Error); return null;
-            }
+            return new JsonResult(new HtmlString(viewRender.Render("Forms/Attribute", new object()).AjustHtml()));
         }
 
         #endregion

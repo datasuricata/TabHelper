@@ -47,7 +47,6 @@
                     </div>
                 </div>
 
-
             </div>
             <div class="text-right">
                 <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Cancelar</button>
@@ -57,24 +56,22 @@
     </div>
     <div class="modal-footer"></div>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
-@*<script src="~/lib/jquery/dist/jquery.js"></script>*@
+<script src="~/lib/jquery/dist/jquery.js"></script>
 <script>
-    $(function (){
-        $("#addComponent").click(function () {
+        $(function (){
+            $("#addComponent").click(function () {
 
-            $.ajax({
-                url: '/Filter',
-                data: {
-                    FilterBy: filterByValue
-                }
-            })
-                .done(function (result) { } 
-
-            @*$(".attrCollapse").append("@(ViewBag.Component)");*@
+                $.ajax({
+                    url: 'Forms/Attribute',
+                })
+                    .done(function (result) {
+                        console.log(result);
+                        $(".attrCollapse").append(result.value);
+                    });
         });
-    });
+                @*$(".attrCollapse").append("@(ViewBag.Component)");*@
+            });
 </script>
 
 
