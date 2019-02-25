@@ -33,15 +33,15 @@
     </div>
 </div>
 
-<div class="modal" id="createatt">
+@*<div class="modal" id="createatt">
     <div class="modal-dialog">
         @await Html.PartialAsync("../Forms/CreateAtt.cshtml", new FormAttModel())
     </div>
-</div>
+</div>*@
 
 <div class="modal" id="createform">
     <div class="modal-dialog">
-        @await Html.PartialAsync("../Forms/CreateForm.cshtml", new FormModel())
+        @await Html.PartialAsync("../Forms/CreateForm.cshtml", new CreateForm())
     </div>
 </div>
 

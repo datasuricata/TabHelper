@@ -1,21 +1,68 @@
-﻿
+﻿@model TabHelper.Models.ComponentModel.ComponentBase
+
+@using TabHelper.Helpers
+
 @{
     Layout = null;
+    var cont = Guid.NewGuid().ToString().Substring(0, 5);
 }
 
 <div class="panel panel-default">
-    <div class="panel-heading" role="tab" id="questionOne">
+    <div class="panel-heading" role="tab" id="@string.Concat("questionOne", cont)">
         <h5 class="panel-title">
-            <a data-toggle="collapse" data-parent="#faq" href="#answerOne" aria-expanded="false" aria-controls="answerOne">
-                Atributo 1
+            <a data-toggle="collapse" data-parent="#faq" href="#@string.Concat("answerOne", cont)" aria-expanded="false" aria-controls="@string.Concat("answerOne", cont)">
+                Atributo de Formulário @ViewBag.CounterStrike
             </a>
+            <a class="btn btn-primary badge" style="width:30px;margin-left: 40px;"></a>
         </h5>
     </div>
-    <div id="answerOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="questionOne">
+    <div id="@string.Concat("answerOne", cont)" class="panel-collapse collapse" role="tabpanel" aria-labelledby="@string.Concat("questionOne", cont)">
         <div class="panel-body">
-            AQUI VAI A PORRA TODA
-            <br />
-            PORRA TODA
+            <fieldset>
+                <div class="form-group">
+                    <label for="select" class="col-lg-3 control-label">Tipo de Componente</label>
+                    <div class="col-lg-9">
+                        <select class="form-control input-sm" name="Attributes[@Model.Counter].ComponentType" asp-items="Utils.GetComponentType()"></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label" for="inputSmall">Nome Identificador</label>
+                    <div class="col-lg-9">
+                        <input style="margin-top: 10px;" class="form-control input-sm" name="Attributes[@Model.Counter].Name" type="text" placeholder="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label" for="inputSmall">Titulo do Componente</label>
+                    <div class="col-lg-9">
+                        <input style="margin-top: 10px;" class="form-control input-sm" name="Attributes[@Model.Counter].Title" type="text" placeholder="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label" for="inputSmall">Informações de Ajuda</label>
+                    <div class="col-lg-9">
+                        <input style="margin-top: 10px;" class="form-control input-sm" name="Attributes[@Model.Counter].Info" type="text" placeholder="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="textArea" class="col-lg-3 control-label">Detalhes</label>
+                    <div class="col-lg-9">
+                        <textarea style="margin-top: 10px;" class="form-control" rows="3" name="Attributes[@Model.Counter].Detail" placeholder="Equipe do receptivo de vendas. bloco 01"></textarea>
+                        <span class="help-block">Informe uma breve descrição que defina a entidade</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label" for="asdas">É numérico?</label>
+                    <div class="col-lg-9">
+                        <input style="margin-top: 10px;" class="checkbox" name="Attributes[@Model.Counter].IsNumeric" type="checkbox" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label" for="asdas">Valor Customizado</label>
+                    <div class="col-lg-9">
+                        <input style="margin-top: 10px;" class="form-control input-sm" name="Attributes[@Model.Counter].Value" type="text" placeholder="10" />
+                    </div>
+                </div>
+            </fieldset>
         </div>
     </div>
 </div>
