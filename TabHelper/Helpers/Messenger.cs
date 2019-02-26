@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Collections.Generic;
+using System.Reflection;
 
 namespace TabHelper.Helpers
 {
@@ -44,6 +45,17 @@ namespace TabHelper.Helpers
                 value = GetPropModel(obj, value, p);
 
             return $"{value} foi desativado com sucesso.";
+        }
+
+        public static string CreatedRange<T>(IEnumerable<T> objs)
+        {
+            var value = string.Empty;
+
+            foreach(var obj in objs)
+                foreach (var p in obj.GetType().GetProperties())
+                    value += ", " + GetPropModel(obj, value, p);
+
+            return $"{value} entidades relacionadas com sucesso.";
         }
 
         #endregion

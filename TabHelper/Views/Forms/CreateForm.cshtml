@@ -42,7 +42,7 @@
 
                 <div class="row">
                     <div id="faq" class="attrCollapse" role="tablist" aria-multiselectable="true">
-
+                        @*<APPEND WORKS HERE>*@
                     </div>
                 </div>
 
@@ -65,9 +65,7 @@
                 url: 'Forms/Attribute/?count=' + count,
             })
                 .done(function (result) {
-
                     count++;
-
                     $(".attrCollapse").append(result.value);
             });
         });

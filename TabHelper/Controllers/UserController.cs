@@ -44,7 +44,7 @@ namespace TabHelper.Controllers
             }
             catch (Exception e)
             {
-                SetMessage(e.Message, MsgType.Error); return RedirectToAction("Index", "Dash");
+                SetMessage(e.Message, MsgType.Error); return RedirectToAction("Error");
             }
         }
 

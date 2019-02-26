@@ -15,6 +15,8 @@ namespace TabHelper.Data.Persistence.Interfaces
         TEntity SoftExclude(TEntity entity);
         TEntity Exclude(TEntity entity);
 
+        IEnumerable<TEntity> CreateRange(IEnumerable<TEntity> entities);
+
         int Count();
         Task<int> SaveAsync();
     }

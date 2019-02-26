@@ -50,6 +50,12 @@ namespace TabHelper.Data.Persistence
             return entity;
         }
 
+        public virtual IEnumerable<TEntity> CreateRange(IEnumerable<TEntity> entities)
+        {
+            db.Set<TEntity>().AddRange(entities);
+            return entities;
+        }
+
         public virtual TEntity Update(TEntity entity)
         {
             db.Set<TEntity>().Attach(entity);

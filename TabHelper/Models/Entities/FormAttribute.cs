@@ -27,6 +27,11 @@ namespace TabHelper.Models.Entities
 
         #region [ ctor ]
 
+        protected FormAttribute()
+        {
+
+        }
+
         /// <summary>
         /// Return new attribute for tabulation form
         /// </summary>
@@ -42,21 +47,6 @@ namespace TabHelper.Models.Entities
             Validate(formId, name, title);
             SetProperties(formId, name, componentType, title, value, info, detail, isnumeric, order, repeat);
         }
-        public FormAttribute(Form form, string name, ComponentType componentType, string title, string value, string info, string detail, bool isnumeric, int order, int repeat)
-        {
-            Validate(form, name, title);
-            SetProperties(form, name, componentType, title, value, info, detail, isnumeric, order, repeat);
-        }
-
-        protected FormAttribute()
-        {
-
-        }
-
-        #endregion
-
-        #region [ methods ]
-
         private void Validate(int formId, string name, string title)
         {
             DomainValidation.When(formId == 0, "É necessário vincular um formulário");
@@ -77,6 +67,11 @@ namespace TabHelper.Models.Entities
             FormId = formId;
         }
 
+        public FormAttribute(Form form, string name, ComponentType componentType, string title, string value, string info, string detail, bool isnumeric, int order, int repeat)
+        {
+            Validate(form, name, title);
+            SetProperties(form, name, componentType, title, value, info, detail, isnumeric, order, repeat);
+        }
         private void Validate(Form form, string name, string title)
         {
             DomainValidation.When(string.IsNullOrEmpty(name), "Defina um nome para seu atributo");
@@ -97,9 +92,31 @@ namespace TabHelper.Models.Entities
             Form = form;
         }
 
+        #endregion
+
+        #region [ methods ]
+
         public void ChangeOrder(int order)
         {
             Order = order;
+        }
+        public void Edit(string name, ComponentType componentType, string title, string value, string info, string detail, bool isnumeric, int order, int repeat)
+        {
+            
+            Name = name;
+            ComponentType = componentType;
+            Title = title;
+            Value = value;
+            Info = info;
+            Detail = detail;
+            IsNumeric = isnumeric;
+            Order = order;
+            Repeat = repeat;
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
 
         #endregion

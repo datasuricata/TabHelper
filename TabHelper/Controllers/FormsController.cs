@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using TabHelper.Data.Persistence.Interfaces;
@@ -23,7 +23,6 @@ namespace TabHelper.Controllers
         private readonly IRepository<Form> formRepo;
         private readonly IRepository<FormAttribute> formAttRepo;
         private readonly IViewRender viewRender;
-
 
         #endregion
 
@@ -50,16 +49,47 @@ namespace TabHelper.Controllers
             }
             catch (Exception e)
             {
-                SetMessage(e.Message, MsgType.Error); return RedirectToAction("Index", "Dash");
+                SetMessage(e.Message, MsgType.Error); return RedirectToAction("Error");
             }
         }
 
+        /// <summary>
+        /// Load Attribute rendered form via service
+        /// </summary>
+        /// <param name="count"></param>
+        /// <returns>Json Result</returns>
         public IActionResult Attribute(int count)
         {
             try
             {
-                return new JsonResult(new HtmlString(viewRender.Render("Forms/Attribute", 
+                return new JsonResult(new HtmlString(viewRender.Render("Forms/Attribute",
                     new ComponentBase { Counter = count }).AjustHtml()));
+            }
+            catch (Exception e)
+            {
+                SetMessage(e.Message, MsgType.Error); return RedirectToAction("Index");
+            }
+        }
+
+        public IActionResult EditForm(int id)
+        {
+            try
+            {
+                var form = formRepo.GetById(id);
+                return View((FormModel)form);
+            }
+            catch (Exception e)
+            {
+                SetMessage(e.Message, MsgType.Error); return RedirectToAction("Index");
+            }
+        }
+
+        public IActionResult EditAttribute(int id)
+        {
+            try
+            {
+                var att = formAttRepo.GetById(id);
+                return View((FormAttModel)att);
             }
             catch (Exception e)
             {
@@ -73,10 +103,61 @@ namespace TabHelper.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateForm(CreateForm viewModel)
+        public IActionResult CreateForm(FormManager form)
         {
             try
             {
+                var entity = new Form(form.Form.Name, form.Form.Code);
+
+                var attrs = form.Attributes.Select(x => new FormAttribute(
+                        entity, x.Name, x.ComponentType, x.Title, x.Value,
+                        x.Info, x.Detail, x.IsNumeric, x.Order, x.Repeat
+                    )).ToList();
+
+                SetMessage(Messenger.Created(formRepo.Create(entity)), MsgType.Success);
+                formAttRepo.CreateRange(attrs);
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                SetMessage(e.Message, MsgType.Error); return RedirectToAction("Index");
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditForm(FormModel form)
+        {
+            try
+            {
+                var entity = formRepo.GetById(form.Id);
+                entity.Edit(form.Name, form.Code);
+
+                SetMessage(Messenger.Changed(formRepo.Update(entity)), MsgType.Info);
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                SetMessage(e.Message, MsgType.Error); return RedirectToAction("Index");
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditFormAtt(FormAttModel form)
+        {
+            try
+            {
+                var attribute = formAttRepo.GetById(form.Id);
+                attribute.Edit(form.Name, form.ComponentType,
+                                form.Title, form.Value,
+                                form.Info, form.Detail,
+                                form.IsNumeric, form.Order, form.Repeat);
+
+                SetMessage(Messenger.Changed(formAttRepo.Update(attribute)), MsgType.Info);
+
                 return RedirectToAction("Index");
             }
             catch (Exception e)

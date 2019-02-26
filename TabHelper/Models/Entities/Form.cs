@@ -23,16 +23,12 @@ namespace TabHelper.Models.Entities
         {
 
         }
+
         public Form(string name, string code)
         {
             Validate(name, code);
             SetProperties(name, code);
         }
-
-        #endregion
-
-        #region [ methods ]
-
         private void Validate(string name, string code)
         {
             DomainValidation.When(string.IsNullOrEmpty(name), "Nome é obrigatório");
@@ -42,6 +38,39 @@ namespace TabHelper.Models.Entities
         {
             Name = name;
             Code = code;
+        }
+
+        public Form(string name, string code, IEnumerable<FormAttribute> attributes)
+        {
+            Validate(name, code, attributes);
+            SetProperties(name, code, attributes);
+        }
+        private void Validate(string name, string code, IEnumerable<FormAttribute> attributes)
+        {
+            Validate(name, code);
+            DomainValidation.When(attributes is null, "Crie pelo menos um atributo");
+        }
+        private void SetProperties(string name, string code, IEnumerable<FormAttribute> attributes)
+        {
+            SetProperties(name, code);
+            Attributes = attributes as ICollection<FormAttribute>;
+        }
+
+        #endregion
+
+        #region [ methods ]
+
+        public void Edit(string name, string code)
+        {
+            Validate(name, code);
+
+            Name = name;
+            Code = code;
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
 
         #endregion
