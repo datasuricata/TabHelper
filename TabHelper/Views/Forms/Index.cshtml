@@ -24,42 +24,35 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6">
-            @await Html.PartialAsync("../Forms/List.cshtml", Model)
-        </div>
-        <div class="col-md-6">
+        <div class="col-md-12">
             @await Html.PartialAsync("../Forms/List.cshtml", Model)
         </div>
     </div>
 </div>
 
-@*<div class="modal" id="createatt">
-    <div class="modal-dialog">
-        @await Html.PartialAsync("../Forms/CreateAtt.cshtml", new FormAttModel())
-    </div>
-</div>*@
-
+@*<CREATE FORM>*@
 <div class="modal" id="createform">
     <div class="modal-dialog">
-        @await Html.PartialAsync("../Forms/CreateForm.cshtml", new CreateForm())
+        @await Html.PartialAsync("../Forms/CreateForm.cshtml", new FormManager())
     </div>
 </div>
 
-@*
-    <div class="modal" id="edit">
-        <div class="modal-dialog">
-            <partial name="Edit"/>
-        </div>
+@*<EDIT FORM>*@
+<div class="modal" id="editform">
+    <div class="modal-dialog">
+        @await Html.PartialAsync("../Forms/CreateForm.cshtml", new FormManager())
     </div>
+</div>
 
-    <div class="modal" id="desactive">
-        <div class="modal-dialog">
-            <partial name="Desactive"/>
-        </div>
+@*<EDIT FORM ATTRIBUTE>*@
+<div class="modal" id="editformatt">
+    <div class="modal-dialog">
+        @await Html.PartialAsync("../Forms/EditAttribute.cshtml", new FormAttModel())
     </div>
+</div>
 
-    <div class="modal" id="delete">
-        <div class="modal-dialog">
-            <partial name="Delete"/>
-        </div>
-    </div>*@
+<div class=""
+
+
+
+

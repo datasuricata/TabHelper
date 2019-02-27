@@ -1,4 +1,4 @@
-@model TabHelper.Models.ViewModel.CreateForm
+@model TabHelper.Models.ViewModel.FormManager
 
 @{
     Layout = null;
@@ -31,7 +31,6 @@
                     </div>
                 </fieldset>
             </div>
-
             <div class="well text-center" style="border-color:#029acf">
 
                 <div class="form-group">
@@ -63,10 +62,9 @@
         $("#addComponent").click(function () {
             $.ajax({
                 url: 'Forms/Attribute/?count=' + count,
-            })
-                .done(function (result) {
-                    count++;
-                    $(".attrCollapse").append(result.value);
+            }).done(function (result) {
+                count++;
+                $(".attrCollapse").append(result.value);
             });
         });
     });
