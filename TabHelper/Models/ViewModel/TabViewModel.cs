@@ -17,6 +17,8 @@ namespace TabHelper.Models
         public string Name { get; set; }
         public string Observation { get; set; }
 
+        public bool IsCheck { get; set; }
+
         public List<FormTabModel> Forms { get; set; } = new List<FormTabModel>();
 
         public static explicit operator TabModel(Tabulation v)

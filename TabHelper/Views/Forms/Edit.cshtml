@@ -11,7 +11,7 @@
         <h4 class="modal-title">Editar formulário</h4>
     </div>
     <div class="modal-body">
-        <form class="form-horizontal">
+        <form data-ajax="true" data-ajax-method="POST" data-ajax-failure="formOnFail" data-ajax-success="window.location = '/Index'" asp-controller="Forms" asp-action="Edit" class="form-horizontal">
             <div class="well text-center" style="border-color:#029acf">
                 <strong>Atualizar informações do formulário @ViewBag.Form</strong>
             </div>

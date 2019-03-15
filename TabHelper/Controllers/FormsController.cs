@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -10,6 +11,7 @@ using TabHelper.Models;
 using TabHelper.Models.ComponentModel;
 using TabHelper.Models.Entities;
 using TabHelper.Models.ViewModel;
+using TabHelper.Services;
 using TabHelper.Services.Interfaces;
 
 namespace TabHelper.Controllers
@@ -21,18 +23,20 @@ namespace TabHelper.Controllers
         private readonly IFormManager formManager;
         private readonly IRepository<Form> formRepo;
         private readonly IRepository<FormAttribute> formAttRepo;
+        private readonly IRepository<Tabulation> tabRepo;
         private readonly IViewRender viewRender;
 
         #endregion
 
         #region [ ctor ]
 
-        public FormsController(IViewRender viewRender, IRepository<Form> formRepo, IRepository<FormAttribute> formAttRepo, IFormManager formManager, IUnitOfWork uow) : base(uow)
+        public FormsController(IViewRender viewRender, IRepository<Tabulation> tabRepo, IRepository<Form> formRepo, IRepository<FormAttribute> formAttRepo, IFormManager formManager, IUnitOfWork uow) : base(uow)
         {
-            this.formAttRepo = formAttRepo;
-            this.formManager = formManager;
+            this.tabRepo = tabRepo;
             this.formRepo = formRepo;
             this.viewRender = viewRender;
+            this.formAttRepo = formAttRepo;
+            this.formManager = formManager;
         }
 
         #endregion
@@ -43,8 +47,14 @@ namespace TabHelper.Controllers
         {
             try
             {
-                var forms = formRepo.List().ToList();
-                return View(new FormViewModel { Forms = forms.ConvertAll(e => (FormModel)e) });
+                var forms = formRepo.GetQueriable()
+                    .Include(x => x.FormTabs)
+                    .ThenInclude(x => x.Tabulation)
+                    .ToList();
+
+                return View(new FormViewModel {
+                    Forms = forms.ConvertAll(e => (FormModel)e)
+                });
             }
             catch (Exception e)
             {
@@ -70,7 +80,21 @@ namespace TabHelper.Controllers
             }
         }
 
-        public IActionResult EditForm(int id)
+        public IActionResult CreateForm()
+        {
+            try
+            {
+                ViewBag.Tabulations = GetDropDown(tabRepo.List(), "Name", "Id");
+                return View(new FormManager());
+            }
+            catch (Exception e)
+            {
+                SetMessage(e.Message, MsgType.Error);
+                return RedirectToAction("Index");
+            }
+        }
+
+        public IActionResult Edit(int id)
         {
             try
             {
@@ -96,6 +120,20 @@ namespace TabHelper.Controllers
             }
         }
 
+        public IActionResult Delete(int id)
+        {
+            try
+            {
+                var form = formRepo.GetById(id);
+                DomainValidation.When(form is null, "Formulário não encontrado, contate o suporte");
+                return View((FormModel)form);
+            }
+            catch (Exception e)
+            {
+                SetMessage(e.Message, MsgType.Error); return RedirectToAction("Index");
+            }
+        }
+
         #endregion
 
         #region [ post ]
@@ -114,7 +152,11 @@ namespace TabHelper.Controllers
                     )).ToList();
 
                 SetMessage(Messenger.Created(formRepo.Create(entity)), MsgType.Success);
+
                 formAttRepo.CreateRange(attrs);
+
+                //if (form.Tabulations.Any())
+                //    form.Tabulations.ForEach(x => { formManager.Register(entity.Id, x.Id); });
 
                 return RedirectToAction("Index");
             }
@@ -126,7 +168,7 @@ namespace TabHelper.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditForm(FormModel form)
+        public IActionResult Edit(FormModel form)
         {
             try
             {
@@ -164,6 +206,26 @@ namespace TabHelper.Controllers
                 SetMessage(e.Message, MsgType.Error); return RedirectToAction("Index");
             }
         }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(FormModel form)
+        {
+            try
+            {
+                var entity = formRepo.GetById(form.Id);
+                DomainValidation.When(form is null, "Formulário não encontrado, contate o suporte");
+                SetMessage(Messenger.SoftExclude(formRepo.SoftExclude(entity)), MsgType.Success);
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                SetMessage(e.Message, MsgType.Error); return RedirectToAction("Index");
+            }
+        }
+
+
 
         #endregion
 

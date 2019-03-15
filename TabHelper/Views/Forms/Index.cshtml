@@ -17,9 +17,8 @@
                 <p>Você deve vincular seus formulários com alguma tabulação.</p>
             </div>
             <div class="col-md-4 text-center" style="margin-top:40px;">
-                <a href="#" class="btn btn-default btn-sm text-right drop-shadow" data-toggle="modal" style="width:45%;" data-target="#createform">Formulário (+)</a>
-                <a asp-controller="Forms" asp-action="CreateAtt" class="btn btn-default btn-sm text-right drop-shadow" style="width:45%;" data-toggle="modal" data-target="#createatt">Atributo (+)</a>
-                <a href="#" class="btn btn-primary btn-sm text-right drop-shadow" data-toggle="modal" style="width:91%;margin-top:10px;" data-target="#create">Gerencie todos formulários</a>
+                <a asp-controller="Form" asp-action="CreateForm" class="btn btn-default btn-sm text-right drop-shadow" data-toggle="modal" style="width:100%;" data-target="#createform">Formulário (+)</a>
+                <a href="#" class="btn btn-primary btn-sm text-right drop-shadow" data-toggle="modal" style="width:100%;margin-top:10px;" data-target="#create">Gerencie todos formulários</a>
             </div>
         </div>
     </div>
@@ -40,7 +39,7 @@
 @*<EDIT FORM>*@
 <div class="modal" id="editform">
     <div class="modal-dialog">
-        @await Html.PartialAsync("../Forms/CreateForm.cshtml", new FormManager())
+        @await Html.PartialAsync("../Forms/Edit.cshtml", new FormModel())
     </div>
 </div>
 
@@ -51,8 +50,12 @@
     </div>
 </div>
 
-<div class=""
-
+@*<DELETE FORM>*@
+<div class="modal" id="delete">
+    <div class="modal-dialog">
+        @await Html.PartialAsync("../Forms/Delete.cshtml", new FormModel())
+    </div>
+</div>
 
 
 

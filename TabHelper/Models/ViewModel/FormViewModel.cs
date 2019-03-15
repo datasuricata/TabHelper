@@ -73,6 +73,7 @@ namespace TabHelper.Models.ViewModel
         public int Id { get; set; }
         public string Name { get; set; }
         public string Code { get; set; }
+        public bool IsDeleted { get; set; }
 
         public List<string> Tabulations { get; set; } = new List<string>();
 
@@ -83,6 +84,7 @@ namespace TabHelper.Models.ViewModel
                 Id = v.Id,
                 Code = v.Code,
                 Name = v.Name,
+                IsDeleted = v.IsDeleted,
                 Tabulations = v.FormTabs.Select(x => x.Tabulation.Name).ToList(),
             };
         }

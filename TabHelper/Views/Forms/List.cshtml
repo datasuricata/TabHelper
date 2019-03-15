@@ -13,6 +13,7 @@
                     <th class="text-center">#</th>
                     <th class="text-center">Código</th>
                     <th class="text-center">Nome</th>
+                    <th class="text-center">Tabulações</th>
                     <th class="text-center">Ação</th>
                 </tr>
             </thead>
@@ -25,17 +26,28 @@
                             <td>@frm.Id</td>
                             <td>@frm.Code</td>
                             <td>@frm.Name</td>
+                            <td>@string.Join(", ", frm.Tabulations)</td>
 
                             <td>
-                                <a href="#" class="btn btn-default btn-xs @state" data-toggle="modal" data-target="#detail">Detalhes</a>
-                                <a href="#" class="btn btn-primary btn-xs @state" data-toggle="modal" data-target="#edit">Alterar</a>
-                                <a href="#" class="btn btn-primary btn-xs @state" data-toggle="modal" data-target="#desactive">Desativar</a>
+                                @if (frm.IsDeleted)
+                                {
+                                    state = "disabled";
+                                    frm.Id = 0;
+                                }
+                                else
+                                {
+                                    state = string.Empty;
+                                }
+                                <a asp-controller="Forms" asp-action="Edit" asp-route-id="@frm.Id" style="width: 80px;" class="btn btn-primary btn-xs @state" data-toggle="modal" data-target="#editform">Editar</a>
+                                <a asp-controller="Forms" asp-action="Delete" asp-route-id="@frm.Id" class="btn btn-primary btn-xs @state" style="width: 80px;" data-toggle="modal" data-target="#delete">Deletar</a>
                             </td>
                         </tr>
                     }
                 }
             </tbody>
         </table>
+
+        @*<TODO TRANSFORMAR EM PARTIAL VIEW>*@
         <div class="container-fluid">
             <div class="text-center">
 
