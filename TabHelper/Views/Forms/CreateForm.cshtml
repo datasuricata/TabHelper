@@ -57,7 +57,7 @@
                                 @if (ViewBag.Tabulations != null)
                                 {
                                     <div class="col-lg-9">
-                                        <select class="form-control" asp-items="ViewBag.Tabulations as List<SelectListItem>"></select>
+                                        <select class="form-control input-sm" multiple="multiple" name="Tabulations" asp-items="ViewBag.Tabulations as List<SelectListItem>"></select>
                                     </div>
                                 }
                             </div>
@@ -71,6 +71,7 @@
                 <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Cancelar</button>
                 <button type="submit" class="btn btn-info btn-sm">Salvar alterações</button>
             </div>
+
         </form>
     </div>
     <div class="modal-footer"></div>

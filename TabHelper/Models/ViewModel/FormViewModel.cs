@@ -94,5 +94,6 @@ namespace TabHelper.Models.ViewModel
     {
         public FormModel Form { get; set; }
         public List<FormAttModel> Attributes { get; set; }
+      //  public List<TabModel> Tabulations { get; set; }
     }
 }
