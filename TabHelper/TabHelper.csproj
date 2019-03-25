@@ -19,6 +19,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Views\Forms\CreateForm.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Forms\EditAttribute.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

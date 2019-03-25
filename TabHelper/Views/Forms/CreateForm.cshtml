@@ -32,23 +32,18 @@
                 </fieldset>
             </div>
             <div class="well text-center" style="border-color:#029acf">
-
                 <div class="form-group">
                     <fieldset style="margin-bottom:10px;">
                         <a class="btn btn-default btn-xs" style="width:66%;border-radius:12px;" id="addComponent">Adicionar entrada</a>
                     </fieldset>
                 </div>
-
                 <div class="row">
                     <div id="faq" class="attrCollapse" role="tablist" aria-multiselectable="true">
                         @*<APPEND WORKS HERE>*@
                     </div>
                 </div>
-
             </div>
-
             <div class="well text-center" style="border-color:#029acf">
-
                 <div class="form-group">
                     <fieldset>
                         <div class="form-group">
@@ -57,14 +52,13 @@
                                 @if (ViewBag.Tabulations != null)
                                 {
                                     <div class="col-lg-9">
-                                        <select class="form-control input-sm" multiple="multiple" name="Tabulations" asp-items="ViewBag.Tabulations as List<SelectListItem>"></select>
+                                        <select class="form-control input-sm" multiple="multiple" asp-for="Tabulations" asp-items="ViewBag.Tabulations as List<SelectListItem>"></select>
                                     </div>
                                 }
                             </div>
                         </div>
                     </fieldset>
                 </div>
-
             </div>
 
             <div class="text-right">

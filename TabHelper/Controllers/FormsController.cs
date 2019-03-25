@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using TabHelper.Data.Persistence.Interfaces;
@@ -52,6 +53,8 @@ namespace TabHelper.Controllers
                     .ThenInclude(x => x.Tabulation)
                     .ToList();
 
+                ViewBag.Tabulations = GetDropDown(tabRepo.List(), nameof(Tabulation.Name), nameof(Tabulation.Id));
+
                 return View(new FormViewModel {
                     Forms = forms.ConvertAll(e => (FormModel)e)
                 });
@@ -77,20 +80,6 @@ namespace TabHelper.Controllers
             catch (Exception e)
             {
                 SetMessage(e.Message, MsgType.Error); return RedirectToAction("Index");
-            }
-        }
-
-        public IActionResult CreateForm()
-        {
-            try
-            {
-                ViewBag.Tabulations = GetDropDown(tabRepo.List(), "Name", "Id");
-                return View(new FormManager());
-            }
-            catch (Exception e)
-            {
-                SetMessage(e.Message, MsgType.Error);
-                return RedirectToAction("Index");
             }
         }
 
@@ -140,13 +129,13 @@ namespace TabHelper.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateForm(FormManager form)
+        public IActionResult CreateForm(FormManager vm)
         {
             try
             {
-                var entity = new Form(form.Form.Name, form.Form.Code);
+                var entity = new Form(vm.Form.Name, vm.Form.Code);
 
-                var attrs = form.Attributes.Select(x => new FormAttribute(
+                var attrs = vm.Attributes.Select(x => new FormAttribute(
                         entity, x.Name, x.ComponentType, x.Title, x.Value,
                         x.Info, x.Detail, x.IsNumeric, x.Order, x.Repeat
                     )).ToList();
@@ -155,8 +144,8 @@ namespace TabHelper.Controllers
 
                 formAttRepo.CreateRange(attrs);
 
-                //if (form.Tabulations.Any())
-                //    form.Tabulations.ForEach(x => { formManager.Register(entity.Id, x.Id); });
+                //if (vm.Tabulations.Any())
+                //    vm.Tabulations.ForEach(x => { formManager.Register(entity.Id, x); });
 
                 return RedirectToAction("Index");
             }
