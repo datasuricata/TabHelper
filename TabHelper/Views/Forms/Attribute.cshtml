@@ -5,18 +5,19 @@
 @{
     Layout = null;
     var cont = Guid.NewGuid().ToString().Substring(0, 5);
+
 }
 
-<div class="panel panel-default">
-    <div class="panel-heading" role="tab" id="@string.Concat("questionOne", cont)">
+<div class="panel panel-default" id="Attribute@(Model.Counter)">
+    <div class="panel-heading" role="tab" id="@string.Concat("Master", cont)">
         <h5 class="panel-title">
-            <a data-toggle="collapse" data-parent="#faq" href="#@string.Concat("answerOne", cont)" aria-expanded="false" aria-controls="@string.Concat("answerOne", cont)">
-                Atributo [@Model.Counter]
+            <a data-toggle="collapse" data-parent="#faq" href="#@string.Concat("Child", cont)" aria-expanded="false" aria-controls="@string.Concat("Child", cont)">
+                Atributo [@(Model.Counter)]
             </a>
             <a class="btn btn-primary badge" style="width:30px;margin-left: 40px;"></a>
         </h5>
     </div>
-    <div id="@string.Concat("answerOne", cont)" class="panel-collapse collapse" role="tabpanel" aria-labelledby="@string.Concat("questionOne", cont)">
+    <div id="@string.Concat("Child", cont)" class="panel-collapse collapse" role="tabpanel" aria-labelledby="@string.Concat("Master", cont)">
         <div class="panel-body">
             <fieldset>
                 <div class="form-group">

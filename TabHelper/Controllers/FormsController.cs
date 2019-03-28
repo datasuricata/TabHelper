@@ -144,8 +144,8 @@ namespace TabHelper.Controllers
 
                 formAttRepo.CreateRange(attrs);
 
-                //if (vm.Tabulations.Any())
-                //    vm.Tabulations.ForEach(x => { formManager.Register(entity.Id, x); });
+                if (vm.Tabulations.Any())
+                    vm.Tabulations.ForEach(x => { formManager.Register(entity.Id, x); });
 
                 return RedirectToAction("Index");
             }
